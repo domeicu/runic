@@ -1,13 +1,13 @@
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
-import { TrainingPlan, Workout } from '../domain/types';
-import { mapRunType, parseDistance } from '../utils/parsingUtils';
+import { TrainingPlan, Workout } from '../../lib/types';
+import { mapRunType, parseDistance } from '@/src/lib/parsingUtils';
 
 const parseIcsDate = (icsDate: string): Date => {
   const match = icsDate.match(/^(\d{4})(\d{2})(\d{2})/);
   if (!match) return new Date(); // Fallback to today
 
-  const [_, year, month, day] = match;
+  const [, year, month, day] = match;
   return new Date(`${year}-${month}-${day}`);
 };
 

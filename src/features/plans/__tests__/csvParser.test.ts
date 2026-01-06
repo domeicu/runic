@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { parseCsvPlan } from '../parsers/csvParser';
+import { parseCsvPlan } from '../csvParser';
 
 describe('CSV Parser', () => {
   // Make sure this points to the file with the 4 weeks of data you provided

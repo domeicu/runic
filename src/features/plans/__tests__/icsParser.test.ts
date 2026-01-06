@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { parseIcsPlan } from '../parsers/icsParser';
+import { parseIcsPlan } from '../icsParser';
 
 describe('ICS Parser', () => {
   const icsPath = path.resolve(__dirname, './plan.ics');

@@ -1,8 +1,8 @@
 import Papa from 'papaparse';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
-import { TrainingPlan, Workout } from '../domain/types';
-import { mapRunType, parseDistance } from '../utils/parsingUtils';
+import { TrainingPlan, Workout } from '../../lib/types';
+import { mapRunType, parseDistance } from '@/src/lib/parsingUtils';
 
 interface DefyWeekRow {
   Week: string;

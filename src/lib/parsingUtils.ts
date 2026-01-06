@@ -1,4 +1,4 @@
-import { RunType } from '../domain/types';
+import { RunType } from './types';
 
 /**
  * Maps CSV descriptions to your specific RunType definition.
