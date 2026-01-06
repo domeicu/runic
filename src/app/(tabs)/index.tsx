@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColorScheme } from 'nativewind';
 import { Bell } from 'lucide-react-native';
@@ -7,6 +7,7 @@ import { Colours } from '@/constants/theme';
 import ScreenHeader from '@/src/components/screenHeader';
 import LiquidButton from '@/src/components/liquidButton';
 import WorkoutCard from '@/src/components/workoutCard';
+import { router } from 'expo-router';
 
 const Index = () => {
   const { colorScheme } = useColorScheme();
@@ -20,7 +21,7 @@ const Index = () => {
         rightElement={
           <LiquidButton
             icon={<Bell size={22} color={theme.text} strokeWidth={1.5} />}
-            onPress={() => console.log('Notifications opened')}
+            onPress={() => router.push('/notifications')}
           />
         }
       />

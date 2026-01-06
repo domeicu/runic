@@ -16,9 +16,11 @@ const RootLayout = () => {
           headerTitleStyle: { fontWeight: '600' },
           headerShadowVisible: false,
           headerBackTitle: 'Back',
+          contentStyle: { backgroundColor: theme.background },
         }}
       >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="notifications" />
         <Stack.Screen name="settings" />
       </Stack>
     </SafeAreaProvider>
