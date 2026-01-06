@@ -1,13 +1,28 @@
 import { Stack } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useColorScheme } from 'nativewind';
+import { Colours } from '@/constants/theme';
 import './globals.css';
 
-export default function RootLayout() {
+const RootLayout = () => {
+  const { colorScheme } = useColorScheme();
+  const theme = Colours[colorScheme ?? 'dark'];
   return (
     <SafeAreaProvider>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" />
+      <Stack
+        screenOptions={{
+          headerStyle: { backgroundColor: theme.background },
+          headerTintColor: theme.text,
+          headerTitleStyle: { fontWeight: '600' },
+          headerShadowVisible: false,
+          headerBackTitle: 'Back',
+        }}
+      >
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="settings" />
       </Stack>
     </SafeAreaProvider>
   );
-}
+};
+
+export default RootLayout;

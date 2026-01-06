@@ -4,11 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColorScheme } from 'nativewind';
 import { Bell } from 'lucide-react-native';
 import { Colours } from '@/constants/theme';
-import WorkoutCard from '@/src/components/workoutCard';
-import LiquidButton from '@/src/components/liquidButton';
 import ScreenHeader from '@/src/components/screenHeader';
+import LiquidButton from '@/src/components/liquidButton';
+import WorkoutCard from '@/src/components/workoutCard';
 
-const index = () => {
+const Index = () => {
   const { colorScheme } = useColorScheme();
   const isDark = colorScheme === 'dark';
   const theme = Colours[isDark ? 'dark' : 'light'];
@@ -50,4 +50,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

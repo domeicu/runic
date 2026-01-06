@@ -2,7 +2,7 @@ import { NativeTabs, Icon, Label } from 'expo-router/unstable-native-tabs';
 import { useColorScheme } from 'nativewind';
 import { icons } from '@/constants/icons';
 
-const _layout = () => {
+const Layout = () => {
   const { colorScheme } = useColorScheme();
   const isDark = colorScheme === 'dark';
   const accentColor = isDark ? '#deff63' : '#accf2d';
@@ -27,4 +27,4 @@ const _layout = () => {
   );
 };
 
-export default _layout;
+export default Layout;

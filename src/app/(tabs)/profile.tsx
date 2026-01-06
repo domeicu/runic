@@ -1,17 +1,16 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Settings, User } from 'lucide-react-native';
+import { router } from 'expo-router';
 import { useColorScheme } from 'nativewind';
+import { Settings, User } from 'lucide-react-native';
 import { Layout, Colours } from '@/constants/theme';
-import LiquidButton from '@/src/components/liquidButton';
 import ScreenHeader from '@/src/components/screenHeader';
+import LiquidButton from '@/src/components/liquidButton';
 
 const Profile = () => {
   const { colorScheme } = useColorScheme();
   const isDark = colorScheme === 'dark';
-
-  // Select the active theme palette
   const theme = Colours[isDark ? 'dark' : 'light'];
 
   return (
@@ -21,7 +20,7 @@ const Profile = () => {
         rightElement={
           <LiquidButton
             icon={<Settings size={22} color={theme.text} strokeWidth={1.5} />}
-            onPress={() => console.log('Settings opened')}
+            onPress={() => router.push('/settings')}
           />
         }
       />
@@ -48,10 +47,10 @@ const Profile = () => {
           </View>
 
           <Text className="text-xl font-bold" style={{ color: theme.text }}>
-            Runner One
+            Guest
           </Text>
           <Text className="font-medium" style={{ color: theme.textSecondary }}>
-            Level 12 • Marathoner
+            Level 0 • Runner
           </Text>
         </View>
       </View>
