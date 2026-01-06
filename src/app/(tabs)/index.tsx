@@ -1,14 +1,31 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useColorScheme } from 'nativewind';
+import { Bell } from 'lucide-react-native';
 import WorkoutCard from '@/src/components/workoutCard';
+import LiquidButton from '@/src/components/liquidButton';
+import ScreenHeader from '@/src/components/screenHeader';
+import Colours from '@/constants/colours';
 
 const index = () => {
+  const { colorScheme } = useColorScheme();
+  const isDark = colorScheme === 'dark';
+  const theme = Colours[isDark ? 'dark' : 'light'];
+
   return (
-    <SafeAreaView className="flex-1 items-center justify-center bg-neutral-100 dark:bg-neutral-900">
-      <Text className="text-3xl text-light-300 font-bold">runic</Text>
+    <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
+      <ScreenHeader
+        title="runic"
+        rightElement={
+          <LiquidButton
+            icon={<Bell size={22} color={theme.text} strokeWidth={1.5} />}
+            onPress={() => console.log('Notifications opened')}
+          />
+        }
+      />
       <ScrollView
-        className="w-full flex-1 mt-10 px-4"
+        className="w-full flex-1 mt-3 px-4"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ minHeight: '100%', paddingBottom: 10 }}
       >

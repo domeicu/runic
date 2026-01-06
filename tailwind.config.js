@@ -5,18 +5,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#000000',
-        secondary: '#1C1C1E',
-        light: {
-          100: '#FFFFFF',
-          200: '#8E8E93',
-          300: '#3A3A3C',
+        // This maps tailwind to your specific theme
+        accent: {
+          DEFAULT: '#deff63',
+          light: '#b5d600',
         },
         dark: {
           100: '#1C1C1E',
           200: '#2C2C2E',
         },
-        accent: '#007AFF',
       },
     },
   },
