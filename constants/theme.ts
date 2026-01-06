@@ -1,4 +1,11 @@
-const Colours = {
+export const Layout = {
+  borderRadius: {
+    card: 18,
+    small: 10,
+  },
+};
+
+export const Colours = {
   light: {
     background: '#F9F9F9', // System Gray 6 (Light)
     surface: '#FFFFFF',
@@ -18,5 +25,3 @@ const Colours = {
     glass: 'rgba(28, 28, 30, 0.8)',
   },
 };
-
-export default Colours;

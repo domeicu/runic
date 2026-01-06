@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { useColorScheme } from 'nativewind';
-import Colours from '@/constants/colours';
+import { Colours } from '@/constants/theme';
 
 interface ScreenHeaderProps {
   title: string;

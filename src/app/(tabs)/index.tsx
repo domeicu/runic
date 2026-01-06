@@ -3,10 +3,10 @@ import { View, Text, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColorScheme } from 'nativewind';
 import { Bell } from 'lucide-react-native';
+import { Colours } from '@/constants/theme';
 import WorkoutCard from '@/src/components/workoutCard';
 import LiquidButton from '@/src/components/liquidButton';
 import ScreenHeader from '@/src/components/screenHeader';
-import Colours from '@/constants/colours';
 
 const index = () => {
   const { colorScheme } = useColorScheme();

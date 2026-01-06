@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, ViewStyle } from 'react-native';
 import { useColorScheme } from 'nativewind';
-import Colours from '@/constants/colours';
+import { Colours } from '@/constants/theme';
 
 interface LiquidButtonProps {
   icon: React.ReactNode;

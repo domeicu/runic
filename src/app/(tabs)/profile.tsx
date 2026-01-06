@@ -3,9 +3,9 @@ import { View, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Settings, User } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
+import { Layout, Colours } from '@/constants/theme';
 import LiquidButton from '@/src/components/liquidButton';
 import ScreenHeader from '@/src/components/screenHeader';
-import Colours from '@/constants/colours';
 
 const Profile = () => {
   const { colorScheme } = useColorScheme();
@@ -33,6 +33,7 @@ const Profile = () => {
           style={{
             backgroundColor: theme.surface,
             borderColor: theme.border,
+            borderRadius: Layout.borderRadius.card,
           }}
         >
           {/* Avatar Circle */}
@@ -65,9 +66,10 @@ const Profile = () => {
         </Text>
 
         <View
-          className="h-32 w-full rounded-3xl border border-dashed items-center justify-center"
+          className="h-32 w-full border border-dashed items-center justify-center"
           style={{
             borderColor: theme.border,
+            borderRadius: Layout.borderRadius.card,
             backgroundColor: isDark ? 'rgba(255,255,255,0.02)' : '#F4F4F5',
           }}
         >
