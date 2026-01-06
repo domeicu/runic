@@ -1,7 +1,7 @@
-import { View, Text, ScrollView } from 'react-native';
 import React from 'react';
-import WorkoutCard from '@/src/components/workoutCard';
+import { View, Text, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import WorkoutCard from '@/src/components/workoutCard';
 
 const index = () => {
   return (
@@ -15,16 +15,16 @@ const index = () => {
         <View className="gap-y-1">
           <WorkoutCard
             title="Easy Run"
+            date="2026-03-10T12:00:00.000Z"
             distance="13 km"
             type="Easy"
-            pace="6:30 /km"
             onPress={() => console.log('Open Workout Details')}
           />
           <WorkoutCard
             title="Tempo Run"
+            date="2026-07-13T12:00:00.000Z"
             distance="8 km"
             type="Tempo"
-            pace="4:15 /km"
             onPress={() => console.log('Open Workout Details')}
           />
         </View>

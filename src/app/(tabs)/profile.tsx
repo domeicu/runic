@@ -1,11 +1,13 @@
-import { View, Text } from 'react-native';
 import React from 'react';
+import { View, Text, Button } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const profile = () => {
   return (
-    <View className="flex-1 items-center justify-center">
-      <Text className="text-xl font-bold">profile</Text>
-    </View>
+    <SafeAreaView className="flex-1 items-center justify-center bg-neutral-100 dark:bg-neutral-900">
+      <Button title="Settings" />
+      <Text className="text-xl text-white font-bold">profile</Text>
+    </SafeAreaView>
   );
 };
 
