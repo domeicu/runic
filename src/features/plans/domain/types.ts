@@ -1,15 +1,8 @@
-export type RunType =
-  | 'Easy'
-  | 'Tempo'
-  | 'Intervals'
-  | 'Long Run'
-  | 'Recovery'
-  | 'Race'
-  | 'Endurance';
+export type RunType = 'Easy' | 'Tempo' | 'Intervals' | 'Aerobic' | 'Recovery' | 'Race' | 'Long';
 
 export interface Workout {
   id: string;
-  date: string;
+  date: Date;
   distanceKm: number;
   title: string;
   description?: string;

@@ -1,1 +1,1 @@
-import 'react-native-get-random-values';
+require('react-native-get-random-values');
