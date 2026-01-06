@@ -1,7 +1,8 @@
 import Papa from 'papaparse';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
-import { TrainingPlan, Workout, RunType } from '../domain/types';
+import { TrainingPlan, Workout } from '../domain/types';
+import { mapRunType, parseDistance } from '../utils/parsingUtils';
 
 interface DefyWeekRow {
   Week: string;
@@ -24,32 +25,6 @@ const DAYS = [
   'Saturday',
   'Sunday',
 ] as const;
-
-/**
- * Maps CSV descriptions to your specific RunType definition.
- * Prioritizes "Key" workouts (Tempo/Intervals/Long) over general types.
- */
-const mapRunType = (desc: string): RunType => {
-  const lower = desc.toLowerCase();
-  if (lower.includes('recovery')) return 'Recovery';
-  if (lower.includes('long run') || lower.includes('med-long') || lower.includes('endurance'))
-    return 'Long';
-  if (lower.includes('lt') || lower.includes('tempo') || lower.includes('marathon-pace'))
-    return 'Tempo';
-  if (lower.includes('interval') || lower.includes('vo2max') || lower.includes('hill sprints'))
-    return 'Intervals';
-  if (lower.includes('race') || lower.includes('tune-up')) return 'Race';
-  if (lower.includes('gen-aerobic') || lower.includes('steady')) return 'Aerobic';
-  return 'Easy';
-};
-
-/**
- * Extracts numeric distance from strings like "LT 13 km with..." or "Recovery 6 km"
- */
-const parseDistance = (desc: string): number => {
-  const match = desc.match(/(\d+(\.\d+)?)\s*km/);
-  return match ? parseFloat(match[1]) : 0;
-};
 
 export const parseCsvPlan = (fileContent: string): TrainingPlan => {
   const { data } = Papa.parse<DefyWeekRow>(fileContent, {
