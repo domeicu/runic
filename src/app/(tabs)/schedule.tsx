@@ -25,7 +25,7 @@ const Schedule = () => {
     <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
       <ScreenHeader
         title="schedule"
-        rightElement={
+        button1={
           <LiquidButton
             icon={<Menu size={22} color={theme.text} strokeWidth={1.5} />}
             onPress={() => console.log('Settings opened')}

@@ -18,7 +18,7 @@ const Profile = () => {
     <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
       <ScreenHeader
         title="profile"
-        rightElement={
+        button1={
           <LiquidButton
             icon={<Settings size={22} color={theme.text} strokeWidth={1.5} />}
             onPress={() => router.push('/settings')}

@@ -3,7 +3,7 @@ import { router } from 'expo-router';
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColorScheme } from 'nativewind';
-import { Bell } from 'lucide-react-native';
+import { Bell, Plus } from 'lucide-react-native';
 import { Colours } from '@/constants/theme';
 import { asc, gte } from 'drizzle-orm';
 import { db } from '@/src/db/client';
@@ -31,10 +31,16 @@ const Index = () => {
     <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
       <ScreenHeader
         title="dashboard"
-        rightElement={
+        button1={
           <LiquidButton
             icon={<Bell size={22} color={theme.text} strokeWidth={1.5} />}
             onPress={() => router.push('/notifications')}
+          />
+        }
+        button2={
+          <LiquidButton
+            icon={<Plus size={22} color={theme.text} strokeWidth={1.5} />}
+            onPress={() => console.log('add activity')}
           />
         }
       />

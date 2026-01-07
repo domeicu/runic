@@ -5,10 +5,11 @@ import { Colours } from '@/constants/theme';
 
 interface ScreenHeaderProps {
   title: string;
-  rightElement?: React.ReactNode;
+  button1?: React.ReactNode;
+  button2?: React.ReactNode;
 }
 
-const ScreenHeader = ({ title, rightElement }: ScreenHeaderProps) => {
+const ScreenHeader = ({ title, button1, button2 }: ScreenHeaderProps) => {
   const { colorScheme } = useColorScheme();
   const isDark = colorScheme === 'dark';
   const theme = Colours[isDark ? 'dark' : 'light'];
@@ -18,8 +19,7 @@ const ScreenHeader = ({ title, rightElement }: ScreenHeaderProps) => {
       <Text className="text-3xl font-bold tracking-tight lowercase" style={{ color: theme.text }}>
         {title}
       </Text>
-
-      {rightElement && <View>{rightElement}</View>}
+      {button1 && <View className='flex-row gap-2'>{button2}{button1}</View>}
     </View>
   );
 };
