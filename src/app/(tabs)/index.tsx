@@ -44,8 +44,8 @@ const Index = () => {
           />
         }
       />
-      <View className="px-3">
-        <Text className="text-xl font-bold mb-3 pl-1" style={{ color: theme.text }}>
+      <View className="px-4">
+        <Text className="text-xl font-bold mb-3 pl-2" style={{ color: theme.text }}>
           next run
         </Text>
         {nextRun ? (

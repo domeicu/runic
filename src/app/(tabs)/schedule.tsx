@@ -33,7 +33,7 @@ const Schedule = () => {
         }
       />
       <FlashList
-        className="w-full flex-1 px-3"
+        className="w-full flex-1 px-4"
         data={data || []}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ minHeight: '100%', paddingBottom: 100 }}
@@ -49,7 +49,7 @@ const Schedule = () => {
           />
         )}
         ListHeaderComponent={
-          <Text className="text-xl font-bold mb-3 pl-1" style={{ color: theme.text }}>
+          <Text className="text-xl font-bold mb-3 pl-2" style={{ color: theme.text }}>
             upcoming runs
           </Text>
         }
