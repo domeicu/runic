@@ -1,15 +1,14 @@
-import React, { useCallback, useState } from 'react';
-import { useFocusEffect } from 'expo-router';
+import React from 'react';
 import { View, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlashList } from '@shopify/flash-list';
 import { useColorScheme } from 'nativewind';
 import { Menu } from 'lucide-react-native';
 import { asc } from 'drizzle-orm';
-import { useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import { db } from '@/src/db/client';
 import { workouts } from '@/src/db/schema';
-import { RunType } from '@/src/lib/types';
+import { useFocusQuery } from '@/src/lib/useFocusQuery';
+import { Workout } from '@/src/lib/types';
 import { Colours } from '@/constants/theme';
 import ScreenHeader from '@/src/components/screenHeader';
 import LiquidButton from '@/src/components/liquidButton';
@@ -20,17 +19,7 @@ const Schedule = () => {
   const isDark = colorScheme === 'dark';
   const theme = Colours[isDark ? 'dark' : 'light'];
 
-  const [refreshKey, setRefreshKey] = useState(0);
-
-  useFocusEffect(
-    useCallback(() => {
-      setRefreshKey((prev) => prev + 1);
-    }, [])
-  );
-
-  const { data } = useLiveQuery(db.select().from(workouts).orderBy(asc(workouts.date)), [
-    refreshKey,
-  ]);
+  const { data } = useFocusQuery<Workout[]>(db.select().from(workouts).orderBy(asc(workouts.date)));
 
   return (
     <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
@@ -44,7 +33,7 @@ const Schedule = () => {
         }
       />
       <FlashList
-        className="w-full flex-1 mt-3 px-4"
+        className="w-full flex-1 px-3"
         data={data || []}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ minHeight: '100%', paddingBottom: 100 }}
@@ -53,16 +42,23 @@ const Schedule = () => {
           <WorkoutCard
             title={item.title}
             description={item.description ? item.description : ''}
-            date={item.date}
+            date={new Date(item.date).toISOString()}
             distance={`${item.distanceKm} km`}
-            type={item.type as RunType}
+            type={item.type}
             onPress={() => console.log('Open Workou:', item.id, 'of type', item.type)}
           />
         )}
         ListHeaderComponent={
-          <Text className="text-xl font-bold mb-3" style={{ color: theme.text }}>
+          <Text className="text-xl font-bold mb-3 pl-1" style={{ color: theme.text }}>
             upcoming runs
           </Text>
+        }
+        ListEmptyComponent={
+          <View className="items-center">
+            <Text className="text-sm mt-5" style={{ color: theme.textSecondary }}>
+              no runs found!
+            </Text>
+          </View>
         }
       />
     </SafeAreaView>
