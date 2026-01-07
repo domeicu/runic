@@ -43,7 +43,7 @@ export const parseIcsPlan = (fileContent: string): TrainingPlan => {
           continue;
         }
 
-        const textToAnalyze = currentDesc || currentSummary;
+        const textToAnalyze = currentDesc;
 
         const distanceKm = parseDistance(textToAnalyze);
         const type = mapRunType(textToAnalyze);

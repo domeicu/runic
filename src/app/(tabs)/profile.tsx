@@ -7,6 +7,7 @@ import { Settings, User } from 'lucide-react-native';
 import { Layout, Colours } from '@/constants/theme';
 import ScreenHeader from '@/src/components/screenHeader';
 import LiquidButton from '@/src/components/liquidButton';
+import DataManagement from '@/src/components/dataManagement';
 
 const Profile = () => {
   const { colorScheme } = useColorScheme();
@@ -75,6 +76,9 @@ const Profile = () => {
           <Text style={{ color: theme.textSecondary }}>Sync Strava to view stats</Text>
         </View>
       </View>
+
+      <DataManagement />
+      <View className="h-20" />
     </SafeAreaView>
   );
 };

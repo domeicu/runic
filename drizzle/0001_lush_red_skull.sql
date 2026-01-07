@@ -1,0 +1,1 @@
+DROP INDEX `workouts_external_id_unique`;

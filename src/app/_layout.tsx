@@ -7,6 +7,7 @@ import './globals.css';
 const RootLayout = () => {
   const { colorScheme } = useColorScheme();
   const theme = Colours[colorScheme ?? 'dark'];
+
   return (
     <SafeAreaProvider>
       <Stack

@@ -7,14 +7,15 @@ import { RunType } from '../lib/types';
 import { Layout, Colours } from '@/constants/theme';
 
 interface WorkoutCardProps {
-  title: string;
   date: string;
+  title: string;
+  description: string;
   distance: string;
   type: RunType;
   onPress?: () => void;
 }
 
-const WorkoutCard = ({ title, date, distance, type = 'Easy', onPress }: WorkoutCardProps) => {
+const WorkoutCard = ({ date, title, description, distance, type, onPress }: WorkoutCardProps) => {
   const { colorScheme } = useColorScheme();
   const isDark = colorScheme === 'dark';
 
@@ -38,7 +39,7 @@ const WorkoutCard = ({ title, date, distance, type = 'Easy', onPress }: WorkoutC
 
       <View className="flex-1 py-4">
         {/* Header */}
-        <View className="flex-row justify-between items-center mb-2 px-2">
+        <View className="flex-row justify-between items-center px-2">
           <Text className="text-lg font-bold tracking-wide" style={{ color: theme.text }}>
             {title}
           </Text>
@@ -59,6 +60,12 @@ const WorkoutCard = ({ title, date, distance, type = 'Easy', onPress }: WorkoutC
               {type}
             </Text>
           </View>
+        </View>
+
+        <View className="mb-2 px-2">
+          <Text className="text-sm font-medium" style={{ color: theme.textSecondary }}>
+            {description}
+          </Text>
         </View>
 
         {/* Stats Row */}

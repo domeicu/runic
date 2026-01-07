@@ -14,7 +14,7 @@ export const mapRunType = (desc: string): RunType => {
   if (lower.includes('interval') || lower.includes('vo') || lower.includes('hill sprints'))
     return 'Intervals';
   if (lower.includes('race') || lower.includes('tune-up')) return 'Race';
-  if (lower.includes('gen-aerobic') || lower.includes('steady')) return 'Aerobic';
+  if (lower.includes('aerobic') || lower.includes('steady')) return 'Aerobic';
   return 'Easy';
 };
 
