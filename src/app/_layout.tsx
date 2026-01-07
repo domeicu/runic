@@ -14,8 +14,8 @@ const RootLayout = () => {
           headerStyle: { backgroundColor: theme.background },
           headerTintColor: theme.text,
           headerTitleStyle: { fontWeight: '600' },
-          headerShadowVisible: false,
-          headerBackTitle: 'Back',
+          headerShadowVisible: true,
+          headerBackButtonDisplayMode: 'minimal',
           contentStyle: { backgroundColor: theme.background },
         }}
       >

@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColorScheme } from 'nativewind';
 import { ChevronRight } from 'lucide-react-native';
 import { Colours } from '@/constants/theme';
@@ -30,25 +29,23 @@ const Notifications = () => {
   );
 
   return (
-    <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
-      <ScrollView
-        className="w-full flex-1"
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ minHeight: '100%', paddingBottom: 10 }}
-      >
-        <View className="overflow-hidden border" style={{}}>
-          <NotificationItem title="New follower" description="Guest has started following you." />
-          <NotificationItem
-            title="Goal reached"
-            description="Weekly mileage goal of 50km reached. Congratulations!"
-          />
-          <NotificationItem
-            title="New year"
-            description="Happy new year! Let's make 2026 your year."
-          />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <ScrollView
+      className="w-full flex-1"
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ minHeight: '100%' }}
+    >
+      <View className="overflow-hidden border">
+        <NotificationItem title="New follower" description="Guest has started following you." />
+        <NotificationItem
+          title="Goal reached"
+          description="Weekly mileage goal of 50km reached. Congratulations!"
+        />
+        <NotificationItem
+          title="New year"
+          description="Happy new year! Let's make 2026 your year."
+        />
+      </View>
+    </ScrollView>
   );
 };
 

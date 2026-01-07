@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColorScheme } from 'nativewind';
 import { ChevronRight, Shield, Bell, Moon } from 'lucide-react-native';
 import { Layout, Colours } from '@/constants/theme';
@@ -30,26 +29,24 @@ const Settings = () => {
   );
 
   return (
-    <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
-      <ScrollView
-        className="w-full flex-1 px-4"
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ minHeight: '100%', paddingBottom: 10 }}
+    <ScrollView
+      className="w-full flex-1 px-4"
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ minHeight: '100%' }}
+    >
+      <View
+        className="overflow-hidden border mt-4"
+        style={{
+          backgroundColor: theme.surface,
+          borderColor: theme.border,
+          borderRadius: Layout.borderRadius.card,
+        }}
       >
-        <View
-          className="overflow-hidden border"
-          style={{
-            backgroundColor: theme.surface,
-            borderColor: theme.border,
-            borderRadius: Layout.borderRadius.card,
-          }}
-        >
-          <SettingItem icon={Bell} label="Notifications" />
-          <SettingItem icon={Shield} label="Privacy" />
-          <SettingItem icon={Moon} label="Appearance" value={colorScheme} />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        <SettingItem icon={Bell} label="Notifications" />
+        <SettingItem icon={Shield} label="Privacy" />
+        <SettingItem icon={Moon} label="Appearance" value={colorScheme} />
+      </View>
+    </ScrollView>
   );
 };
 

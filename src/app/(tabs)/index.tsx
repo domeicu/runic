@@ -28,7 +28,7 @@ const Index = () => {
       <ScrollView
         className="w-full flex-1 mt-3 px-4"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ minHeight: '100%', paddingBottom: 10 }}
+        contentContainerStyle={{ minHeight: '100%' }}
       >
         <View className="gap-y-1">
           <WorkoutCard
