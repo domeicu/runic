@@ -1,5 +1,4 @@
-import 'react-native-get-random-values';
-import { v4 as uuidv4 } from 'uuid';
+import * as Crypto from 'expo-crypto';
 import { TrainingPlan, Workout } from '../../lib/types';
 import { mapRunType, parseDistance } from '@/src/lib/parsingUtils';
 
@@ -52,7 +51,7 @@ export const parseIcsPlan = (fileContent: string): TrainingPlan => {
         const formattedTitle = `${distanceKm}km ${type}${suffix}`;
 
         workouts.push({
-          id: uuidv4(),
+          id: Crypto.randomUUID(),
           date: parseIcsDate(currentDtStart),
           title: formattedTitle,
           description: currentDesc.trim(),
@@ -79,7 +78,7 @@ export const parseIcsPlan = (fileContent: string): TrainingPlan => {
   }
 
   return {
-    id: uuidv4(),
+    id: Crypto.randomUUID(),
     name: 'Imported Calendar',
     source: 'ics',
     workouts: workouts.sort((a, b) => a.date.getTime() - b.date.getTime()),

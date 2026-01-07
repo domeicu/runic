@@ -1,6 +1,5 @@
+import * as Crypto from 'expo-crypto';
 import Papa from 'papaparse';
-import 'react-native-get-random-values';
-import { v4 as uuidv4 } from 'uuid';
 import { TrainingPlan, Workout } from '../../lib/types';
 import { mapRunType, parseDistance } from '@/src/lib/parsingUtils';
 
@@ -49,7 +48,7 @@ export const parseCsvPlan = (fileContent: string): TrainingPlan => {
       if (fullDescription.toLowerCase().startsWith('rest')) return;
 
       workouts.push({
-        id: uuidv4(),
+        id: Crypto.randomUUID(),
         date: new Date(dateStr),
         distanceKm: distance,
         title: distance + 'km ' + runType + ' Run',
@@ -61,7 +60,7 @@ export const parseCsvPlan = (fileContent: string): TrainingPlan => {
   });
 
   return {
-    id: uuidv4(),
+    id: Crypto.randomUUID(),
     name: 'Imported Plan',
     source: 'csv',
     workouts,
