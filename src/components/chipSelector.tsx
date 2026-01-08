@@ -17,7 +17,12 @@ const ChipSelector = <T extends string>({
     <Text className="mb-2 font-medium" style={{ color: theme.textSecondary }}>
       type
     </Text>
-    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} className="flex-row gap-2">
+    <ScrollView
+      horizontal={true}
+      showsHorizontalScrollIndicator={false}
+      className="flex-row"
+      contentContainerStyle={{ columnGap: 5 }}
+    >
       {values.map((value) => (
         <TouchableOpacity
           key={value}

@@ -14,7 +14,7 @@ import { ArrowLeft } from 'lucide-react-native';
 import { parseISO } from 'date-fns';
 import { Colours, Layout } from '@/constants/theme';
 import { addWorkout } from '@/src/db/client';
-import { RUN_TYPES } from '@/src/lib/types';
+import { RUN_TYPES, RunType } from '@/src/lib/types';
 import WorkoutTextInput from '@/src/components/workoutTextInput';
 import WorkoutDateInput from '@/src/components/workoutDateInput';
 import ChipSelector from '@/src/components/chipSelector';
@@ -46,16 +46,14 @@ export default function AddWorkout() {
 
     setIsSubmitting(true);
     try {
-      // await addWorkout({
-      //   title: form.title,
-      //   distanceKm: parseFloat(form.distance),
-      //   durationMin: form.duration ? parseInt(form.duration) : 0,
-      //   type: form.type as any, // Cast to your Enum type
-      //   date: new Date().toISOString(), // Defaults to 'Now' for this stub
-      //   description: form.description,
-      //   externalId: null, // Manual entry
-      // });
-      addWorkout();
+      await addWorkout({
+        title: form.title,
+        distanceKm: parseFloat(form.distance),
+        type: form.type as RunType,
+        date: new Date().toISOString(), // Defaults to 'Now' for this stub
+        description: form.description,
+        externalId: null,
+      });
 
       // Go back to dashboard and refresh
       router.back();
@@ -88,22 +86,28 @@ export default function AddWorkout() {
             <View className="flex-1">
               <WorkoutDateInput
                 label="date"
+                theme={theme}
                 value={parseISO(form.date)}
                 onChange={(date) => updateField('date', date.toISOString())}
-                theme={theme}
               />
             </View>
             <View className="flex-1">
               <WorkoutTextInput
                 label="distance (km)"
                 theme={theme}
+                onChangeText={(text) => updateField('distance', text)}
                 keyboardType="decimal-pad"
                 placeholder="5.0"
               />
             </View>
           </View>
 
-          <WorkoutTextInput label="title" theme={theme} placeholder="Morning Run" />
+          <WorkoutTextInput
+            label="title"
+            theme={theme}
+            onChangeText={(text) => updateField('title', text)}
+            placeholder="Morning Run"
+          />
 
           <ChipSelector
             theme={theme}
@@ -112,7 +116,12 @@ export default function AddWorkout() {
             activeValue={form.type}
           />
 
-          <WorkoutTextInput label="description" theme={theme} multiline={true} />
+          <WorkoutTextInput
+            label="description"
+            theme={theme}
+            onChangeText={(text) => updateField('description', text)}
+            multiline={true}
+          />
         </ScrollView>
       </KeyboardAvoidingView>
 

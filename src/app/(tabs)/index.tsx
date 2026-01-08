@@ -21,10 +21,16 @@ const Index = () => {
   const isDark = colorScheme === 'dark';
   const theme = Colours[isDark ? 'dark' : 'light'];
 
-  const today = new Date().toISOString();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   const { data } = useFocusQuery<Workout[]>(
-    db.select().from(workouts).where(gte(workouts.date, today)).orderBy(asc(workouts.date)).limit(1)
+    db
+      .select()
+      .from(workouts)
+      .where(gte(workouts.date, today.toISOString()))
+      .orderBy(asc(workouts.date))
+      .limit(1)
   );
 
   const nextRun = data ? data[0] : null;
