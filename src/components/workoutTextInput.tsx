@@ -7,7 +7,12 @@ interface FormInputProps extends TextInputProps {
   label: string;
 }
 
-const WorkoutTextInput = ({ theme, label, style, ...props }: FormInputProps) => (
+const WorkoutTextInput = ({
+  theme,
+  label,
+  style,
+  ...props
+}: FormInputProps) => (
   <View className="mb-5">
     <Text className="mb-2 font-medium" style={{ color: theme.textSecondary }}>
       {label}
@@ -23,7 +28,7 @@ const WorkoutTextInput = ({ theme, label, style, ...props }: FormInputProps) => 
         },
         style,
       ]}
-      className={`p-4 text-lg leading-tight border ${props.multiline ? 'h-32' : ''}`}
+      className={`border p-4 text-lg leading-tight ${props.multiline ? 'h-32' : ''}`}
       {...props}
     />
   </View>

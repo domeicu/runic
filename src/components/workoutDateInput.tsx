@@ -19,7 +19,12 @@ interface DateInputProps {
   onChange: (date: Date) => void;
 }
 
-const WorkoutDateInput = ({ theme, label, value, onChange }: DateInputProps) => {
+const WorkoutDateInput = ({
+  theme,
+  label,
+  value,
+  onChange,
+}: DateInputProps) => {
   const [showPicker, setShowPicker] = useState(false);
   const handleChange = (event: any, selectedDate?: Date) => {
     // On Android, the picker closes automatically after selection
@@ -49,7 +54,7 @@ const WorkoutDateInput = ({ theme, label, value, onChange }: DateInputProps) => 
           borderColor: theme.border,
           borderRadius: Layout.borderRadius.card,
         }}
-        className="h-14 px-4 border flex-row items-center justify-between"
+        className="h-14 flex-row items-center justify-between border px-4"
         activeOpacity={0.7}
       >
         <Text className="text-lg" style={{ color: theme.text }}>
@@ -59,7 +64,12 @@ const WorkoutDateInput = ({ theme, label, value, onChange }: DateInputProps) => 
       </TouchableOpacity>
 
       {Platform.OS === 'android' && showPicker && (
-        <DateTimePicker value={value} mode="date" display="default" onChange={handleChange} />
+        <DateTimePicker
+          value={value}
+          mode="date"
+          display="default"
+          onChange={handleChange}
+        />
       )}
 
       {Platform.OS === 'ios' && (
@@ -68,15 +78,18 @@ const WorkoutDateInput = ({ theme, label, value, onChange }: DateInputProps) => 
             <View className="flex-1 justify-end bg-black/40">
               <TouchableWithoutFeedback>
                 <View
-                  className="pb-8 rounded-t-3xl overflow-hidden"
+                  className="overflow-hidden rounded-t-3xl pb-8"
                   style={{ backgroundColor: theme.surface }}
                 >
                   <View
-                    className="flex-row justify-end p-4 border-b"
+                    className="flex-row justify-end border-b p-4"
                     style={{ borderColor: theme.border }}
                   >
                     <TouchableOpacity onPress={confirmIOS}>
-                      <Text className="text-lg font-bold" style={{ color: theme.accent }}>
+                      <Text
+                        className="text-lg font-bold"
+                        style={{ color: theme.accent }}
+                      >
                         Done
                       </Text>
                     </TouchableOpacity>
@@ -88,7 +101,9 @@ const WorkoutDateInput = ({ theme, label, value, onChange }: DateInputProps) => 
                     display="spinner"
                     onChange={handleChange}
                     textColor={theme.text}
-                    themeVariant={theme.background === '#000000' ? 'dark' : 'light'} // Force dark/light mode
+                    themeVariant={
+                      theme.background === '#000000' ? 'dark' : 'light'
+                    } // Force dark/light mode
                   />
                 </View>
               </TouchableWithoutFeedback>

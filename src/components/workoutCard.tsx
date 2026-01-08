@@ -36,18 +36,24 @@ const WorkoutCard = ({
     }}
   >
     {/* Left Strip: Using theme accent (Neon in dark, Weighted in light) */}
-    <View className="w-1.5 h-full mr-3 opacity-90" style={{ backgroundColor: theme.accent }} />
+    <View
+      className="mr-3 h-full w-1.5 opacity-90"
+      style={{ backgroundColor: theme.accent }}
+    />
 
     <View className="flex-1 py-4">
       {/* Header */}
-      <View className="flex-row justify-between items-center px-2">
-        <Text className="text-lg font-bold tracking-wide" style={{ color: theme.text }}>
+      <View className="flex-row items-center justify-between px-2">
+        <Text
+          className="text-lg font-bold tracking-wide"
+          style={{ color: theme.text }}
+        >
           {title}
         </Text>
 
         {/* Badge */}
         <View
-          className="px-2 py-0.5 border overflow-hidden"
+          className="overflow-hidden border px-2 py-0.5"
           style={{
             backgroundColor: theme.border,
             borderColor: theme.border,
@@ -55,7 +61,7 @@ const WorkoutCard = ({
           }}
         >
           <Text
-            className="text-[10px] font-extrabold tracking-widest uppercase"
+            className="text-[10px] font-extrabold uppercase tracking-widest"
             style={{ color: theme.accent }}
           >
             {type}
@@ -64,17 +70,23 @@ const WorkoutCard = ({
       </View>
 
       <View className="mb-2 px-2">
-        <Text className="text-sm font-medium" style={{ color: theme.textSecondary }}>
+        <Text
+          className="text-sm font-medium"
+          style={{ color: theme.textSecondary }}
+        >
           {description}
         </Text>
       </View>
 
       {/* Stats Row */}
-      <View className="flex-row justify-between items-center px-2">
+      <View className="flex-row items-center justify-between px-2">
         {date && (
           <View className="flex-row items-center gap-1.5 opacity-80">
             <Calendar size={16} color={theme.textSecondary} />
-            <Text className="text-sm font-medium" style={{ color: theme.textSecondary }}>
+            <Text
+              className="text-sm font-medium"
+              style={{ color: theme.textSecondary }}
+            >
               {format(parseISO(date), 'dd MMM')}
             </Text>
           </View>
@@ -82,14 +94,21 @@ const WorkoutCard = ({
 
         <View className="flex-row items-center gap-1.5 opacity-80">
           <MapPin size={16} color={theme.textSecondary} />
-          <Text className="text-sm font-medium" style={{ color: theme.textSecondary }}>
+          <Text
+            className="text-sm font-medium"
+            style={{ color: theme.textSecondary }}
+          >
             {distance}
           </Text>
         </View>
       </View>
     </View>
 
-    <ChevronRight color={theme.textSecondary} size={20} className="opacity-30" />
+    <ChevronRight
+      color={theme.textSecondary}
+      size={20}
+      className="opacity-30"
+    />
   </TouchableOpacity>
 );
 

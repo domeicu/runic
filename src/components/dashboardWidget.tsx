@@ -18,9 +18,12 @@ const DashboardWidget = ({
   action,
 }: DashboardWidgetProps) => {
   return (
-    <View className="px-5 mb-6">
-      <View className="flex-row justify-between items-end mb-3 px-1">
-        <Text className="text-xl font-bold tracking-tight" style={{ color: theme.text }}>
+    <View className="mb-6 px-5">
+      <View className="mb-3 flex-row items-end justify-between px-1">
+        <Text
+          className="text-xl font-bold tracking-tight"
+          style={{ color: theme.text }}
+        >
           {title.toLowerCase()}
         </Text>
         {action && <View className="mb-1">{action}</View>}
@@ -30,14 +33,17 @@ const DashboardWidget = ({
         children
       ) : (
         <View
-          className="items-center py-6 border border-dashed"
+          className="items-center border border-dashed py-6"
           style={{
             backgroundColor: theme.glass,
             borderColor: theme.border,
             borderRadius: Layout.borderRadius.card,
           }}
         >
-          <Text className="text-sm font-medium opacity-60" style={{ color: theme.text }}>
+          <Text
+            className="text-sm font-medium opacity-60"
+            style={{ color: theme.text }}
+          >
             {emptyMessage.toLowerCase()}
           </Text>
         </View>

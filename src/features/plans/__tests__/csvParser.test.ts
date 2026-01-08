@@ -20,7 +20,9 @@ describe('CSV Parser', () => {
 
   test('Correctly parses the "LT" workout (Jan 27) as Tempo', () => {
     // Row: "2026-01-27: LT 13 km with 6 km at LT pace"
-    const ltRun = plan.workouts.find((w) => w.date.toISOString().split('T')[0] === '2026-01-27');
+    const ltRun = plan.workouts.find(
+      (w) => w.date.toISOString().split('T')[0] === '2026-01-27'
+    );
 
     expect(ltRun).toBeDefined();
     expect(ltRun?.distanceKm).toBe(13);

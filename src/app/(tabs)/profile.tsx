@@ -14,7 +14,10 @@ const Profile = () => {
   const theme = Colours[colorScheme ?? 'light'];
 
   return (
-    <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
+    <SafeAreaView
+      className="flex-1"
+      style={{ backgroundColor: theme.background }}
+    >
       <ScreenHeader
         theme={theme}
         title="profile"
@@ -28,9 +31,9 @@ const Profile = () => {
       />
 
       {/* User Card */}
-      <View className="px-4 mt-3">
+      <View className="mt-3 px-4">
         <View
-          className="p-6 rounded-[32px] items-center border"
+          className="items-center rounded-[32px] border p-6"
           style={{
             backgroundColor: theme.surface,
             borderColor: theme.border,
@@ -39,7 +42,7 @@ const Profile = () => {
         >
           {/* Avatar Circle */}
           <View
-            className="h-24 w-24 rounded-full items-center justify-center mb-4 border-4 shadow-sm"
+            className="mb-4 h-24 w-24 items-center justify-center rounded-full border-4 shadow-sm"
             style={{
               backgroundColor: theme.border,
               borderColor: theme.background,
@@ -58,23 +61,25 @@ const Profile = () => {
       </View>
 
       {/* Placeholder for other profile content */}
-      <View className="flex-1 px-6 mt-8">
+      <View className="mt-8 flex-1 px-6">
         <Text
-          className="font-semibold uppercase tracking-widest text-[10px] mb-4"
+          className="mb-4 text-[10px] font-semibold uppercase tracking-widest"
           style={{ color: theme.textSecondary }}
         >
           Stats Overview
         </Text>
 
         <View
-          className="h-32 w-full border border-dashed items-center justify-center"
+          className="h-32 w-full items-center justify-center border border-dashed"
           style={{
             borderColor: theme.border,
             borderRadius: Layout.borderRadius.card,
             backgroundColor: theme.surface,
           }}
         >
-          <Text style={{ color: theme.textSecondary }}>Sync Strava to view stats</Text>
+          <Text style={{ color: theme.textSecondary }}>
+            Sync Strava to view stats
+          </Text>
         </View>
       </View>
 

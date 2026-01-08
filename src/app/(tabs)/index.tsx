@@ -35,7 +35,10 @@ const Index = () => {
   const nextRun = data ? data[0] : null;
 
   return (
-    <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
+    <SafeAreaView
+      className="flex-1"
+      style={{ backgroundColor: theme.background }}
+    >
       <ScreenHeader
         theme={theme}
         title="dashboard"
@@ -64,7 +67,11 @@ const Index = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ minHeight: '100%', paddingBottom: 10 }}
       >
-        <DashboardWidget theme={theme} title="next run" emptyMessage="no runs found!">
+        <DashboardWidget
+          theme={theme}
+          title="next run"
+          emptyMessage="no runs found!"
+        >
           {nextRun && (
             <WorkoutCard
               theme={theme}
@@ -73,7 +80,9 @@ const Index = () => {
               date={new Date(nextRun.date).toISOString()}
               distance={`${nextRun.distanceKm} km`}
               type={nextRun.type}
-              onPress={() => console.log('Open Workou:', nextRun.id, 'of type', nextRun.type)}
+              onPress={() =>
+                console.log('Open Workou:', nextRun.id, 'of type', nextRun.type)
+              }
             />
           )}
         </DashboardWidget>

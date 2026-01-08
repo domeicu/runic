@@ -18,10 +18,15 @@ const Schedule = () => {
   const { colorScheme } = useColorScheme();
   const theme = Colours[colorScheme ?? 'light'];
 
-  let { data } = useFocusQuery<Workout[]>(db.select().from(workouts).orderBy(asc(workouts.date)));
+  let { data } = useFocusQuery<Workout[]>(
+    db.select().from(workouts).orderBy(asc(workouts.date))
+  );
 
   return (
-    <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
+    <SafeAreaView
+      className="flex-1"
+      style={{ backgroundColor: theme.background }}
+    >
       <ScreenHeader
         theme={theme}
         title="schedule"
@@ -47,17 +52,25 @@ const Schedule = () => {
             date={new Date(item.date).toISOString()}
             distance={`${item.distanceKm} km`}
             type={item.type}
-            onPress={() => console.log('Open Workou:', item.id, 'of type', item.type)}
+            onPress={() =>
+              console.log('Open Workou:', item.id, 'of type', item.type)
+            }
           />
         )}
         ListHeaderComponent={
-          <Text className="text-xl font-bold mb-3 px-1" style={{ color: theme.text }}>
+          <Text
+            className="mb-3 px-1 text-xl font-bold"
+            style={{ color: theme.text }}
+          >
             upcoming runs
           </Text>
         }
         ListEmptyComponent={
           <View className="items-center">
-            <Text className="text-sm mt-5" style={{ color: theme.textSecondary }}>
+            <Text
+              className="mt-5 text-sm"
+              style={{ color: theme.textSecondary }}
+            >
               no runs found!
             </Text>
           </View>

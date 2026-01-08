@@ -7,11 +7,23 @@ import { RunType } from './types';
 export const mapRunType = (desc: string): RunType => {
   const lower = desc.toLowerCase();
   if (lower.includes('recovery')) return 'Recovery';
-  if (lower.includes('long run') || lower.includes('med-long') || lower.includes('endurance'))
+  if (
+    lower.includes('long run') ||
+    lower.includes('med-long') ||
+    lower.includes('endurance')
+  )
     return 'Long';
-  if (lower.includes('lt') || lower.includes('tempo') || lower.includes('marathon-pace'))
+  if (
+    lower.includes('lt') ||
+    lower.includes('tempo') ||
+    lower.includes('marathon-pace')
+  )
     return 'Tempo';
-  if (lower.includes('interval') || lower.includes('vo') || lower.includes('hill sprints'))
+  if (
+    lower.includes('interval') ||
+    lower.includes('vo') ||
+    lower.includes('hill sprints')
+  )
     return 'Intervals';
   if (lower.includes('race') || lower.includes('tune-up')) return 'Race';
   if (lower.includes('aerobic') || lower.includes('steady')) return 'Aerobic';

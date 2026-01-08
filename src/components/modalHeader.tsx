@@ -27,10 +27,10 @@ const ModalHeader = ({
   };
 
   return (
-    <View className="p-4 pt-8 border-b" style={{ borderColor: theme.border }}>
+    <View className="border-b p-4 pt-8" style={{ borderColor: theme.border }}>
       <View className="flex-row items-center">
         {showBackButton && (
-          <TouchableOpacity onPress={handlePress} className="p-2 mr-2">
+          <TouchableOpacity onPress={handlePress} className="mr-2 p-2">
             <ArrowLeft size={24} color={theme.text} />
           </TouchableOpacity>
         )}
@@ -39,7 +39,10 @@ const ModalHeader = ({
             {title}
           </Text>
           {subtitle && (
-            <Text className="text-sm mt-1" style={{ color: theme.textSecondary }}>
+            <Text
+              className="mt-1 text-sm"
+              style={{ color: theme.textSecondary }}
+            >
               {subtitle}
             </Text>
           )}

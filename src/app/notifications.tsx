@@ -10,11 +10,14 @@ const Notifications = () => {
 
   const NotificationItem = ({ title, description }: any) => (
     <TouchableOpacity
-      className="flex-row items-center p-4 border-b"
+      className="flex-row items-center border-b p-4"
       style={{ borderColor: theme.border }}
     >
       <View className="mr-4">
-        <Image className="w-12 h-12 border rounded-full" style={{ borderColor: theme.border }} />
+        <Image
+          className="h-12 w-12 rounded-full border"
+          style={{ borderColor: theme.border }}
+        />
       </View>
       <View className="flex-1">
         <Text className="flex-1 font-medium" style={{ color: theme.text }}>
@@ -35,7 +38,10 @@ const Notifications = () => {
       contentContainerStyle={{ minHeight: '100%' }}
     >
       <View className="overflow-hidden border">
-        <NotificationItem title="New follower" description="Guest has started following you." />
+        <NotificationItem
+          title="New follower"
+          description="Guest has started following you."
+        />
         <NotificationItem
           title="Goal reached"
           description="Weekly mileage goal of 50km reached. Congratulations!"

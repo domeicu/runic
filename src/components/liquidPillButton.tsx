@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Dimensions, TouchableWithoutFeedback } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Dimensions,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import Animated, {
   useSharedValue,
   withSpring,
@@ -31,7 +36,11 @@ interface ExpandingActionPillProps {
   rightAction: ActionButton;
 }
 
-const ExpandingActionPill = ({ theme, leftAction, rightAction }: ExpandingActionPillProps) => {
+const ExpandingActionPill = ({
+  theme,
+  leftAction,
+  rightAction,
+}: ExpandingActionPillProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const progress = useSharedValue(0);
 
@@ -107,7 +116,7 @@ const ExpandingActionPill = ({ theme, leftAction, rightAction }: ExpandingAction
           <TouchableOpacity
             onPress={toggle}
             activeOpacity={0.7}
-            className="w-11 h-11 items-center justify-center"
+            className="h-11 w-11 items-center justify-center"
           >
             <Plus size={22} color={theme.text} strokeWidth={1.5} />
           </TouchableOpacity>
@@ -121,16 +130,19 @@ const ExpandingActionPill = ({ theme, leftAction, rightAction }: ExpandingAction
         >
           <TouchableOpacity
             onPress={() => handlePress(leftAction.onPress)}
-            className="flex-1 h-full items-center justify-center"
+            className="h-full flex-1 items-center justify-center"
           >
             {leftAction.icon}
           </TouchableOpacity>
 
-          <View className="h-4 w-[1px]" style={{ backgroundColor: theme.border }} />
+          <View
+            className="h-4 w-[1px]"
+            style={{ backgroundColor: theme.border }}
+          />
 
           <TouchableOpacity
             onPress={() => handlePress(rightAction.onPress)}
-            className="flex-1 h-full items-center justify-center"
+            className="h-full flex-1 items-center justify-center"
           >
             {rightAction.icon}
           </TouchableOpacity>

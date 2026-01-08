@@ -8,9 +8,17 @@ interface ScreenHeaderProps {
   button2?: React.ReactNode;
 }
 
-const ScreenHeader = ({ theme, title, button1, button2 }: ScreenHeaderProps) => (
-  <View className="flex-row justify-between items-center px-6 py-4 w-full">
-    <Text className="text-3xl font-bold tracking-tight lowercase" style={{ color: theme.text }}>
+const ScreenHeader = ({
+  theme,
+  title,
+  button1,
+  button2,
+}: ScreenHeaderProps) => (
+  <View className="w-full flex-row items-center justify-between px-6 py-4">
+    <Text
+      className="text-3xl font-bold lowercase tracking-tight"
+      style={{ color: theme.text }}
+    >
       {title}
     </Text>
     {button1 && (
