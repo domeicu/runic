@@ -1,0 +1,45 @@
+import React from 'react';
+import { View, Text } from 'react-native';
+import { Layout } from '@/constants/theme';
+
+interface DashboardWidgetProps {
+  title: string;
+  theme: any;
+  children: React.ReactNode;
+  emptyMessage?: string;
+  action?: React.ReactNode;
+}
+
+const DashboardWidget = ({
+  title,
+  theme,
+  children,
+  emptyMessage = 'nothing to display!',
+  action,
+}: DashboardWidgetProps) => {
+  return (
+    <View className="px-5 mb-6">
+      <View className="flex-row justify-between items-end mb-3 px-1">
+        <Text className="text-xl font-bold tracking-tight" style={{ color: theme.text }}>
+          {title.toLowerCase()}
+        </Text>
+        {action && <View className="mb-1">{action}</View>}
+      </View>
+
+      {children ? (
+        children
+      ) : (
+        <View
+          className="items-center py-6 bg-zinc-100/50 dark:bg-zinc-900/50 border border-dashed border-zinc-200 dark:border-zinc-800"
+          style={{ borderRadius: Layout.borderRadius.card }}
+        >
+          <Text className="text-sm font-medium opacity-60" style={{ color: theme.text }}>
+            {emptyMessage.toLowerCase()}
+          </Text>
+        </View>
+      )}
+    </View>
+  );
+};
+
+export default DashboardWidget;
