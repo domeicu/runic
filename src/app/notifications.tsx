@@ -2,19 +2,22 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { useColorScheme } from 'nativewind';
 import { ChevronRight } from 'lucide-react-native';
-import { Colours } from '@/constants/theme';
+import { Colours } from '@/src/constants/theme';
 
 const Notifications = () => {
   const { colorScheme } = useColorScheme();
-  const theme = Colours[colorScheme ?? 'dark'];
+  const theme = Colours[colorScheme ?? 'light'];
 
   const NotificationItem = ({ title, description }: any) => (
     <TouchableOpacity
-      className="flex-row items-center p-4 border-b"
+      className="flex-row items-center border-b p-4"
       style={{ borderColor: theme.border }}
     >
       <View className="mr-4">
-        <Image className="w-12 h-12 border rounded-full" style={{ borderColor: theme.border }} />
+        <Image
+          className="h-12 w-12 rounded-full border"
+          style={{ borderColor: theme.border }}
+        />
       </View>
       <View className="flex-1">
         <Text className="flex-1 font-medium" style={{ color: theme.text }}>
@@ -35,7 +38,10 @@ const Notifications = () => {
       contentContainerStyle={{ minHeight: '100%' }}
     >
       <View className="overflow-hidden border">
-        <NotificationItem title="New follower" description="Guest has started following you." />
+        <NotificationItem
+          title="New follower"
+          description="Guest has started following you."
+        />
         <NotificationItem
           title="Goal reached"
           description="Weekly mileage goal of 50km reached. Congratulations!"

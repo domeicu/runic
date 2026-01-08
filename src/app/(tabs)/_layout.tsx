@@ -1,14 +1,14 @@
 import { NativeTabs, Icon, Label } from 'expo-router/unstable-native-tabs';
 import { useColorScheme } from 'nativewind';
-import { icons } from '@/constants/icons';
+import { icons } from '@/src/constants/icons';
+import { Colours } from '@/src/constants/theme';
 
 const Layout = () => {
   const { colorScheme } = useColorScheme();
-  const isDark = colorScheme === 'dark';
-  const accentColor = isDark ? '#deff63' : '#accf2d';
+  const theme = Colours[colorScheme ?? 'light'];
 
   return (
-    <NativeTabs tintColor={accentColor}>
+    <NativeTabs tintColor={theme.accent}>
       <NativeTabs.Trigger name="index">
         <Label>Home</Label>
         <Icon src={icons.home} />

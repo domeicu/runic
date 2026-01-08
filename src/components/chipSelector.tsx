@@ -27,7 +27,7 @@ const ChipSelector = <T extends string>({
         <TouchableOpacity
           key={value}
           onPress={() => onPress(value)}
-          className={'px-4 py-2 rounded-full border'}
+          className={'rounded-full border px-4 py-2'}
           style={
             activeValue === value
               ? { backgroundColor: theme.accent }
@@ -35,7 +35,11 @@ const ChipSelector = <T extends string>({
           }
         >
           <Text
-            style={activeValue === value ? { color: theme.glass } : { color: theme.textSecondary }}
+            style={
+              activeValue === value
+                ? { color: theme.glass }
+                : { color: theme.textSecondary }
+            }
           >
             {value.charAt(0).toUpperCase() + value.slice(1)}
           </Text>

@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColorScheme } from 'nativewind';
 import { Bell, Pencil, FileUp } from 'lucide-react-native';
-import { Colours } from '@/constants/theme';
+import { Colours } from '@/src/constants/theme';
 import { asc, gte } from 'drizzle-orm';
 import { db } from '@/src/db/client';
 import { workouts } from '@/src/db/schema';
@@ -18,8 +18,7 @@ import WorkoutCard from '@/src/components/workoutCard';
 
 const Index = () => {
   const { colorScheme } = useColorScheme();
-  const isDark = colorScheme === 'dark';
-  const theme = Colours[isDark ? 'dark' : 'light'];
+  const theme = Colours[colorScheme ?? 'light'];
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -36,11 +35,16 @@ const Index = () => {
   const nextRun = data ? data[0] : null;
 
   return (
-    <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
+    <SafeAreaView
+      className="flex-1"
+      style={{ backgroundColor: theme.background }}
+    >
       <ScreenHeader
+        theme={theme}
         title="dashboard"
         button1={
           <LiquidButton
+            theme={theme}
             icon={<Bell size={22} color={theme.text} strokeWidth={1.5} />}
             onPress={() => router.push('/notifications')}
           />
@@ -63,15 +67,22 @@ const Index = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ minHeight: '100%', paddingBottom: 10 }}
       >
-        <DashboardWidget title="next run" theme={theme} emptyMessage="no runs found!">
+        <DashboardWidget
+          theme={theme}
+          title="next run"
+          emptyMessage="no runs found!"
+        >
           {nextRun && (
             <WorkoutCard
+              theme={theme}
               title={nextRun.title}
               description={nextRun.description ? nextRun.description : ''}
               date={new Date(nextRun.date).toISOString()}
               distance={`${nextRun.distanceKm} km`}
               type={nextRun.type}
-              onPress={() => console.log('Open Workou:', nextRun.id, 'of type', nextRun.type)}
+              onPress={() =>
+                console.log('Open Workou:', nextRun.id, 'of type', nextRun.type)
+              }
             />
           )}
         </DashboardWidget>

@@ -2,15 +2,15 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { useColorScheme } from 'nativewind';
 import { ChevronRight, Shield, Bell, Moon } from 'lucide-react-native';
-import { Layout, Colours } from '@/constants/theme';
+import { Layout, Colours } from '@/src/constants/theme';
 
 const Settings = () => {
   const { colorScheme } = useColorScheme();
-  const theme = Colours[colorScheme ?? 'dark'];
+  const theme = Colours[colorScheme ?? 'light'];
 
   const SettingItem = ({ icon: Icon, label, value }: any) => (
     <TouchableOpacity
-      className="flex-row items-center p-4 border-b"
+      className="flex-row items-center border-b p-4"
       style={{ borderColor: theme.border }}
     >
       <View className="mr-4">
@@ -35,7 +35,7 @@ const Settings = () => {
       contentContainerStyle={{ minHeight: '100%' }}
     >
       <View
-        className="overflow-hidden border mt-4"
+        className="mt-4 overflow-hidden border"
         style={{
           backgroundColor: theme.surface,
           borderColor: theme.border,

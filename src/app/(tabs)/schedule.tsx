@@ -9,24 +9,30 @@ import { db } from '@/src/db/client';
 import { workouts } from '@/src/db/schema';
 import { useFocusQuery } from '@/src/lib/useFocusQuery';
 import { Workout } from '@/src/lib/types';
-import { Colours } from '@/constants/theme';
+import { Colours } from '@/src/constants/theme';
 import ScreenHeader from '@/src/components/screenHeader';
 import LiquidButton from '@/src/components/liquidButton';
 import WorkoutCard from '@/src/components/workoutCard';
 
 const Schedule = () => {
   const { colorScheme } = useColorScheme();
-  const isDark = colorScheme === 'dark';
-  const theme = Colours[isDark ? 'dark' : 'light'];
+  const theme = Colours[colorScheme ?? 'light'];
 
-  let { data } = useFocusQuery<Workout[]>(db.select().from(workouts).orderBy(asc(workouts.date)));
+  let { data } = useFocusQuery<Workout[]>(
+    db.select().from(workouts).orderBy(asc(workouts.date))
+  );
 
   return (
-    <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
+    <SafeAreaView
+      className="flex-1"
+      style={{ backgroundColor: theme.background }}
+    >
       <ScreenHeader
+        theme={theme}
         title="schedule"
         button1={
           <LiquidButton
+            theme={theme}
             icon={<Menu size={22} color={theme.text} strokeWidth={1.5} />}
             onPress={() => console.log('Settings opened')}
           />
@@ -40,22 +46,31 @@ const Schedule = () => {
         ItemSeparatorComponent={() => <View className="h-2" />}
         renderItem={({ item }) => (
           <WorkoutCard
+            theme={theme}
             title={item.title}
             description={item.description ? item.description : ''}
             date={new Date(item.date).toISOString()}
             distance={`${item.distanceKm} km`}
             type={item.type}
-            onPress={() => console.log('Open Workou:', item.id, 'of type', item.type)}
+            onPress={() =>
+              console.log('Open Workou:', item.id, 'of type', item.type)
+            }
           />
         )}
         ListHeaderComponent={
-          <Text className="text-xl font-bold mb-3 px-1" style={{ color: theme.text }}>
+          <Text
+            className="mb-3 px-1 text-xl font-bold"
+            style={{ color: theme.text }}
+          >
             upcoming runs
           </Text>
         }
         ListEmptyComponent={
           <View className="items-center">
-            <Text className="text-sm mt-5" style={{ color: theme.textSecondary }}>
+            <Text
+              className="mt-5 text-sm"
+              style={{ color: theme.textSecondary }}
+            >
               no runs found!
             </Text>
           </View>

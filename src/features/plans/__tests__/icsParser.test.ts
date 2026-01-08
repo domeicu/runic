@@ -20,7 +20,9 @@ describe('ICS Parser', () => {
   test('Correctly parses the "LT" workout (Jan 27) as Tempo', () => {
     // EVENT: DTSTART:20260127 -> SUMMARY: LT 13 km with 6 km at LT pace
     // Note: The parser sorts by date, so we find it by date matching
-    const ltRun = plan.workouts.find((w) => w.date.toISOString().split('T')[0] === '2026-01-27');
+    const ltRun = plan.workouts.find(
+      (w) => w.date.toISOString().split('T')[0] === '2026-01-27'
+    );
 
     expect(ltRun).toBeDefined();
     expect(ltRun?.distanceKm).toBe(13);

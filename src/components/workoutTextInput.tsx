@@ -1,13 +1,18 @@
 import React from 'react';
 import { View, Text, TextInput, TextInputProps } from 'react-native';
-import { Layout } from '@/constants/theme';
+import { Layout } from '@/src/constants/theme';
 
 interface FormInputProps extends TextInputProps {
-  label: string;
   theme: any;
+  label: string;
 }
 
-const WorkoutTextInput = ({ label, theme, style, ...props }: FormInputProps) => (
+const WorkoutTextInput = ({
+  theme,
+  label,
+  style,
+  ...props
+}: FormInputProps) => (
   <View className="mb-5">
     <Text className="mb-2 font-medium" style={{ color: theme.textSecondary }}>
       {label}
@@ -23,7 +28,7 @@ const WorkoutTextInput = ({ label, theme, style, ...props }: FormInputProps) => 
         },
         style,
       ]}
-      className={`p-4 text-lg leading-tight border ${props.multiline ? 'h-32' : ''}`}
+      className={`border p-4 text-lg leading-tight ${props.multiline ? 'h-32' : ''}`}
       {...props}
     />
   </View>
