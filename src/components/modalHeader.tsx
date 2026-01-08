@@ -4,17 +4,17 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { ArrowLeft } from 'lucide-react-native';
 
 interface ModalHeaderProps {
+  theme: any;
   title: string;
   subtitle?: string;
-  theme: any;
   onBack?: () => void;
   showBackButton?: boolean;
 }
 
 const ModalHeader = ({
+  theme,
   title,
   subtitle,
-  theme,
   onBack,
   showBackButton = true,
 }: ModalHeaderProps) => {

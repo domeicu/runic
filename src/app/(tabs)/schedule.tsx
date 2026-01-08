@@ -23,9 +23,11 @@ const Schedule = () => {
   return (
     <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
       <ScreenHeader
+        theme={theme}
         title="schedule"
         button1={
           <LiquidButton
+            theme={theme}
             icon={<Menu size={22} color={theme.text} strokeWidth={1.5} />}
             onPress={() => console.log('Settings opened')}
           />
@@ -39,6 +41,7 @@ const Schedule = () => {
         ItemSeparatorComponent={() => <View className="h-2" />}
         renderItem={({ item }) => (
           <WorkoutCard
+            theme={theme}
             title={item.title}
             description={item.description ? item.description : ''}
             date={new Date(item.date).toISOString()}

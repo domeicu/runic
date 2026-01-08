@@ -3,11 +3,11 @@ import { View, Text, TextInput, TextInputProps } from 'react-native';
 import { Layout } from '@/constants/theme';
 
 interface FormInputProps extends TextInputProps {
-  label: string;
   theme: any;
+  label: string;
 }
 
-const WorkoutTextInput = ({ label, theme, style, ...props }: FormInputProps) => (
+const WorkoutTextInput = ({ theme, label, style, ...props }: FormInputProps) => (
   <View className="mb-5">
     <Text className="mb-2 font-medium" style={{ color: theme.textSecondary }}>
       {label}

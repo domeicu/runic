@@ -3,8 +3,8 @@ import React from 'react';
 import { TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 
 interface ActionButtonProps {
-  label: string;
   theme: any;
+  label: string;
   onPress: () => void;
   loading?: boolean;
   disabled?: boolean;
@@ -12,8 +12,8 @@ interface ActionButtonProps {
 }
 
 const ActionButton = ({
-  label,
   theme,
+  label,
   onPress,
   loading = false,
   disabled = false,

@@ -37,9 +37,11 @@ const Index = () => {
   return (
     <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
       <ScreenHeader
+        theme={theme}
         title="dashboard"
         button1={
           <LiquidButton
+            theme={theme}
             icon={<Bell size={22} color={theme.text} strokeWidth={1.5} />}
             onPress={() => router.push('/notifications')}
           />
@@ -62,9 +64,10 @@ const Index = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ minHeight: '100%', paddingBottom: 10 }}
       >
-        <DashboardWidget title="next run" theme={theme} emptyMessage="no runs found!">
+        <DashboardWidget theme={theme} title="next run" emptyMessage="no runs found!">
           {nextRun && (
             <WorkoutCard
+              theme={theme}
               title={nextRun.title}
               description={nextRun.description ? nextRun.description : ''}
               date={new Date(nextRun.date).toISOString()}

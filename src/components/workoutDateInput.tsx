@@ -13,13 +13,13 @@ import { Calendar as CalendarIcon } from 'lucide-react-native';
 import { Layout } from '@/constants/theme';
 
 interface DateInputProps {
+  theme: any;
   label: string;
   value: Date;
   onChange: (date: Date) => void;
-  theme: any;
 }
 
-const WorkoutDateInput = ({ label, value, onChange, theme }: DateInputProps) => {
+const WorkoutDateInput = ({ theme, label, value, onChange }: DateInputProps) => {
   const [showPicker, setShowPicker] = useState(false);
   const handleChange = (event: any, selectedDate?: Date) => {
     // On Android, the picker closes automatically after selection

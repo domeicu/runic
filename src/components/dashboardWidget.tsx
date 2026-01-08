@@ -3,16 +3,16 @@ import { View, Text } from 'react-native';
 import { Layout } from '@/constants/theme';
 
 interface DashboardWidgetProps {
-  title: string;
   theme: any;
+  title: string;
   children: React.ReactNode;
   emptyMessage?: string;
   action?: React.ReactNode;
 }
 
 const DashboardWidget = ({
-  title,
   theme,
+  title,
   children,
   emptyMessage = 'nothing to display!',
   action,

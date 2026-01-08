@@ -52,7 +52,7 @@ export default function AddWorkout() {
 
   return (
     <View className="flex-1" style={{ backgroundColor: theme.background }}>
-      <ModalHeader title="plan workout" theme={theme} />
+      <ModalHeader theme={theme} title="plan workout" />
 
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -62,16 +62,16 @@ export default function AddWorkout() {
           <View className="flex-row gap-4">
             <View className="flex-1">
               <WorkoutDateInput
-                label="date"
                 theme={theme}
+                label="date"
                 value={parseISO(form.date)}
                 onChange={(date) => updateField('date', date.toISOString())}
               />
             </View>
             <View className="flex-1">
               <WorkoutTextInput
-                label="distance (km)"
                 theme={theme}
+                label="distance (km)"
                 onChangeText={(text) => updateField('distance', text)}
                 keyboardType="decimal-pad"
                 placeholder="5.0"
@@ -80,8 +80,8 @@ export default function AddWorkout() {
           </View>
 
           <WorkoutTextInput
-            label="title"
             theme={theme}
+            label="title"
             onChangeText={(text) => updateField('title', text)}
             placeholder="Morning Run"
           />
@@ -94,8 +94,8 @@ export default function AddWorkout() {
           />
 
           <WorkoutTextInput
-            label="description"
             theme={theme}
+            label="description"
             onChangeText={(text) => updateField('description', text)}
             multiline={true}
           />
@@ -104,8 +104,8 @@ export default function AddWorkout() {
 
       <View className="p-5 pb-12" style={{ borderColor: theme.border }}>
         <ActionButton
-          label="save workout"
           theme={theme}
+          label="save workout"
           onPress={handleSave}
           disabled={isSubmitting}
         />
