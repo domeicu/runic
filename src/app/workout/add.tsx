@@ -3,7 +3,7 @@ import { router } from 'expo-router';
 import { View, ScrollView, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { useColorScheme } from 'nativewind';
 import { parseISO } from 'date-fns';
-import { Colours } from '@/constants/theme';
+import { Colours } from '@/src/constants/theme';
 import { addWorkout } from '@/src/db/client';
 import { RUN_TYPES, RunType } from '@/src/lib/types';
 import WorkoutTextInput from '@/src/components/workoutTextInput';

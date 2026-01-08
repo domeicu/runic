@@ -10,7 +10,7 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { format } from 'date-fns';
 import { Calendar as CalendarIcon } from 'lucide-react-native';
-import { Layout } from '@/constants/theme';
+import { Layout } from '@/src/constants/theme';
 
 interface DateInputProps {
   theme: any;

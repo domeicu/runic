@@ -9,7 +9,7 @@ import { db } from '@/src/db/client';
 import { workouts } from '@/src/db/schema';
 import { useFocusQuery } from '@/src/lib/useFocusQuery';
 import { Workout } from '@/src/lib/types';
-import { Colours } from '@/constants/theme';
+import { Colours } from '@/src/constants/theme';
 import ScreenHeader from '@/src/components/screenHeader';
 import LiquidButton from '@/src/components/liquidButton';
 import WorkoutCard from '@/src/components/workoutCard';

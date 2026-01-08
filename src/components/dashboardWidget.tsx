@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Layout } from '@/constants/theme';
+import { Layout } from '@/src/constants/theme';
 
 interface DashboardWidgetProps {
   theme: any;

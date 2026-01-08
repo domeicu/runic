@@ -3,7 +3,7 @@ import { format, parseISO } from 'date-fns';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { MapPin, ChevronRight, Calendar } from 'lucide-react-native';
 import { RunType } from '../lib/types';
-import { Layout } from '@/constants/theme';
+import { Layout } from '@/src/constants/theme';
 
 interface WorkoutCardProps {
   theme: any;

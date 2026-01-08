@@ -1,4 +1,4 @@
-import { Layout } from '@/constants/theme';
+import { Layout } from '@/src/constants/theme';
 import React from 'react';
 import { TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 

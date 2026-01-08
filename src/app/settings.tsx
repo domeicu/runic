@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { useColorScheme } from 'nativewind';
 import { ChevronRight, Shield, Bell, Moon } from 'lucide-react-native';
-import { Layout, Colours } from '@/constants/theme';
+import { Layout, Colours } from '@/src/constants/theme';
 
 const Settings = () => {
   const { colorScheme } = useColorScheme();

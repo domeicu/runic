@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { useColorScheme } from 'nativewind';
 import { ChevronRight } from 'lucide-react-native';
-import { Colours } from '@/constants/theme';
+import { Colours } from '@/src/constants/theme';
 
 const Notifications = () => {
   const { colorScheme } = useColorScheme();

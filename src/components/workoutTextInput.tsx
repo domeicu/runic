@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TextInput, TextInputProps } from 'react-native';
-import { Layout } from '@/constants/theme';
+import { Layout } from '@/src/constants/theme';
 
 interface FormInputProps extends TextInputProps {
   theme: any;

@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { useColorScheme } from 'nativewind';
 import { Settings, User } from 'lucide-react-native';
-import { Layout, Colours } from '@/constants/theme';
+import { Layout, Colours } from '@/src/constants/theme';
 import ScreenHeader from '@/src/components/screenHeader';
 import LiquidButton from '@/src/components/liquidButton';
 import DataManagement from '@/src/components/dataManagement';

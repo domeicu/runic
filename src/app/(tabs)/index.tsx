@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColorScheme } from 'nativewind';
 import { Bell, Pencil, FileUp } from 'lucide-react-native';
-import { Colours } from '@/constants/theme';
+import { Colours } from '@/src/constants/theme';
 import { asc, gte } from 'drizzle-orm';
 import { db } from '@/src/db/client';
 import { workouts } from '@/src/db/schema';
