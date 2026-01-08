@@ -24,9 +24,9 @@ export default function AddWorkout() {
   const theme = Colours[colorScheme ?? 'light'];
 
   const [form, setForm] = useState({
-    distance: '',
+    distance: '5.0',
     date: new Date().toISOString(),
-    title: '',
+    title: 'Morning Run',
     type: RUN_TYPES[0],
     description: '',
   });
@@ -38,23 +38,16 @@ export default function AddWorkout() {
   };
 
   const handleSave = async () => {
-    if (!form.title || !form.distance) {
-      Alert.alert('Missing Fields', 'Please enter at least a title and distance.');
-      return;
-    }
-
     setIsSubmitting(true);
     try {
       await addWorkout({
         title: form.title,
         distanceKm: parseFloat(form.distance),
         type: form.type as RunType,
-        date: new Date().toISOString(), // Defaults to 'Now' for this stub
+        date: form.date,
         description: form.description,
         externalId: null,
       });
-
-      // Go back to dashboard and refresh
       router.back();
     } catch (e) {
       console.error(e);
