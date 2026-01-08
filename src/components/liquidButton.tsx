@@ -24,7 +24,7 @@ const LiquidButton = ({ icon, onPress, style }: LiquidButtonProps) => {
           backgroundColor: theme.glass,
           borderColor: theme.border,
           borderWidth: 1,
-          shadowColor: isDark ? '#000' : '#A1A1AA',
+          shadowColor: theme.shadow,
           shadowOpacity: 0.2,
           shadowRadius: 10,
         },
