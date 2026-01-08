@@ -1,6 +1,6 @@
 import React from 'react';
 import { router } from 'expo-router';
-import { Text, View } from 'react-native';
+import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColorScheme } from 'nativewind';
 import { Bell, Pencil, FileUp } from 'lucide-react-native';
@@ -11,6 +11,7 @@ import { workouts } from '@/src/db/schema';
 import { useFocusQuery } from '@/src/lib/useFocusQuery';
 import { Workout } from '@/src/lib/types';
 import ScreenHeader from '@/src/components/screenHeader';
+import DashboardWidget from '@/src/components/dashboardWidget';
 import LiquidButton from '@/src/components/liquidButton';
 import LiquidPillButton from '@/src/components/liquidPillButton';
 import WorkoutCard from '@/src/components/workoutCard';
@@ -20,10 +21,16 @@ const Index = () => {
   const isDark = colorScheme === 'dark';
   const theme = Colours[isDark ? 'dark' : 'light'];
 
-  const today = new Date().toISOString();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   const { data } = useFocusQuery<Workout[]>(
-    db.select().from(workouts).where(gte(workouts.date, today)).orderBy(asc(workouts.date)).limit(1)
+    db
+      .select()
+      .from(workouts)
+      .where(gte(workouts.date, today.toISOString()))
+      .orderBy(asc(workouts.date))
+      .limit(1)
   );
 
   const nextRun = data ? data[0] : null;
@@ -50,33 +57,25 @@ const Index = () => {
               onPress: () => router.push('/workout/import'),
             }}
           />
-          // <LiquidButton
-          //   icon={<Plus size={22} color={theme.text} strokeWidth={1.5} />}
-          //   onPress={() => router.push('/workout/add')}
-          // />
         }
       />
-      <View className="px-4">
-        <Text className="text-xl font-bold mb-3 pl-2" style={{ color: theme.text }}>
-          next run
-        </Text>
-        {nextRun ? (
-          <WorkoutCard
-            title={nextRun.title}
-            description={nextRun.description ? nextRun.description : ''}
-            date={new Date(nextRun.date).toISOString()}
-            distance={`${nextRun.distanceKm} km`}
-            type={nextRun.type}
-            onPress={() => console.log('Open Workou:', nextRun.id, 'of type', nextRun.type)}
-          />
-        ) : (
-          <View className="items-center">
-            <Text className="text-sm mt-5" style={{ color: theme.textSecondary }}>
-              no runs found!
-            </Text>
-          </View>
-        )}
-      </View>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ minHeight: '100%', paddingBottom: 10 }}
+      >
+        <DashboardWidget title="next run" theme={theme} emptyMessage="no runs found!">
+          {nextRun && (
+            <WorkoutCard
+              title={nextRun.title}
+              description={nextRun.description ? nextRun.description : ''}
+              date={new Date(nextRun.date).toISOString()}
+              distance={`${nextRun.distanceKm} km`}
+              type={nextRun.type}
+              onPress={() => console.log('Open Workou:', nextRun.id, 'of type', nextRun.type)}
+            />
+          )}
+        </DashboardWidget>
+      </ScrollView>
     </SafeAreaView>
   );
 };

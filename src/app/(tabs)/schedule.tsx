@@ -19,7 +19,7 @@ const Schedule = () => {
   const isDark = colorScheme === 'dark';
   const theme = Colours[isDark ? 'dark' : 'light'];
 
-  const { data } = useFocusQuery<Workout[]>(db.select().from(workouts).orderBy(asc(workouts.date)));
+  let { data } = useFocusQuery<Workout[]>(db.select().from(workouts).orderBy(asc(workouts.date)));
 
   return (
     <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
@@ -33,7 +33,7 @@ const Schedule = () => {
         }
       />
       <FlashList
-        className="w-full flex-1 px-4"
+        className="w-full flex-1 px-5"
         data={data || []}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ minHeight: '100%', paddingBottom: 100 }}
@@ -49,7 +49,7 @@ const Schedule = () => {
           />
         )}
         ListHeaderComponent={
-          <Text className="text-xl font-bold mb-3 pl-2" style={{ color: theme.text }}>
+          <Text className="text-xl font-bold mb-3 px-1" style={{ color: theme.text }}>
             upcoming runs
           </Text>
         }

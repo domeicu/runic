@@ -1,17 +1,45 @@
 import { openDatabaseSync } from 'expo-sqlite';
 import { drizzle } from 'drizzle-orm/expo-sqlite';
 import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
-import migrations from '@/drizzle/migrations'; // Auto-generated alias
+import migrations from '@/drizzle/migrations';
 import * as schema from './schema';
+import { InferInsertModel } from 'drizzle-orm';
 
-// 1. Open the file on the device
 const expoDb = openDatabaseSync('runic.db');
 
-// 2. Export the Typed DB
 export const db = drizzle(expoDb, { schema });
 
-// 3. Helper Hook for your Root Layout
 export const useDatabaseInit = () => {
   const { success, error } = useMigrations(db, migrations);
   return { isLoaded: success, error };
+};
+
+export type NewWorkout = InferInsertModel<typeof schema.workouts>;
+
+export const addWorkout = async (workoutData: Omit<NewWorkout, 'id'>) => {
+  try {
+    console.log('Adding workout to DB:', workoutData.title);
+
+    const result = await db
+      .insert(schema.workouts)
+      .values({
+        title: workoutData.title,
+        date: workoutData.date,
+        distanceKm: workoutData.distanceKm,
+        type: workoutData.type,
+        description: workoutData.description || null,
+
+        isCompleted: workoutData.isCompleted ?? false,
+
+        stravaActivityId: workoutData.stravaActivityId || null,
+        externalId: workoutData.externalId || null,
+      })
+      .returning();
+
+    console.log('Success. New ID:', result[0]?.id);
+    return result[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw error;
+  }
 };

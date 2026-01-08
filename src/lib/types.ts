@@ -1,4 +1,5 @@
-export type RunType = 'Easy' | 'Tempo' | 'Intervals' | 'Aerobic' | 'Recovery' | 'Race' | 'Long';
+export const RUN_TYPES = ['Easy', 'Aerobic', 'Tempo', 'Long', 'Recovery', 'Intervals', 'Race'];
+export type RunType = (typeof RUN_TYPES)[number];
 
 export interface Workout {
   id: string;

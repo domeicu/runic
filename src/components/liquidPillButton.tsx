@@ -121,16 +121,16 @@ const ExpandingActionPill = ({ theme, leftAction, rightAction }: ExpandingAction
         >
           <TouchableOpacity
             onPress={() => handlePress(leftAction.onPress)}
-            className="flex-1 h-full items-center justify-center active:bg-black/5 dark:active:bg-white/10"
+            className="flex-1 h-full items-center justify-center"
           >
             {leftAction.icon}
           </TouchableOpacity>
 
-          <View className="h-4 w-[1px] bg-zinc-400/20 dark:bg-zinc-600/40" />
+          <View className="h-4 w-[1px]" style={{ backgroundColor: theme.border }} />
 
           <TouchableOpacity
             onPress={() => handlePress(rightAction.onPress)}
-            className="flex-1 h-full items-center justify-center active:bg-black/5 dark:active:bg-white/10"
+            className="flex-1 h-full items-center justify-center"
           >
             {rightAction.icon}
           </TouchableOpacity>
