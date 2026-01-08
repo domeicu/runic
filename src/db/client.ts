@@ -15,3 +15,7 @@ export const useDatabaseInit = () => {
   const { success, error } = useMigrations(db, migrations);
   return { isLoaded: success, error };
 };
+
+export const addWorkout = () => {
+  console.log('add workout');
+};
