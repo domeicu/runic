@@ -14,6 +14,7 @@ export const Colours = {
     border: '#E4E4E7', // Zinc 200
     accent: '#b5d600', // Weighted Neon Lime
     glass: 'rgba(255, 255, 255, 0.7)',
+    shadow: '#A1A1AA',
   },
   dark: {
     background: '#000000', // True Black
@@ -23,5 +24,6 @@ export const Colours = {
     border: 'rgba(255, 255, 255, 0.1)',
     accent: '#deff63', // Cyber Neon Lime
     glass: 'rgba(28, 28, 30, 0.8)',
+    shadow: '#000',
   },
 };

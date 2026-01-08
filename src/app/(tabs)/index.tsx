@@ -3,7 +3,7 @@ import { router } from 'expo-router';
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColorScheme } from 'nativewind';
-import { Bell, Plus } from 'lucide-react-native';
+import { Bell, Pencil, FileUp } from 'lucide-react-native';
 import { Colours } from '@/constants/theme';
 import { asc, gte } from 'drizzle-orm';
 import { db } from '@/src/db/client';
@@ -12,6 +12,7 @@ import { useFocusQuery } from '@/src/lib/useFocusQuery';
 import { Workout } from '@/src/lib/types';
 import ScreenHeader from '@/src/components/screenHeader';
 import LiquidButton from '@/src/components/liquidButton';
+import LiquidPillButton from '@/src/components/liquidPillButton';
 import WorkoutCard from '@/src/components/workoutCard';
 
 const Index = () => {
@@ -38,10 +39,21 @@ const Index = () => {
           />
         }
         button2={
-          <LiquidButton
-            icon={<Plus size={22} color={theme.text} strokeWidth={1.5} />}
-            onPress={() => console.log('add activity')}
+          <LiquidPillButton
+            theme={theme}
+            leftAction={{
+              icon: <Pencil size={18} color={theme.text} />,
+              onPress: () => router.push('/workout/add'),
+            }}
+            rightAction={{
+              icon: <FileUp size={18} color={theme.text} />,
+              onPress: () => router.push('/workout/import'),
+            }}
           />
+          // <LiquidButton
+          //   icon={<Plus size={22} color={theme.text} strokeWidth={1.5} />}
+          //   onPress={() => router.push('/workout/add')}
+          // />
         }
       />
       <View className="px-4">

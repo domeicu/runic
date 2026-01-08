@@ -21,6 +21,14 @@ const RootLayout = () => {
         }}
       >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="workout/add"
+          options={{ presentation: 'modal', title: 'add workout' }}
+        />
+        <Stack.Screen
+          name="workout/import"
+          options={{ presentation: 'modal', title: 'import workout' }}
+        />
         <Stack.Screen name="notifications" />
         <Stack.Screen name="settings" />
       </Stack>
