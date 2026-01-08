@@ -30,8 +30,12 @@ const DashboardWidget = ({
         children
       ) : (
         <View
-          className="items-center py-6 bg-zinc-100/50 dark:bg-zinc-900/50 border border-dashed border-zinc-200 dark:border-zinc-800"
-          style={{ borderRadius: Layout.borderRadius.card }}
+          className="items-center py-6 border border-dashed"
+          style={{
+            backgroundColor: theme.glass,
+            borderColor: theme.border,
+            borderRadius: Layout.borderRadius.card,
+          }}
         >
           <Text className="text-sm font-medium opacity-60" style={{ color: theme.text }}>
             {emptyMessage.toLowerCase()}
