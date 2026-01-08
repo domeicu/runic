@@ -6,7 +6,7 @@ import { Colours } from '@/constants/theme';
 
 const Notifications = () => {
   const { colorScheme } = useColorScheme();
-  const theme = Colours[colorScheme ?? 'dark'];
+  const theme = Colours[colorScheme ?? 'light'];
 
   const NotificationItem = ({ title, description }: any) => (
     <TouchableOpacity

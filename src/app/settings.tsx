@@ -6,7 +6,7 @@ import { Layout, Colours } from '@/constants/theme';
 
 const Settings = () => {
   const { colorScheme } = useColorScheme();
-  const theme = Colours[colorScheme ?? 'dark'];
+  const theme = Colours[colorScheme ?? 'light'];
 
   const SettingItem = ({ icon: Icon, label, value }: any) => (
     <TouchableOpacity

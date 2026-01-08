@@ -21,8 +21,7 @@ import ChipSelector from '@/src/components/chipSelector';
 
 export default function AddWorkout() {
   const { colorScheme } = useColorScheme();
-  const isDark = colorScheme === 'dark';
-  const theme = Colours[isDark ? 'dark' : 'light'];
+  const theme = Colours[colorScheme ?? 'light'];
 
   const [form, setForm] = useState({
     distance: '',
@@ -66,9 +65,12 @@ export default function AddWorkout() {
   };
 
   return (
-    <View className="flex-1 bg-white dark:bg-black">
+    <View className="flex-1" style={{ backgroundColor: theme.background }}>
       {/* Header */}
-      <View className="flex-row items-center p-4 pt-8 border-b border-zinc-100 dark:border-zinc-800">
+      <View
+        className="flex-row items-center p-4 pt-8 border-b"
+        style={{ borderColor: theme.border }}
+      >
         <TouchableOpacity onPress={() => router.back()} className="p-2 mr-2">
           <ArrowLeft size={24} color={theme.text} />
         </TouchableOpacity>
@@ -126,7 +128,7 @@ export default function AddWorkout() {
       </KeyboardAvoidingView>
 
       {/* Footer / Submit Button */}
-      <View className="p-4 border-t border-zinc-100 dark:border-zinc-800 pb-8">
+      <View className="p-4 border-t pb-8" style={{ borderColor: theme.border }}>
         <TouchableOpacity
           onPress={handleSave}
           disabled={isSubmitting}

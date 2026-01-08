@@ -11,8 +11,7 @@ import DataManagement from '@/src/components/dataManagement';
 
 const Profile = () => {
   const { colorScheme } = useColorScheme();
-  const isDark = colorScheme === 'dark';
-  const theme = Colours[isDark ? 'dark' : 'light'];
+  const theme = Colours[colorScheme ?? 'light'];
 
   return (
     <SafeAreaView className="flex-1" style={{ backgroundColor: theme.background }}>
@@ -40,7 +39,7 @@ const Profile = () => {
           <View
             className="h-24 w-24 rounded-full items-center justify-center mb-4 border-4 shadow-sm"
             style={{
-              backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : theme.border,
+              backgroundColor: theme.border,
               borderColor: theme.background,
             }}
           >
@@ -70,7 +69,7 @@ const Profile = () => {
           style={{
             borderColor: theme.border,
             borderRadius: Layout.borderRadius.card,
-            backgroundColor: isDark ? 'rgba(255,255,255,0.02)' : '#F4F4F5',
+            backgroundColor: theme.surface,
           }}
         >
           <Text style={{ color: theme.textSecondary }}>Sync Strava to view stats</Text>

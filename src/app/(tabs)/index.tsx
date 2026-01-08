@@ -18,8 +18,7 @@ import WorkoutCard from '@/src/components/workoutCard';
 
 const Index = () => {
   const { colorScheme } = useColorScheme();
-  const isDark = colorScheme === 'dark';
-  const theme = Colours[isDark ? 'dark' : 'light'];
+  const theme = Colours[colorScheme ?? 'light'];
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);

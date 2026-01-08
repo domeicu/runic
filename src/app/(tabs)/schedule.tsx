@@ -16,8 +16,7 @@ import WorkoutCard from '@/src/components/workoutCard';
 
 const Schedule = () => {
   const { colorScheme } = useColorScheme();
-  const isDark = colorScheme === 'dark';
-  const theme = Colours[isDark ? 'dark' : 'light'];
+  const theme = Colours[colorScheme ?? 'light'];
 
   let { data } = useFocusQuery<Workout[]>(db.select().from(workouts).orderBy(asc(workouts.date)));
 
