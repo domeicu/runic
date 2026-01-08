@@ -1,0 +1,51 @@
+import { Layout } from '@/constants/theme';
+import React from 'react';
+import { TouchableOpacity, Text, ActivityIndicator } from 'react-native';
+
+interface ActionButtonProps {
+  label: string;
+  theme: any;
+  onPress: () => void;
+  loading?: boolean;
+  disabled?: boolean;
+  icon?: React.ReactNode;
+}
+
+const ActionButton = ({
+  label,
+  theme,
+  onPress,
+  loading = false,
+  disabled = false,
+  icon,
+}: ActionButtonProps) => {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      disabled={disabled || loading}
+      activeOpacity={0.8}
+      className={'w-full py-4 flex-row items-center justify-center gap-2'}
+      style={
+        disabled
+          ? { borderRadius: Layout.borderRadius.card, backgroundColor: theme.surface }
+          : { borderRadius: Layout.borderRadius.card, backgroundColor: theme.accent }
+      }
+    >
+      {loading ? (
+        <ActivityIndicator color={theme.text} />
+      ) : (
+        <>
+          {icon}
+          <Text
+            className={'font-bold text-lg'}
+            style={disabled ? { color: theme.textSecondary } : { color: theme.glass }}
+          >
+            {label}
+          </Text>
+        </>
+      )}
+    </TouchableOpacity>
+  );
+};
+
+export default ActionButton;
