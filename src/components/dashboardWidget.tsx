@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Layout } from '@/src/constants/theme';
+import EmptyState from './emptyState';
 
 interface DashboardWidgetProps {
   theme: any;
@@ -32,21 +32,7 @@ const DashboardWidget = ({
       {children ? (
         children
       ) : (
-        <View
-          className="items-center border border-dashed py-6"
-          style={{
-            backgroundColor: theme.glass,
-            borderColor: theme.border,
-            borderRadius: Layout.borderRadius.card,
-          }}
-        >
-          <Text
-            className="text-sm font-medium opacity-60"
-            style={{ color: theme.text }}
-          >
-            {emptyMessage.toLowerCase()}
-          </Text>
-        </View>
+        <EmptyState theme={theme} message={emptyMessage} />
       )}
     </View>
   );

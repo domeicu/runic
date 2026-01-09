@@ -13,6 +13,7 @@ import { Colours } from '@/src/constants/theme';
 import ScreenHeader from '@/src/components/screenHeader';
 import LiquidButton from '@/src/components/liquidButton';
 import WorkoutCard from '@/src/components/workoutCard';
+import EmptyState from '@/src/components/emptyState';
 
 const Schedule = () => {
   const { colorScheme } = useColorScheme();
@@ -66,14 +67,7 @@ const Schedule = () => {
           </Text>
         }
         ListEmptyComponent={
-          <View className="items-center">
-            <Text
-              className="mt-5 text-sm"
-              style={{ color: theme.textSecondary }}
-            >
-              no runs found!
-            </Text>
-          </View>
+          <EmptyState theme={theme} message="no runs found!" />
         }
       />
     </SafeAreaView>
