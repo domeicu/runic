@@ -27,7 +27,7 @@ const ModalHeader = ({
   };
 
   return (
-    <View className="border-b p-4 pt-8" style={{ borderColor: theme.border }}>
+    <View className="border-b p-4 pt-6" style={{ borderColor: theme.border }}>
       <View className="flex-row items-center">
         {showBackButton && (
           <TouchableOpacity onPress={handlePress} className="mr-2 p-2">
