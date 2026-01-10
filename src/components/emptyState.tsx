@@ -6,9 +6,10 @@ interface EmptyStateProps {
   theme: any;
   message: string;
   icon?: React.ReactNode;
+  action?: React.ReactNode;
 }
 
-const EmptyState = ({ theme, message, icon }: EmptyStateProps) => {
+const EmptyState = ({ theme, message, icon, action }: EmptyStateProps) => {
   return (
     <View
       className="items-center justify-center border border-dashed px-4 py-8"
@@ -27,6 +28,7 @@ const EmptyState = ({ theme, message, icon }: EmptyStateProps) => {
       >
         {message}
       </Text>
+      {action && <View>{action}</View>}
     </View>
   );
 };
