@@ -19,7 +19,7 @@ const DashboardWidget = ({
 }: DashboardWidgetProps) => {
   return (
     <View className="mb-6 px-5">
-      <View className="mb-3 flex-row items-end justify-between px-1">
+      <View className="mb-2 flex-row items-end justify-between px-1">
         <Text
           className="text-xl font-bold tracking-tight"
           style={{ color: theme.text }}

@@ -1,8 +1,7 @@
 import React from 'react';
 import { router } from 'expo-router';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { SectionList, View, Text, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { FlashList } from '@shopify/flash-list';
 import { useColorScheme } from 'nativewind';
 import { Menu, Pencil, FileUp } from 'lucide-react-native';
 import { asc } from 'drizzle-orm';
@@ -10,6 +9,7 @@ import { db } from '@/src/db/client';
 import { workouts } from '@/src/db/schema';
 import { useFocusQuery } from '@/src/lib/useFocusQuery';
 import { Workout } from '@/src/lib/types';
+import { groupWorkouts } from '@/src/lib/groupWorkouts';
 import { Colours } from '@/src/constants/theme';
 import ScreenHeader from '@/src/components/screenHeader';
 import LiquidButton from '@/src/components/liquidButton';
@@ -24,6 +24,8 @@ const Schedule = () => {
   let { data } = useFocusQuery<Workout[]>(
     db.select().from(workouts).orderBy(asc(workouts.date))
   );
+
+  const sections = React.useMemo(() => groupWorkouts(data || []), [data]);
 
   return (
     <SafeAreaView
@@ -54,31 +56,37 @@ const Schedule = () => {
           />
         }
       />
-      <FlashList
-        className="w-full flex-1 px-5"
-        data={data || []}
-        showsVerticalScrollIndicator={false}
+      <SectionList
+        className="px-5"
+        sections={sections}
+        keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={{ minHeight: '100%', paddingBottom: 100 }}
-        ItemSeparatorComponent={() => <View className="h-2" />}
+        showsVerticalScrollIndicator={false}
+        stickySectionHeadersEnabled={false}
+        renderSectionHeader={({ section }) => {
+          const isFirst = sections.indexOf(section) === 0;
+          return (
+            <Text
+              className={`mb-2 px-1 text-xl font-bold ${!isFirst && 'mt-6'}`}
+              style={{ color: theme.text }}
+            >
+              {section.title}
+            </Text>
+          );
+        }}
         renderItem={({ item }) => (
-          <WorkoutCard
-            theme={theme}
-            title={item.title}
-            description={item.description ? item.description : ''}
-            date={new Date(item.date).toISOString()}
-            distance={`${item.distanceKm} km`}
-            type={item.type}
-            onPress={() => router.push(`/workout/${item.id}`)}
-          />
+          <View className="mb-2">
+            <WorkoutCard
+              theme={theme}
+              title={item.title}
+              description={item.description || ''}
+              date={item.date}
+              distance={`${item.distanceKm} km`}
+              type={item.type}
+              onPress={() => router.push(`/workout/${item.id}`)}
+            />
+          </View>
         )}
-        ListHeaderComponent={
-          <Text
-            className="mb-3 px-1 text-xl font-bold"
-            style={{ color: theme.text }}
-          >
-            upcoming runs
-          </Text>
-        }
         ListEmptyComponent={
           <EmptyState
             theme={theme}
