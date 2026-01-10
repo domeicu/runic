@@ -1,6 +1,6 @@
 import React from 'react';
 import { router } from 'expo-router';
-import { ScrollView } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColorScheme } from 'nativewind';
 import { Bell, Pencil, FileUp } from 'lucide-react-native';
@@ -71,6 +71,17 @@ const Index = () => {
           theme={theme}
           title="next run"
           emptyMessage="no runs found!"
+          emptyAction={
+            <View className="flex-row gap-2">
+              <TouchableOpacity onPress={() => router.push('/workout/add')}>
+                <Text style={{ color: theme.accent }}>add</Text>
+              </TouchableOpacity>
+              <Text style={{ color: theme.textSecondary }}>/</Text>
+              <TouchableOpacity onPress={() => router.push('/workout/import')}>
+                <Text style={{ color: theme.accent }}>import</Text>
+              </TouchableOpacity>
+            </View>
+          }
         >
           {nextRun && (
             <WorkoutCard
@@ -80,9 +91,7 @@ const Index = () => {
               date={new Date(nextRun.date).toISOString()}
               distance={`${nextRun.distanceKm} km`}
               type={nextRun.type}
-              onPress={() =>
-                console.log('Open Workou:', nextRun.id, 'of type', nextRun.type)
-              }
+              onPress={() => router.push(`/workout/${nextRun.id}`)}
             />
           )}
         </DashboardWidget>

@@ -7,7 +7,7 @@ interface DashboardWidgetProps {
   title: string;
   children: React.ReactNode;
   emptyMessage?: string;
-  action?: React.ReactNode;
+  emptyAction?: React.ReactNode;
 }
 
 const DashboardWidget = ({
@@ -15,7 +15,7 @@ const DashboardWidget = ({
   title,
   children,
   emptyMessage = 'nothing to display!',
-  action,
+  emptyAction,
 }: DashboardWidgetProps) => {
   return (
     <View className="mb-6 px-5">
@@ -26,13 +26,12 @@ const DashboardWidget = ({
         >
           {title.toLowerCase()}
         </Text>
-        {action && <View className="mb-1">{action}</View>}
       </View>
 
       {children ? (
         children
       ) : (
-        <EmptyState theme={theme} message={emptyMessage} />
+        <EmptyState theme={theme} message={emptyMessage} action={emptyAction} />
       )}
     </View>
   );
