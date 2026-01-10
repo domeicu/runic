@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useLocalSearchParams, Stack, router } from 'expo-router';
 import { View, Text, Alert } from 'react-native';
 import { useColorScheme } from 'nativewind';
+import { CheckSquare, Square } from 'lucide-react-native';
 import { eq } from 'drizzle-orm';
 import { workouts } from '@/src/db/schema';
 import { db } from '@/src/db/client';
 import { Colours, Layout } from '@/src/constants/theme';
 import ActionButton from '@/src/components/actionButton';
-import { Square } from 'lucide-react-native';
 
 export default function WorkoutDetail() {
   const { colorScheme } = useColorScheme();
@@ -172,7 +172,13 @@ export default function WorkoutDetail() {
               theme={theme}
               label="mark complete"
               toggledOff={!workout.isCompleted}
-              icon={<Square color={theme.text} />}
+              renderIcon={(colour) =>
+                workout.isCompleted ? (
+                  <CheckSquare color={colour} />
+                ) : (
+                  <Square color={colour} />
+                )
+              }
               onPress={() => handleComplete()}
             />
           </View>
