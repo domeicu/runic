@@ -10,7 +10,7 @@ interface ActionButtonProps {
   loading?: boolean;
   disabled?: boolean;
   toggledOff?: boolean;
-  icon?: React.ReactNode;
+  renderIcon?: (colour: string) => React.ReactNode;
 }
 
 const ActionButton = ({
@@ -21,7 +21,7 @@ const ActionButton = ({
   loading = false,
   disabled = false,
   toggledOff = false,
-  icon,
+  renderIcon,
 }: ActionButtonProps) => {
   return (
     <TouchableOpacity
@@ -47,7 +47,10 @@ const ActionButton = ({
         <ActivityIndicator color={theme.text} />
       ) : (
         <>
-          {icon}
+          {renderIcon &&
+            (disabled || toggledOff
+              ? renderIcon(theme.textSecondary)
+              : renderIcon(colour))}
           <Text
             className={'text-lg font-bold'}
             style={
