@@ -59,7 +59,7 @@ export default function ImportWorkout() {
           /* NO FILE SELECTED */
           <TouchableOpacity
             onPress={pickFile}
-            className="flex-1 items-center justify-center border-2 border-dashed"
+            className="flex-1 items-center justify-center border border-dashed"
             style={{
               backgroundColor: theme.glass,
               borderRadius: Layout.borderRadius.card,

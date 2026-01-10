@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useLocalSearchParams, Stack } from 'expo-router';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { useLocalSearchParams, Stack, router } from 'expo-router';
+import { View, Text, Alert } from 'react-native';
 import { useColorScheme } from 'nativewind';
 import { eq } from 'drizzle-orm';
 import { workouts } from '@/src/db/schema';
@@ -14,7 +14,6 @@ export default function WorkoutDetail() {
 
   const { id } = useLocalSearchParams();
   const [workout, setWorkout] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!id) return;
@@ -27,14 +26,58 @@ export default function WorkoutDetail() {
       const result = await db.query.workouts.findFirst({
         where: eq(workouts.id, Number(id)),
       });
-      if (result) {
-        setWorkout(result);
-      }
+      setWorkout(result);
     } catch (e) {
       console.error('Failed to fetch workout:', e);
-    } finally {
-      setLoading(false);
     }
+  };
+
+  const handleComplete = async () => {
+    if (!workout) return;
+    const newStatus = !workout.isCompleted;
+    try {
+      await db
+        .update(workouts)
+        .set({ isCompleted: newStatus })
+        .where(eq(workouts.id, Number(id)));
+      setWorkout({ ...workout, isCompleted: newStatus });
+    } catch (error) {
+      console.error('Error updating status:', error);
+    }
+  };
+
+  const handleDelete = () => {
+    Alert.alert(
+      'Delete Workout',
+      'Are you sure you want to delete this workout? This cannot be undone.',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await db.delete(workouts).where(eq(workouts.id, Number(id)));
+
+              if (router.canGoBack()) {
+                router.back();
+              } else {
+                router.replace('/');
+              }
+            } catch (error) {
+              console.error('Error deleting workout:', error);
+              Alert.alert(
+                'Error',
+                'Could not delete the workout. Please try again.'
+              );
+            }
+          },
+        },
+      ]
+    );
   };
 
   const InfoItem = ({ className, topText, bottomText }: any) => (
@@ -48,16 +91,6 @@ export default function WorkoutDetail() {
     </View>
   );
 
-  if (loading) {
-    return (
-      <View
-        className="flex-1 items-center justify-center"
-        style={{ backgroundColor: theme.background }}
-      >
-        <ActivityIndicator size="large" color={theme.text} />
-      </View>
-    );
-  }
   if (!workout) {
     return (
       <View
@@ -69,6 +102,7 @@ export default function WorkoutDetail() {
       </View>
     );
   }
+
   return (
     <View className="flex-1 p-5" style={{ backgroundColor: theme.background }}>
       <Stack.Screen
@@ -118,19 +152,21 @@ export default function WorkoutDetail() {
       </View>
 
       <View className="pb-7">
-        <View className="flex-row gap-4">
+        <View className="flex-row gap-3">
           <View className="flex-1">
             <ActionButton
               theme={theme}
               label="mark complete"
-              onPress={() => console.log('complete')}
+              toggledOff={!workout.isCompleted}
+              onPress={() => handleComplete()}
             />
           </View>
           <View className="flex-1">
             <ActionButton
               theme={theme}
               label="delete activity"
-              onPress={() => console.log('delete')}
+              colour={theme.red}
+              onPress={() => handleDelete()}
             />
           </View>
         </View>
