@@ -44,6 +44,7 @@ export default function AddWorkout() {
         distanceKm: parseFloat(form.distance),
         type: form.type as RunType,
         date: form.date,
+        dateCreated: new Date().toISOString(),
         description: form.description,
         externalId: null,
       });

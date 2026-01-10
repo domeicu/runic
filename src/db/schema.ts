@@ -4,6 +4,7 @@ export const workouts = sqliteTable('workouts', {
   id: integer('id').primaryKey({ autoIncrement: true }),
 
   date: text('date').notNull(), // Store as ISO string
+  dateCreated: text('date_created').notNull(),
   distanceKm: real('distance_km').notNull(), // Map camelCase JS to snake_case DB
   title: text('title').notNull(),
   description: text('description'), // Can be null

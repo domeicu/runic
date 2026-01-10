@@ -8,7 +8,7 @@ import { parseIcsPlan } from '../features/plans/icsParser';
 import { parseCsvPlan } from '../features/plans/csvParser';
 import { Workout } from '../lib/types';
 
-const expoDb = openDatabaseSync('runic.db');
+const expoDb = openDatabaseSync('runic_v2.db');
 
 export const db = drizzle(expoDb, { schema });
 
@@ -25,6 +25,7 @@ export const addWorkout = async (workoutData: Omit<NewWorkout, 'id'>) => {
     .values({
       title: workoutData.title,
       date: workoutData.date,
+      dateCreated: workoutData.dateCreated,
       distanceKm: workoutData.distanceKm,
       type: workoutData.type,
       description: workoutData.description || null,
@@ -45,6 +46,7 @@ const processImport = async (
   const parsedResult = parserStrategy(rawData);
   const formattedWorkouts = parsedResult.workouts.map((e) => ({
     date: e.date.toISOString(),
+    dateCreated: new Date().toISOString(),
     title: e.title,
     description: e.description || '',
     distanceKm: e.distanceKm,

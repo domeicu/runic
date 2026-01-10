@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "25cc8b89-acba-42a8-9d13-5a9e1d0e5830",
+  "id": "035351bf-b744-416d-a9ab-f30c8fbf593d",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "workouts": {
@@ -16,6 +16,13 @@
         },
         "date": {
           "name": "date",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "date_created": {
+          "name": "date_created",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -72,15 +79,7 @@
           "autoincrement": false
         }
       },
-      "indexes": {
-        "workouts_external_id_unique": {
-          "name": "workouts_external_id_unique",
-          "columns": [
-            "external_id"
-          ],
-          "isUnique": true
-        }
-      },
+      "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},

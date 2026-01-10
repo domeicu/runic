@@ -13,7 +13,9 @@ const parseIcsDate = (icsDate: string): Date => {
 export const parseIcsPlan = (fileContent: string): TrainingPlan => {
   const workouts: Workout[] = [];
 
-  const lines = fileContent.split(/\r\n|\n|\r/);
+  const lines = fileContent
+    .replace(/\r\n[ \t]/g, '') // unfold
+    .split(/\r\n|\n|\r/);
 
   let inEvent = false;
   let currentDtStart = '';
@@ -42,7 +44,7 @@ export const parseIcsPlan = (fileContent: string): TrainingPlan => {
           continue;
         }
 
-        const textToAnalyze = currentDesc;
+        const textToAnalyze = currentDesc; // unfold
 
         const distanceKm = parseDistance(textToAnalyze);
         const type = mapRunType(textToAnalyze);
@@ -53,8 +55,13 @@ export const parseIcsPlan = (fileContent: string): TrainingPlan => {
         workouts.push({
           id: Crypto.randomUUID(),
           date: parseIcsDate(currentDtStart),
+          dateCreated: new Date(),
           title: formattedTitle,
-          description: currentDesc.trim(),
+          description: currentDesc
+            .trim()
+            .replace(/\\n/gi, '\n')
+            .replace(/\\,/g, ',')
+            .replace(/\\;/g, ';'),
           distanceKm: distanceKm,
           type: type,
           isCompleted: false,

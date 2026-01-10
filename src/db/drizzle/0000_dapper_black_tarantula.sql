@@ -1,6 +1,7 @@
 CREATE TABLE `workouts` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`date` text NOT NULL,
+	`date_created` text NOT NULL,
 	`distance_km` real NOT NULL,
 	`title` text NOT NULL,
 	`description` text,
@@ -9,5 +10,3 @@ CREATE TABLE `workouts` (
 	`strava_activity_id` text,
 	`external_id` text
 );
---> statement-breakpoint
-CREATE UNIQUE INDEX `workouts_external_id_unique` ON `workouts` (`external_id`);
