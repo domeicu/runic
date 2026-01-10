@@ -67,7 +67,7 @@ const Schedule = () => {
           const isFirst = sections.indexOf(section) === 0;
           return (
             <Text
-              className={`mb-2 px-1 text-xl font-bold ${!isFirst && 'mt-6'}`}
+              className={`mb-2 px-1 text-xl font-bold ${!isFirst && 'mt-2'}`}
               style={{ color: theme.text }}
             >
               {section.title}
