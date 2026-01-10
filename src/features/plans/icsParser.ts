@@ -55,6 +55,7 @@ export const parseIcsPlan = (fileContent: string): TrainingPlan => {
         workouts.push({
           id: Crypto.randomUUID(),
           date: parseIcsDate(currentDtStart),
+          dateCreated: new Date(),
           title: formattedTitle,
           description: currentDesc
             .trim()

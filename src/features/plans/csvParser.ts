@@ -50,6 +50,7 @@ export const parseCsvPlan = (fileContent: string): TrainingPlan => {
       workouts.push({
         id: Crypto.randomUUID(),
         date: new Date(dateStr),
+        dateCreated: new Date(),
         distanceKm: distance,
         title: distance + 'km ' + runType + ' Run',
         description: fullDescription,

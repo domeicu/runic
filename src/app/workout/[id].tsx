@@ -7,6 +7,7 @@ import { workouts } from '@/src/db/schema';
 import { db } from '@/src/db/client';
 import { Colours, Layout } from '@/src/constants/theme';
 import ActionButton from '@/src/components/actionButton';
+import { Square } from 'lucide-react-native';
 
 export default function WorkoutDetail() {
   const { colorScheme } = useColorScheme();
@@ -137,6 +138,19 @@ export default function WorkoutDetail() {
             bottomText={workout.type}
           />
         </View>
+        <View className="mb-4 flex-row pl-1">
+          <InfoItem
+            className="flex-1"
+            topText="date created"
+            bottomText={new Date(workout.dateCreated).toLocaleDateString()}
+          />
+          <InfoItem
+            className="flex-1"
+            topText="complete"
+            bottomText={workout.isCompleted ? 'true' : 'false'}
+          />
+          <InfoItem className="flex-1" />
+        </View>
 
         <View
           className="mb-4 border p-4"
@@ -158,6 +172,7 @@ export default function WorkoutDetail() {
               theme={theme}
               label="mark complete"
               toggledOff={!workout.isCompleted}
+              icon={<Square color={theme.text} />}
               onPress={() => handleComplete()}
             />
           </View>
