@@ -6,8 +6,10 @@ interface ActionButtonProps {
   theme: any;
   label: string;
   onPress: () => void;
+  colour?: string;
   loading?: boolean;
   disabled?: boolean;
+  toggledOff?: boolean;
   icon?: React.ReactNode;
 }
 
@@ -15,8 +17,10 @@ const ActionButton = ({
   theme,
   label,
   onPress,
+  colour = theme.accent,
   loading = false,
   disabled = false,
+  toggledOff = false,
   icon,
 }: ActionButtonProps) => {
   return (
@@ -24,16 +28,18 @@ const ActionButton = ({
       onPress={onPress}
       disabled={disabled || loading}
       activeOpacity={0.8}
-      className={'w-full flex-row items-center justify-center gap-2 py-4'}
+      className={
+        'w-full flex-row items-center justify-center gap-2 border py-4'
+      }
       style={
-        disabled
+        disabled || toggledOff
           ? {
               borderRadius: Layout.borderRadius.card,
-              backgroundColor: theme.surface,
+              borderColor: theme.border,
             }
           : {
               borderRadius: Layout.borderRadius.card,
-              backgroundColor: theme.accent,
+              borderColor: colour,
             }
       }
     >
@@ -45,7 +51,9 @@ const ActionButton = ({
           <Text
             className={'text-lg font-bold'}
             style={
-              disabled ? { color: theme.textSecondary } : { color: theme.glass }
+              disabled || toggledOff
+                ? { color: theme.textSecondary }
+                : { color: colour }
             }
           >
             {label}
