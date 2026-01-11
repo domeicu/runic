@@ -125,7 +125,11 @@ export default function WorkoutDetail() {
           <InfoItem
             className="flex-1"
             topText="date"
-            bottomText={new Date(workout.date).toLocaleDateString()}
+            bottomText={new Date(workout.date).toLocaleDateString('en-GB', {
+              day: 'numeric',
+              month: 'short',
+              year: 'numeric',
+            })}
           />
           <InfoItem
             className="flex-1"
@@ -142,7 +146,14 @@ export default function WorkoutDetail() {
           <InfoItem
             className="flex-1"
             topText="date created"
-            bottomText={new Date(workout.dateCreated).toLocaleDateString()}
+            bottomText={new Date(workout.dateCreated).toLocaleDateString(
+              'en-GB',
+              {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+              }
+            )}
           />
           <InfoItem
             className="flex-1"
