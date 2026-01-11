@@ -92,6 +92,26 @@ export default function WorkoutDetail() {
     </View>
   );
 
+  const InfoItemLarge = ({ className, topText, bottomText }: any) => (
+    <View className={className}>
+      <Text
+        className="pb-2 pl-1 text-sm"
+        style={{ color: theme.textSecondary }}
+      >
+        {topText}
+      </Text>
+      <View
+        className="border p-4"
+        style={{
+          borderRadius: Layout.borderRadius.card,
+          borderColor: theme.border,
+        }}
+      >
+        <Text style={{ color: theme.textSecondary }}>{bottomText}</Text>
+      </View>
+    </View>
+  );
+
   if (!workout) {
     return (
       <View
@@ -163,17 +183,17 @@ export default function WorkoutDetail() {
           <InfoItem className="flex-1" />
         </View>
 
-        <View
-          className="mb-4 border p-4"
-          style={{
-            borderRadius: Layout.borderRadius.card,
-            borderColor: theme.border,
-          }}
-        >
-          <Text style={{ color: theme.textSecondary }}>
-            {workout.description ?? 'no description'}
-          </Text>
-        </View>
+        <InfoItemLarge
+          className="mb-4 px-0.5"
+          topText="description"
+          bottomText={workout.description ?? 'no description'}
+        />
+
+        <InfoItemLarge
+          className="px-0.5"
+          topText="private notes"
+          bottomText={workout.notes ?? 'no private notes'}
+        />
       </View>
 
       <View className="pb-7">

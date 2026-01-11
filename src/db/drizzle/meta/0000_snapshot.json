@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "035351bf-b744-416d-a9ab-f30c8fbf593d",
+  "id": "0bdeeaec-7c96-441e-b394-b1d7472c088e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "workouts": {
@@ -44,6 +44,13 @@
         },
         "description": {
           "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "notes": {
+          "name": "notes",
           "type": "text",
           "primaryKey": false,
           "notNull": false,

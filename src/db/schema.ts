@@ -8,6 +8,7 @@ export const workouts = sqliteTable('workouts', {
   distanceKm: real('distance_km').notNull(), // Map camelCase JS to snake_case DB
   title: text('title').notNull(),
   description: text('description'), // Can be null
+  notes: text('notes'),
   type: text('type').notNull(), // 'Easy', 'Long Run', etc.
   isCompleted: integer('is_completed', { mode: 'boolean' }).default(false),
 

@@ -5,6 +5,7 @@ CREATE TABLE `workouts` (
 	`distance_km` real NOT NULL,
 	`title` text NOT NULL,
 	`description` text,
+	`notes` text,
 	`type` text NOT NULL,
 	`is_completed` integer DEFAULT false,
 	`strava_activity_id` text,

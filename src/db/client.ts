@@ -8,7 +8,7 @@ import { parseIcsPlan } from '../features/plans/icsParser';
 import { parseCsvPlan } from '../features/plans/csvParser';
 import { Workout } from '../lib/types';
 
-const expoDb = openDatabaseSync('runic_v2.db');
+const expoDb = openDatabaseSync('runic_v4.db');
 
 export const db = drizzle(expoDb, { schema });
 
