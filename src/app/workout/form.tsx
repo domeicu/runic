@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { router, useLocalSearchParams } from 'expo-router';
-import {
-  View,
-  ScrollView,
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
+import { View, Alert, KeyboardAvoidingView } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useColorScheme } from 'nativewind';
 import { parseISO } from 'date-fns';
 import { Colours } from '@/src/constants/theme';
@@ -38,6 +33,7 @@ export default function WorkoutForm() {
     title: '',
     type: RUN_TYPES[0],
     description: '',
+    notes: '',
   });
 
   useEffect(() => {
@@ -52,6 +48,7 @@ export default function WorkoutForm() {
               title: workout.title,
               type: workout.type as RunType,
               description: workout.description || '',
+              notes: workout.notes || '',
             });
           }
         } catch {
@@ -75,6 +72,7 @@ export default function WorkoutForm() {
         type: form.type as RunType,
         date: form.date,
         description: form.description,
+        notes: form.notes,
       };
 
       if (id) {
@@ -99,11 +97,14 @@ export default function WorkoutForm() {
     <View className="flex-1" style={{ backgroundColor: theme.background }}>
       <ModalHeader theme={theme} title={id ? 'edit workout' : 'plan workout'} />
 
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        className="flex-1"
-      >
-        <ScrollView className="flex-1 p-6">
+      <KeyboardAvoidingView className="flex-1">
+        <KeyboardAwareScrollView
+          className="flex-1 p-6"
+          showsVerticalScrollIndicator={false}
+          viewIsInsideTabBar={true}
+          enableResetScrollToCoords={false}
+          keyboardOpeningTime={0}
+        >
           <View className="flex-row gap-4">
             <View className="flex-1">
               <WorkoutDateInput
@@ -147,7 +148,15 @@ export default function WorkoutForm() {
             onChangeText={(text) => updateField('description', text)}
             multiline={true}
           />
-        </ScrollView>
+
+          <WorkoutTextInput
+            theme={theme}
+            label="private notes"
+            value={form.notes}
+            onChangeText={(text) => updateField('notes', text)}
+            multiline={true}
+          />
+        </KeyboardAwareScrollView>
       </KeyboardAvoidingView>
 
       <View className="p-5 pb-12" style={{ borderColor: theme.border }}>

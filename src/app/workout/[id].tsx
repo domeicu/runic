@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocalSearchParams, Stack, router } from 'expo-router';
+import { useLocalSearchParams, router } from 'expo-router';
 import { View, Text, Alert } from 'react-native';
 import { useColorScheme } from 'nativewind';
 import { CheckSquare, Pencil, Square } from 'lucide-react-native';
