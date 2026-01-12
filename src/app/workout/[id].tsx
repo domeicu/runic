@@ -108,7 +108,6 @@ export default function WorkoutDetail() {
         className="flex-1 items-center justify-center"
         style={{ backgroundColor: theme.background }}
       >
-        <Stack.Screen options={{ title: 'Not Found' }} />
         <Text style={{ color: theme.text }}>Workout not found.</Text>
       </View>
     );
@@ -116,14 +115,6 @@ export default function WorkoutDetail() {
 
   return (
     <View className="flex-1 p-5" style={{ backgroundColor: theme.background }}>
-      <Stack.Screen
-        options={{
-          title: 'workout details',
-          headerStyle: { backgroundColor: theme.background },
-          headerTintColor: theme.text,
-        }}
-      />
-
       <View className="mt-4 flex-1">
         <View className="flex-row justify-between">
           <Text

@@ -64,6 +64,12 @@ const RootLayout = () => {
             presentation: 'modal',
           }}
         />
+        <Stack.Screen
+          name="workout/[id]"
+          options={{
+            title: 'workout details',
+          }}
+        />
         <Stack.Screen name="notifications" />
         <Stack.Screen name="settings" />
       </Stack>
