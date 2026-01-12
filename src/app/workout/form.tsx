@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { router } from 'expo-router';
+import React, { useState, useEffect } from 'react';
+import { router, useLocalSearchParams } from 'expo-router';
 import {
   View,
   ScrollView,
@@ -10,7 +10,7 @@ import {
 import { useColorScheme } from 'nativewind';
 import { parseISO } from 'date-fns';
 import { Colours } from '@/src/constants/theme';
-import { addWorkout } from '@/src/db/client';
+import { addWorkout, getWorkoutById, updateWorkout } from '@/src/db/client';
 import { RUN_TYPES, RunType } from '@/src/lib/types';
 import WorkoutTextInput from '@/src/components/workoutTextInput';
 import WorkoutDateInput from '@/src/components/workoutDateInput';
@@ -18,40 +18,78 @@ import ChipSelector from '@/src/components/chipSelector';
 import ActionButton from '@/src/components/actionButton';
 import ModalHeader from '@/src/components/modalHeader';
 
-export default function AddWorkout() {
+export default function WorkoutForm() {
   const { colorScheme } = useColorScheme();
   const theme = Colours[colorScheme ?? 'light'];
 
+  const params = useLocalSearchParams();
+  const id = params.id ? Number(params.id) : null;
+
+  const placeholders = {
+    distance: '5',
+    title: 'Daily Run',
+  };
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [form, setForm] = useState({
-    distance: '5.0',
+    distance: '',
     date: new Date().toISOString(),
-    title: 'Morning Run',
+    title: '',
     type: RUN_TYPES[0],
     description: '',
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  useEffect(() => {
+    if (id) {
+      const loadData = async () => {
+        try {
+          const workout = await getWorkoutById(id);
+          if (workout) {
+            setForm({
+              distance: workout.distanceKm.toString(),
+              date: workout.date,
+              title: workout.title,
+              type: workout.type as RunType,
+              description: workout.description || '',
+            });
+          }
+        } catch {
+          Alert.alert('Error', 'Could not load workout details');
+          router.back();
+        }
+      };
+      loadData();
+    }
+  }, [id]);
 
   const updateField = (key: string, value: string) => {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
   const handleSave = async () => {
-    setIsSubmitting(true);
     try {
-      await addWorkout({
-        title: form.title,
-        distanceKm: parseFloat(form.distance),
+      const payload = {
+        title: form.title || placeholders.title,
+        distanceKm: parseFloat(form.distance || placeholders.distance),
         type: form.type as RunType,
         date: form.date,
-        dateCreated: new Date().toISOString(),
         description: form.description,
-        externalId: null,
-      });
+      };
+
+      if (id) {
+        await updateWorkout(id, payload);
+      } else {
+        await addWorkout({
+          ...payload,
+          dateCreated: new Date().toISOString(),
+          externalId: null,
+        });
+      }
       router.back();
     } catch (e) {
       console.error(e);
-      Alert.alert('Error', 'Failed to save workout');
+      Alert.alert('Error', `Failed to ${id ? 'update' : 'save'} workout`);
     } finally {
       setIsSubmitting(false);
     }
@@ -59,7 +97,7 @@ export default function AddWorkout() {
 
   return (
     <View className="flex-1" style={{ backgroundColor: theme.background }}>
-      <ModalHeader theme={theme} title="plan workout" />
+      <ModalHeader theme={theme} title={id ? 'edit workout' : 'plan workout'} />
 
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -79,9 +117,10 @@ export default function AddWorkout() {
               <WorkoutTextInput
                 theme={theme}
                 label="distance (km)"
+                value={form.distance}
                 onChangeText={(text) => updateField('distance', text)}
                 keyboardType="decimal-pad"
-                placeholder="5.0"
+                placeholder={placeholders.distance}
               />
             </View>
           </View>
@@ -89,8 +128,9 @@ export default function AddWorkout() {
           <WorkoutTextInput
             theme={theme}
             label="title"
+            value={form.title}
             onChangeText={(text) => updateField('title', text)}
-            placeholder="Morning Run"
+            placeholder={placeholders.title}
           />
 
           <ChipSelector
@@ -103,6 +143,7 @@ export default function AddWorkout() {
           <WorkoutTextInput
             theme={theme}
             label="description"
+            value={form.description}
             onChangeText={(text) => updateField('description', text)}
             multiline={true}
           />
@@ -112,7 +153,7 @@ export default function AddWorkout() {
       <View className="p-5 pb-12" style={{ borderColor: theme.border }}>
         <ActionButton
           theme={theme}
-          label="save workout"
+          label={id ? 'update workout' : 'save workout'}
           onPress={handleSave}
           disabled={isSubmitting}
         />

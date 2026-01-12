@@ -51,11 +51,10 @@ const RootLayout = () => {
       >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen
-          name="workout/add"
+          name="workout/form"
           options={{
             headerShown: false,
             presentation: 'modal',
-            title: 'add workout',
           }}
         />
         <Stack.Screen
@@ -63,7 +62,6 @@ const RootLayout = () => {
           options={{
             headerShown: false,
             presentation: 'modal',
-            title: 'import workout',
           }}
         />
         <Stack.Screen name="notifications" />
