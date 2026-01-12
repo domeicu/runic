@@ -3,7 +3,7 @@ import { drizzle } from 'drizzle-orm/expo-sqlite';
 import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
 import migrations from '@/src/db/drizzle/migrations';
 import * as schema from './schema';
-import { InferInsertModel } from 'drizzle-orm';
+import { eq, InferInsertModel } from 'drizzle-orm';
 import { parseIcsPlan } from '../features/plans/icsParser';
 import { parseCsvPlan } from '../features/plans/csvParser';
 import { Workout } from '../lib/types';
@@ -17,7 +17,25 @@ export const useDatabaseInit = () => {
   return { isLoaded: success, error };
 };
 
-export type NewWorkout = InferInsertModel<typeof schema.workouts>;
+export const getWorkoutById = async (id: number) => {
+  const result = await db
+    .select()
+    .from(schema.workouts)
+    .where(eq(schema.workouts.id, id));
+  return result[0];
+};
+
+export const updateWorkout = async (
+  id: number,
+  data: Partial<typeof schema.workouts.$inferInsert>
+) => {
+  return await db
+    .update(schema.workouts)
+    .set(data)
+    .where(eq(schema.workouts.id, id));
+};
+
+type NewWorkout = InferInsertModel<typeof schema.workouts>;
 
 export const addWorkout = async (workoutData: Omit<NewWorkout, 'id'>) => {
   const result = await db

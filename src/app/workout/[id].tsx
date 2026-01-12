@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useLocalSearchParams, Stack, router } from 'expo-router';
 import { View, Text, Alert } from 'react-native';
 import { useColorScheme } from 'nativewind';
-import { CheckSquare, Square } from 'lucide-react-native';
+import { CheckSquare, Pencil, Square } from 'lucide-react-native';
 import { eq } from 'drizzle-orm';
+import { useFocusQuery } from '@/src/lib/useFocusQuery';
 import { workouts } from '@/src/db/schema';
 import { db } from '@/src/db/client';
+import { Workout } from '@/src/lib/types';
 import { Colours, Layout } from '@/src/constants/theme';
+import LiquidButton from '@/src/components/liquidButton';
 import ActionButton from '@/src/components/actionButton';
 
 export default function WorkoutDetail() {
@@ -14,34 +17,21 @@ export default function WorkoutDetail() {
   const theme = Colours[colorScheme ?? 'light'];
 
   const { id } = useLocalSearchParams();
-  const [workout, setWorkout] = useState<any>(null);
+  const workoutId = Array.isArray(id) ? Number(id[0]) : Number(id);
 
-  useEffect(() => {
-    if (!id) return;
-    const workoutId = Array.isArray(id) ? id[0] : id;
-    fetchWorkout(workoutId);
-  }, [id]);
-
-  const fetchWorkout = async (id: string) => {
-    try {
-      const result = await db.query.workouts.findFirst({
-        where: eq(workouts.id, Number(id)),
-      });
-      setWorkout(result);
-    } catch (e) {
-      console.error('Failed to fetch workout:', e);
-    }
-  };
+  const { data, refetch } = useFocusQuery<Workout[]>(
+    db.select().from(workouts).where(eq(workouts.id, workoutId))
+  );
+  const workout = data?.[0];
 
   const handleComplete = async () => {
     if (!workout) return;
-    const newStatus = !workout.isCompleted;
     try {
       await db
         .update(workouts)
-        .set({ isCompleted: newStatus })
-        .where(eq(workouts.id, Number(id)));
-      setWorkout({ ...workout, isCompleted: newStatus });
+        .set({ isCompleted: !workout.isCompleted })
+        .where(eq(workouts.id, Number(workout.id)));
+      refetch();
     } catch (error) {
       console.error('Error updating status:', error);
     }
@@ -135,12 +125,24 @@ export default function WorkoutDetail() {
       />
 
       <View className="mt-4 flex-1">
-        <Text
-          className="mb-2 pl-1 text-3xl font-bold"
-          style={{ color: theme.text }}
-        >
-          {workout.title}
-        </Text>
+        <View className="flex-row justify-between">
+          <Text
+            className="mb-2 pl-1 text-3xl font-bold"
+            style={{ color: theme.text }}
+          >
+            {workout.title}
+          </Text>
+          <LiquidButton
+            theme={theme}
+            icon={<Pencil size={18} color={theme.text} />}
+            onPress={() =>
+              router.push({
+                pathname: '/workout/form',
+                params: { id: workout.id },
+              })
+            }
+          />
+        </View>
         <View className="mb-4 flex-row pl-1">
           <InfoItem
             className="flex-1"
