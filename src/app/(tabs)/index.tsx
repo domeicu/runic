@@ -54,7 +54,7 @@ const Index = () => {
             theme={theme}
             leftAction={{
               icon: <Pencil size={18} color={theme.text} />,
-              onPress: () => router.push('/workout/add'),
+              onPress: () => router.push('/workout/form'),
             }}
             rightAction={{
               icon: <FileUp size={18} color={theme.text} />,
@@ -73,7 +73,7 @@ const Index = () => {
           emptyMessage="no runs found!"
           emptyAction={
             <View className="flex-row gap-2">
-              <TouchableOpacity onPress={() => router.push('/workout/add')}>
+              <TouchableOpacity onPress={() => router.push('/workout/form')}>
                 <Text style={{ color: theme.accent }}>add</Text>
               </TouchableOpacity>
               <Text style={{ color: theme.textSecondary }}>/</Text>

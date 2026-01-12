@@ -16,6 +16,7 @@ export interface Workout {
   distanceKm: number;
   title: string;
   description?: string;
+  notes?: string;
   type: RunType;
   isCompleted: boolean;
   stravaActivityId?: string;

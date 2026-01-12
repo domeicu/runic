@@ -3,12 +3,12 @@ import { drizzle } from 'drizzle-orm/expo-sqlite';
 import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
 import migrations from '@/src/db/drizzle/migrations';
 import * as schema from './schema';
-import { InferInsertModel } from 'drizzle-orm';
+import { eq, InferInsertModel } from 'drizzle-orm';
 import { parseIcsPlan } from '../features/plans/icsParser';
 import { parseCsvPlan } from '../features/plans/csvParser';
 import { Workout } from '../lib/types';
 
-const expoDb = openDatabaseSync('runic_v2.db');
+const expoDb = openDatabaseSync('runic_v4.db');
 
 export const db = drizzle(expoDb, { schema });
 
@@ -17,24 +17,34 @@ export const useDatabaseInit = () => {
   return { isLoaded: success, error };
 };
 
-export type NewWorkout = InferInsertModel<typeof schema.workouts>;
+export const getWorkoutById = async (id: number) => {
+  const result = await db
+    .select()
+    .from(schema.workouts)
+    .where(eq(schema.workouts.id, id));
+  return result[0];
+};
+
+type NewWorkout = InferInsertModel<typeof schema.workouts>;
+
+export const updateWorkout = async (
+  id: number,
+  data: Partial<Omit<NewWorkout, 'id'>>
+) => {
+  const [result] = await db
+    .update(schema.workouts)
+    .set(data)
+    .where(eq(schema.workouts.id, id))
+    .returning();
+  return result;
+};
 
 export const addWorkout = async (workoutData: Omit<NewWorkout, 'id'>) => {
-  const result = await db
+  const [result] = await db
     .insert(schema.workouts)
-    .values({
-      title: workoutData.title,
-      date: workoutData.date,
-      dateCreated: workoutData.dateCreated,
-      distanceKm: workoutData.distanceKm,
-      type: workoutData.type,
-      description: workoutData.description || null,
-      isCompleted: workoutData.isCompleted ?? false,
-      stravaActivityId: workoutData.stravaActivityId || null,
-      externalId: workoutData.externalId || null,
-    })
+    .values(workoutData)
     .returning();
-  return result[0];
+  return result;
 };
 
 type ParserFunction = (data: string) => { workouts: Workout[] };
