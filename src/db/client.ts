@@ -25,34 +25,26 @@ export const getWorkoutById = async (id: number) => {
   return result[0];
 };
 
-export const updateWorkout = async (
-  id: number,
-  data: Partial<typeof schema.workouts.$inferInsert>
-) => {
-  return await db
-    .update(schema.workouts)
-    .set(data)
-    .where(eq(schema.workouts.id, id));
-};
-
 type NewWorkout = InferInsertModel<typeof schema.workouts>;
 
-export const addWorkout = async (workoutData: Omit<NewWorkout, 'id'>) => {
-  const result = await db
-    .insert(schema.workouts)
-    .values({
-      title: workoutData.title,
-      date: workoutData.date,
-      dateCreated: workoutData.dateCreated,
-      distanceKm: workoutData.distanceKm,
-      type: workoutData.type,
-      description: workoutData.description || null,
-      isCompleted: workoutData.isCompleted ?? false,
-      stravaActivityId: workoutData.stravaActivityId || null,
-      externalId: workoutData.externalId || null,
-    })
+export const updateWorkout = async (
+  id: number,
+  data: Partial<Omit<NewWorkout, 'id'>>
+) => {
+  const [result] = await db
+    .update(schema.workouts)
+    .set(data)
+    .where(eq(schema.workouts.id, id))
     .returning();
-  return result[0];
+  return result;
+};
+
+export const addWorkout = async (workoutData: Omit<NewWorkout, 'id'>) => {
+  const [result] = await db
+    .insert(schema.workouts)
+    .values(workoutData)
+    .returning();
+  return result;
 };
 
 type ParserFunction = (data: string) => { workouts: Workout[] };
