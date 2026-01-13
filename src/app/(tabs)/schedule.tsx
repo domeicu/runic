@@ -7,9 +7,9 @@ import { asc } from 'drizzle-orm';
 
 import { db } from '@/src/db/client';
 import { workouts } from '@/src/db/schema';
-import { useFocusQuery } from '@/src/lib/useFocusQuery';
-import { useAutoScrollToToday } from '@/src/lib/useAutoScroll';
-import { Workout } from '@/src/lib/types';
+import { useFocusQuery } from '@/src/hooks/useFocusQuery';
+import { useAutoScrollToToday } from '@/src/hooks/useAutoScroll';
+import { Workout } from '@/src/types/types';
 import { groupWorkouts } from '@/src/lib/groupWorkouts';
 import { Colours } from '@/src/constants/theme';
 
@@ -35,9 +35,9 @@ const Schedule = () => {
   );
 
   const listRef = useRef<SectionList>(null);
-  const { handleScrollBeginDrag } = useAutoScrollToToday(
+  const { handleTouchStart } = useAutoScrollToToday(
     listRef,
-    data,
+    sections,
     todayIndex
   );
 
@@ -61,18 +61,19 @@ const Schedule = () => {
       <SectionList
         ref={listRef}
         className="px-5"
-        sections={sections}
         keyExtractor={(item) => item.id.toString()}
+        sections={sections}
+        ListHeaderComponent={<ScreenHeader.Spacer />}
         renderSectionHeader={({ section }: { section: any }) => {
           const isFirst = section.title === sections[0].title;
           return (
             <Text
-              className={`mb-2 px-1 text-xl font-bold ${!isFirst && 'mt-6'}`}
+              className={`mb-2 px-1 text-xl font-bold ${!isFirst && 'mt-4'}`}
               style={{ color: theme.text }}
             >
               {section.title}
             </Text>
-          );
+          )
         }}
         renderItem={({ item }: { item: Workout }) => (
           <View className="mb-2">
@@ -80,13 +81,26 @@ const Schedule = () => {
           </View>
         )}
         ListEmptyComponent={
-          <EmptyState
-            theme={theme}
-            message="no runs found!"
-            action={EmptyWorkoutAction({ theme })}
-          />
+          <View className="pt-2">
+            <EmptyState
+              theme={theme}
+              message="no runs found!"
+              action={EmptyWorkoutAction({ theme })}
+            />
+          </View>
         }
-        onScrollBeginDrag={handleScrollBeginDrag}
+        onScrollToIndexFailed={() => {
+          const wait = new Promise((resolve) => setTimeout(resolve, 500));
+          wait.then(() => {
+            listRef.current?.scrollToLocation({
+              sectionIndex: todayIndex,
+              itemIndex: 0,
+              viewPosition: 0.1,
+              animated: true,
+            });
+          });
+        }}
+        onTouchStart={handleTouchStart}
         contentContainerStyle={{ minHeight: '100%', paddingBottom: 400 }}
         showsVerticalScrollIndicator={false}
         stickySectionHeadersEnabled={false}

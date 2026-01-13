@@ -1,7 +1,7 @@
 import * as Crypto from 'expo-crypto';
 import Papa from 'papaparse';
-import { TrainingPlan, Workout } from '../../lib/types';
-import { mapRunType, parseDistance } from '@/src/lib/parsingUtils';
+import { TrainingPlan, Workout } from '../types/types';
+import { mapRunType, parseDistance } from '@/src/lib/parsingHelpers';
 
 interface DefyWeekRow {
   Week: string;

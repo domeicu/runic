@@ -9,8 +9,8 @@ import { asc, gte } from 'drizzle-orm';
 import { db } from '@/src/db/client';
 import { workouts } from '@/src/db/schema';
 import { Colours } from '@/src/constants/theme';
-import { useFocusQuery } from '@/src/lib/useFocusQuery';
-import { Workout } from '@/src/lib/types';
+import { useFocusQuery } from '@/src/hooks/useFocusQuery';
+import { Workout } from '@/src/types/types';
 
 import ScreenHeader from '@/src/components/screenHeader';
 import DashboardWidget from '@/src/components/dashboardWidget';
@@ -59,6 +59,7 @@ const Index = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ minHeight: '100%', paddingBottom: 10 }}
       >
+        <ScreenHeader.Spacer />
         <DashboardWidget
           theme={theme}
           title="next run"

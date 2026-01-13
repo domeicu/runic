@@ -5,7 +5,7 @@ import { MapPin, ChevronRight, Calendar, Check } from 'lucide-react-native';
 import { format } from 'date-fns';
 import * as Haptics from 'expo-haptics';
 
-import { Workout } from '@/src/lib/types';
+import { Workout } from '@/src/types/types';
 import { Layout } from '@/src/constants/theme';
 
 const WorkoutCard = ({ theme, item }: { theme: any; item: Workout }) => (

@@ -1,7 +1,7 @@
 import { openDatabaseSync } from 'expo-sqlite';
 import { drizzle } from 'drizzle-orm/expo-sqlite';
 import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
-import migrations from '@/src/db/drizzle/migrations';
+import migrations from './drizzle/migrations';
 import * as schema from './schema';
 
 const expoDb = openDatabaseSync('runic_v4.db');

@@ -1,5 +1,5 @@
-import { parseIcsPlan } from './icsParser';
-import { parseCsvPlan } from './csvParser';
+import { parseIcsPlan } from '../lib/icsParser';
+import { parseCsvPlan } from '../lib/csvParser';
 import { addWorkoutsBulk, NewWorkout } from '@/src/db/queries';
 
 type ParserFunction = (data: string) => { workouts: any[] };

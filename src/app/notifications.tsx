@@ -37,7 +37,7 @@ const Notifications = () => {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ minHeight: '100%' }}
     >
-      <View className="overflow-hidden border">
+      <View className="overflow-hidden">
         <NotificationItem
           title="New follower"
           description="Guest has started following you."

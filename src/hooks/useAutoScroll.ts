@@ -7,20 +7,21 @@ export function useAutoScrollToToday(
   data: any[] | undefined,
   todayIndex: number
 ) {
-  const userHasScrolled = useRef(false);
+  const userHasTouched = useRef(false);
+
   useFocusEffect(
     useCallback(() => {
-      userHasScrolled.current = false;
+      userHasTouched.current = false;
     }, [])
   );
 
   useEffect(() => {
     const shouldScroll =
-      todayIndex !== -1 && data !== undefined && !userHasScrolled.current;
+      todayIndex !== -1 && data !== undefined && !userHasTouched.current;
 
     if (shouldScroll) {
       const timer = setTimeout(() => {
-        if (!userHasScrolled.current) {
+        if (!userHasTouched.current) {
           listRef?.current?.scrollToLocation({
             sectionIndex: todayIndex,
             itemIndex: 0,
@@ -34,8 +35,8 @@ export function useAutoScrollToToday(
   }, [todayIndex, data, listRef]);
 
   return {
-    handleScrollBeginDrag: () => {
-      userHasScrolled.current = true;
+    handleTouchStart: () => {
+      userHasTouched.current = true;
     },
   };
 }
