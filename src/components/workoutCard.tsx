@@ -14,6 +14,7 @@ interface WorkoutCardProps {
   type: RunType;
   isCompleted: boolean;
   onPress?: () => void;
+  onLongPress?: () => void;
 }
 
 const WorkoutCard = ({
@@ -25,10 +26,12 @@ const WorkoutCard = ({
   type,
   isCompleted,
   onPress,
+  onLongPress,
 }: WorkoutCardProps) => (
   <TouchableOpacity
     activeOpacity={0.7}
     onPress={onPress}
+    onLongPress={onLongPress}
     className="flex-row items-center overflow-hidden pr-4 shadow-sm shadow-black/5"
     style={{
       backgroundColor: theme.surface,

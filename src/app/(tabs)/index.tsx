@@ -94,6 +94,13 @@ const Index = () => {
               type={nextRun.type}
               isCompleted={nextRun.isCompleted}
               onPress={() => router.push(`/workout/${nextRun.id}`)}
+              onLongPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+                router.push({
+                  pathname: '/workout/form',
+                  params: { id: nextRun.id },
+                });
+              }}
             />
           )}
         </DashboardWidget>

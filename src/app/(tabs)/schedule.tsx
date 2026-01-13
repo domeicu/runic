@@ -86,6 +86,13 @@ const Schedule = () => {
               type={item.type}
               isCompleted={item.isCompleted}
               onPress={() => router.push(`/workout/${item.id}`)}
+              onLongPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+                router.push({
+                  pathname: '/workout/form',
+                  params: { id: item.id },
+                });
+              }}
             />
           </View>
         )}
