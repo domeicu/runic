@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { SectionList, View, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColorScheme } from 'nativewind';
@@ -8,6 +8,7 @@ import { asc } from 'drizzle-orm';
 import { db } from '@/src/db/client';
 import { workouts } from '@/src/db/schema';
 import { useFocusQuery } from '@/src/lib/useFocusQuery';
+import { useAutoScrollToToday } from '@/src/lib/useAutoScroll';
 import { Workout } from '@/src/lib/types';
 import { groupWorkouts } from '@/src/lib/groupWorkouts';
 import { Colours } from '@/src/constants/theme';
@@ -28,6 +29,17 @@ const Schedule = () => {
   );
 
   const sections = useMemo(() => groupWorkouts(data || []), [data]);
+  const todayIndex = useMemo(
+    () => sections.findIndex((s) => s.title === 'today'),
+    [sections]
+  );
+
+  const listRef = useRef<SectionList>(null);
+  const { handleScrollBeginDrag } = useAutoScrollToToday(
+    listRef,
+    data,
+    todayIndex
+  );
 
   return (
     <SafeAreaView
@@ -47,6 +59,7 @@ const Schedule = () => {
         button2={addImportButton({ theme })}
       />
       <SectionList
+        ref={listRef}
         className="px-5"
         sections={sections}
         keyExtractor={(item) => item.id.toString()}
@@ -73,6 +86,7 @@ const Schedule = () => {
             action={EmptyWorkoutAction({ theme })}
           />
         }
+        onScrollBeginDrag={handleScrollBeginDrag}
         contentContainerStyle={{ minHeight: '100%', paddingBottom: 400 }}
         showsVerticalScrollIndicator={false}
         stickySectionHeadersEnabled={false}
