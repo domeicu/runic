@@ -1,82 +1,80 @@
 import React, { useState, useEffect } from 'react';
+import { Alert, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
-import { View, Alert, KeyboardAvoidingView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useColorScheme } from 'nativewind';
 import { parseISO } from 'date-fns';
+
 import { Colours } from '@/src/constants/theme';
-import { addWorkout, getWorkoutById, updateWorkout } from '@/src/db/client';
+import { getWorkoutById, addWorkout, updateWorkout } from '@/src/db/queries';
 import { RUN_TYPES, RunType } from '@/src/lib/types';
+
 import WorkoutTextInput from '@/src/components/workoutTextInput';
 import WorkoutDateInput from '@/src/components/workoutDateInput';
 import ChipSelector from '@/src/components/chipSelector';
 import ActionButton from '@/src/components/actionButton';
 import ModalHeader from '@/src/components/modalHeader';
 
+const DEFAULT_FORM = {
+  distance: '',
+  date: new Date().toISOString(),
+  title: '',
+  type: RUN_TYPES[0],
+  description: '',
+  notes: '',
+};
+
 export default function WorkoutForm() {
   const { colorScheme } = useColorScheme();
   const theme = Colours[colorScheme ?? 'light'];
-
-  const params = useLocalSearchParams();
-  const id = params.id ? Number(params.id) : null;
-
-  const placeholders = {
-    distance: '5',
-    title: 'Daily Run',
-  };
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const isEditing = !!id;
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const [form, setForm] = useState({
-    distance: '',
-    date: new Date().toISOString(),
-    title: '',
-    type: RUN_TYPES[0],
-    description: '',
-    notes: '',
-  });
+  const [form, setForm] = useState(DEFAULT_FORM);
 
   useEffect(() => {
-    if (id) {
-      const loadData = async () => {
-        try {
-          const workout = await getWorkoutById(id);
-          if (workout) {
-            setForm({
-              distance: workout.distanceKm.toString(),
-              date: workout.date,
-              title: workout.title,
-              type: workout.type as RunType,
-              description: workout.description || '',
-              notes: workout.notes || '',
-            });
-          }
-        } catch {
-          Alert.alert('Error', 'Could not load workout details');
-          router.back();
+    if (!id) return;
+
+    getWorkoutById(Number(id))
+      .then((data) => {
+        if (data) {
+          setForm({
+            distance: data.distanceKm.toString(),
+            date: data.date,
+            title: data.title,
+            type: data.type as RunType,
+            description: data.description || '',
+            notes: data.notes || '',
+          });
         }
-      };
-      loadData();
-    }
+      })
+      .catch(() => {
+        Alert.alert('Error', 'Could not load workout details');
+        router.back();
+      });
   }, [id]);
 
-  const updateField = (key: string, value: string) => {
+  const updateField = (key: keyof typeof DEFAULT_FORM, value: any) => {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
   const handleSave = async () => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
     try {
       const payload = {
-        title: form.title || placeholders.title,
-        distanceKm: parseFloat(form.distance || placeholders.distance),
+        title: form.title || 'Daily Run',
+        distanceKm: parseFloat(form.distance || '5'),
         type: form.type as RunType,
         date: form.date,
         description: form.description,
         notes: form.notes,
       };
 
-      if (id) {
-        await updateWorkout(id, payload);
+      if (isEditing) {
+        await updateWorkout(Number(id), payload);
       } else {
         await addWorkout({
           ...payload,
@@ -85,9 +83,9 @@ export default function WorkoutForm() {
         });
       }
       router.back();
-    } catch (e) {
-      console.error(e);
-      Alert.alert('Error', `Failed to ${id ? 'update' : 'save'} workout`);
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error', 'Failed to save workout');
     } finally {
       setIsSubmitting(false);
     }
@@ -95,15 +93,20 @@ export default function WorkoutForm() {
 
   return (
     <View className="flex-1" style={{ backgroundColor: theme.background }}>
-      <ModalHeader theme={theme} title={id ? 'edit workout' : 'plan workout'} />
+      <ModalHeader
+        theme={theme}
+        title={isEditing ? 'edit workout' : 'plan workout'}
+      />
 
-      <KeyboardAvoidingView className="flex-1">
+      <KeyboardAvoidingView
+        className="flex-1"
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
         <KeyboardAwareScrollView
           className="flex-1 p-6"
           showsVerticalScrollIndicator={false}
-          viewIsInsideTabBar={true}
-          enableResetScrollToCoords={false}
-          keyboardOpeningTime={0}
+          enableOnAndroid={true}
+          extraScrollHeight={20}
         >
           <View className="flex-row gap-4">
             <View className="flex-1">
@@ -111,17 +114,17 @@ export default function WorkoutForm() {
                 theme={theme}
                 label="date"
                 value={parseISO(form.date)}
-                onChange={(date) => updateField('date', date.toISOString())}
+                onChange={(d) => updateField('date', d.toISOString())}
               />
             </View>
             <View className="flex-1">
               <WorkoutTextInput
                 theme={theme}
                 label="distance (km)"
+                placeholder="5"
                 value={form.distance}
-                onChangeText={(text) => updateField('distance', text)}
+                onChangeText={(t) => updateField('distance', t)}
                 keyboardType="decimal-pad"
-                placeholder={placeholders.distance}
               />
             </View>
           </View>
@@ -129,32 +132,32 @@ export default function WorkoutForm() {
           <WorkoutTextInput
             theme={theme}
             label="title"
+            placeholder="Daily Run"
             value={form.title}
-            onChangeText={(text) => updateField('title', text)}
-            placeholder={placeholders.title}
+            onChangeText={(t) => updateField('title', t)}
           />
 
           <ChipSelector
             theme={theme}
-            onPress={(type) => updateField('type', type)}
             values={RUN_TYPES}
             activeValue={form.type}
+            onPress={(t) => updateField('type', t)}
           />
 
           <WorkoutTextInput
             theme={theme}
             label="description"
             value={form.description}
-            onChangeText={(text) => updateField('description', text)}
-            multiline={true}
+            onChangeText={(t) => updateField('description', t)}
+            multiline
           />
 
           <WorkoutTextInput
             theme={theme}
             label="private notes"
             value={form.notes}
-            onChangeText={(text) => updateField('notes', text)}
-            multiline={true}
+            onChangeText={(t) => updateField('notes', t)}
+            multiline
           />
         </KeyboardAwareScrollView>
       </KeyboardAvoidingView>
@@ -162,7 +165,7 @@ export default function WorkoutForm() {
       <View className="p-5 pb-12" style={{ borderColor: theme.border }}>
         <ActionButton
           theme={theme}
-          label={id ? 'update workout' : 'save workout'}
+          label={isEditing ? 'update workout' : 'save workout'}
           onPress={handleSave}
           disabled={isSubmitting}
         />

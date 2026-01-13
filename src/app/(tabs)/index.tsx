@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { router } from 'expo-router';
 import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -23,11 +23,8 @@ const Index = () => {
   const { colorScheme } = useColorScheme();
   const theme = Colours[colorScheme ?? 'light'];
 
-  const today = useMemo(() => {
-    const date = new Date();
-    date.setHours(0, 0, 0, 0);
-    return date;
-  }, []);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   const { data } = useFocusQuery<Workout[]>(
     db
