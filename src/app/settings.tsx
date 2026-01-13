@@ -45,7 +45,10 @@ const Settings = () => {
   };
 
   // Generate 0-255 array once for the pickers
-  const range0to255 = useMemo(() => Array.from({ length: 256 }, (_, i) => i), []);
+  const range0to255 = useMemo(
+    () => Array.from({ length: 256 }, (_, i) => i),
+    []
+  );
 
   // --- State ---
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
@@ -248,7 +251,7 @@ const Settings = () => {
                 return (
                   <View key={channel} className="mb-2">
                     {/* Row with Slider and Number */}
-                    <View className="flex-row items-center mb-2">
+                    <View className="mb-2 flex-row items-center">
                       <Text
                         className="mr-2 w-4 font-bold uppercase"
                         style={{ color: theme.textSecondary }}
@@ -295,7 +298,7 @@ const Settings = () => {
 
                     {/* Inline Expanded Picker */}
                     {isExpanded && (
-                      <View className="overflow-hidden rounded-xl bg-black/5 dark:bg-black/20 mb-4">
+                      <View className="mb-4 overflow-hidden rounded-xl bg-black/5 dark:bg-black/20">
                         <Picker
                           selectedValue={rgb[channelKey]}
                           onValueChange={(itemValue) =>
@@ -308,11 +311,7 @@ const Settings = () => {
                           itemStyle={{ color: theme.text, fontSize: 16 }}
                         >
                           {range0to255.map((i) => (
-                            <Picker.Item
-                              key={i}
-                              label={String(i)}
-                              value={i}
-                            />
+                            <Picker.Item key={i} label={String(i)} value={i} />
                           ))}
                         </Picker>
                       </View>

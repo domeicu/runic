@@ -59,6 +59,7 @@ const Index = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ minHeight: '100%', paddingBottom: 10 }}
       >
+        <ScreenHeader.Spacer />
         <DashboardWidget
           theme={theme}
           title="next run"

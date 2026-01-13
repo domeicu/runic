@@ -49,7 +49,7 @@ const DataManagement = () => {
       <View className="flex-col gap-3">
         <ActionButton
           theme={theme}
-          label="clear database"
+          label="clear all workouts"
           onPress={handleClear}
           colour={theme.red}
           loading={loading}

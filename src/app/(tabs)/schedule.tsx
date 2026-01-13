@@ -35,9 +35,9 @@ const Schedule = () => {
   );
 
   const listRef = useRef<SectionList>(null);
-  const { handleScrollBeginDrag } = useAutoScrollToToday(
+  const { handleTouchStart } = useAutoScrollToToday(
     listRef,
-    data,
+    sections,
     todayIndex
   );
 
@@ -61,32 +61,43 @@ const Schedule = () => {
       <SectionList
         ref={listRef}
         className="px-5"
-        sections={sections}
         keyExtractor={(item) => item.id.toString()}
-        renderSectionHeader={({ section }: { section: any }) => {
-          const isFirst = section.title === sections[0].title;
-          return (
-            <Text
-              className={`mb-2 px-1 text-xl font-bold ${!isFirst && 'mt-6'}`}
-              style={{ color: theme.text }}
-            >
-              {section.title}
-            </Text>
-          );
-        }}
+        sections={sections}
+        ListHeaderComponent={<ScreenHeader.Spacer />}
+        renderSectionHeader={({ section }: { section: any }) => (
+          <Text
+            className="mb-2 mt-4 px-1 text-xl font-bold"
+            style={{ color: theme.text }}
+          >
+            {section.title}
+          </Text>
+        )}
         renderItem={({ item }: { item: Workout }) => (
           <View className="mb-2">
             <WorkoutCard theme={theme} item={item} />
           </View>
         )}
         ListEmptyComponent={
-          <EmptyState
-            theme={theme}
-            message="no runs found!"
-            action={EmptyWorkoutAction({ theme })}
-          />
+          <View className="pt-2">
+            <EmptyState
+              theme={theme}
+              message="no runs found!"
+              action={EmptyWorkoutAction({ theme })}
+            />
+          </View>
         }
-        onScrollBeginDrag={handleScrollBeginDrag}
+        onScrollToIndexFailed={() => {
+          const wait = new Promise((resolve) => setTimeout(resolve, 500));
+          wait.then(() => {
+            listRef.current?.scrollToLocation({
+              sectionIndex: todayIndex,
+              itemIndex: 0,
+              viewPosition: 0.1,
+              animated: true,
+            });
+          });
+        }}
+        onTouchStart={handleTouchStart}
         contentContainerStyle={{ minHeight: '100%', paddingBottom: 400 }}
         showsVerticalScrollIndicator={false}
         stickySectionHeadersEnabled={false}
