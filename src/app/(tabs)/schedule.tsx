@@ -4,6 +4,7 @@ import { SectionList, View, Text, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColorScheme } from 'nativewind';
 import { Menu, Pencil, FileUp } from 'lucide-react-native';
+import * as Haptics from 'expo-haptics';
 import { asc } from 'drizzle-orm';
 import { db } from '@/src/db/client';
 import { workouts } from '@/src/db/schema';
@@ -83,6 +84,7 @@ const Schedule = () => {
               date={item.date}
               distance={`${item.distanceKm} km`}
               type={item.type}
+              isCompleted={item.isCompleted}
               onPress={() => router.push(`/workout/${item.id}`)}
             />
           </View>

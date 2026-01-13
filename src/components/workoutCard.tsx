@@ -1,7 +1,7 @@
 import React from 'react';
 import { format, parseISO } from 'date-fns';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { MapPin, ChevronRight, Calendar } from 'lucide-react-native';
+import { MapPin, ChevronRight, Calendar, Check } from 'lucide-react-native';
 import { RunType } from '../lib/types';
 import { Layout } from '@/src/constants/theme';
 
@@ -12,6 +12,7 @@ interface WorkoutCardProps {
   description: string;
   distance: string;
   type: RunType;
+  isCompleted: boolean;
   onPress?: () => void;
 }
 
@@ -22,6 +23,7 @@ const WorkoutCard = ({
   description,
   distance,
   type,
+  isCompleted,
   onPress,
 }: WorkoutCardProps) => (
   <TouchableOpacity
@@ -33,20 +35,31 @@ const WorkoutCard = ({
       borderColor: theme.border,
       borderWidth: 1,
       borderRadius: Layout.borderRadius.card,
+      opacity: isCompleted ? 0.6 : 1,
     }}
   >
-    {/* Left Strip: Using theme accent (Neon in dark, Weighted in light) */}
+    {/* Left Strip */}
     <View
       className="mr-3 h-full w-1.5 opacity-90"
-      style={{ backgroundColor: theme.accent }}
+      style={
+        isCompleted
+          ? { backgroundColor: theme.border }
+          : { backgroundColor: theme.accent }
+      }
     />
-
     <View className="flex-1 py-4">
       {/* Header */}
       <View className="flex-row items-center justify-between px-2">
         <Text
           className="text-lg font-bold tracking-wide"
-          style={{ color: theme.text }}
+          style={
+            isCompleted
+              ? {
+                  color: theme.textSecondary,
+                  textDecorationLine: 'line-through',
+                }
+              : { color: theme.text }
+          }
         >
           {title}
         </Text>
@@ -62,7 +75,9 @@ const WorkoutCard = ({
         >
           <Text
             className="text-[10px] font-extrabold uppercase tracking-widest"
-            style={{ color: theme.accent }}
+            style={
+              isCompleted ? { color: theme.border } : { color: theme.accent }
+            }
           >
             {type}
           </Text>
@@ -104,11 +119,15 @@ const WorkoutCard = ({
       </View>
     </View>
 
-    <ChevronRight
-      color={theme.textSecondary}
-      size={20}
-      className="opacity-30"
-    />
+    {isCompleted ? (
+      <Check color={theme.textSecondary} size={20} className="opacity-30" />
+    ) : (
+      <ChevronRight
+        color={theme.textSecondary}
+        size={20}
+        className="opacity-30"
+      />
+    )}
   </TouchableOpacity>
 );
 

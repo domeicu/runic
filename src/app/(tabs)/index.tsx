@@ -4,10 +4,11 @@ import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColorScheme } from 'nativewind';
 import { Bell, Pencil, FileUp } from 'lucide-react-native';
-import { Colours } from '@/src/constants/theme';
+import * as Haptics from 'expo-haptics';
 import { asc, gte } from 'drizzle-orm';
 import { db } from '@/src/db/client';
 import { workouts } from '@/src/db/schema';
+import { Colours } from '@/src/constants/theme';
 import { useFocusQuery } from '@/src/lib/useFocusQuery';
 import { Workout } from '@/src/lib/types';
 import ScreenHeader from '@/src/components/screenHeader';
@@ -91,6 +92,7 @@ const Index = () => {
               date={new Date(nextRun.date).toISOString()}
               distance={`${nextRun.distanceKm} km`}
               type={nextRun.type}
+              isCompleted={nextRun.isCompleted}
               onPress={() => router.push(`/workout/${nextRun.id}`)}
             />
           )}
