@@ -1,20 +1,23 @@
 import React from 'react';
 import { router } from 'expo-router';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColorScheme } from 'nativewind';
-import { Bell, Pencil, FileUp } from 'lucide-react-native';
-import { Colours } from '@/src/constants/theme';
+import { Bell } from 'lucide-react-native';
 import { asc, gte } from 'drizzle-orm';
+
 import { db } from '@/src/db/client';
 import { workouts } from '@/src/db/schema';
+import { Colours } from '@/src/constants/theme';
 import { useFocusQuery } from '@/src/lib/useFocusQuery';
 import { Workout } from '@/src/lib/types';
+
 import ScreenHeader from '@/src/components/screenHeader';
 import DashboardWidget from '@/src/components/dashboardWidget';
 import LiquidButton from '@/src/components/liquidButton';
-import LiquidPillButton from '@/src/components/liquidPillButton';
 import WorkoutCard from '@/src/components/workoutCard';
+import { addImportButton } from '@/src/components/addImportButton';
+import { EmptyWorkoutAction } from '@/src/components/emptyWorkoutAction';
 
 const Index = () => {
   const { colorScheme } = useColorScheme();
@@ -32,7 +35,7 @@ const Index = () => {
       .limit(1)
   );
 
-  const nextRun = data ? data[0] : null;
+  const item = data ? data[0] : null;
 
   return (
     <SafeAreaView
@@ -49,20 +52,9 @@ const Index = () => {
             onPress={() => router.push('/notifications')}
           />
         }
-        button2={
-          <LiquidPillButton
-            theme={theme}
-            leftAction={{
-              icon: <Pencil size={18} color={theme.text} />,
-              onPress: () => router.push('/workout/form'),
-            }}
-            rightAction={{
-              icon: <FileUp size={18} color={theme.text} />,
-              onPress: () => router.push('/workout/import'),
-            }}
-          />
-        }
+        button2={addImportButton({ theme })}
       />
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ minHeight: '100%', paddingBottom: 10 }}
@@ -71,29 +63,9 @@ const Index = () => {
           theme={theme}
           title="next run"
           emptyMessage="no runs found!"
-          emptyAction={
-            <View className="flex-row gap-2">
-              <TouchableOpacity onPress={() => router.push('/workout/form')}>
-                <Text style={{ color: theme.accent }}>add</Text>
-              </TouchableOpacity>
-              <Text style={{ color: theme.textSecondary }}>/</Text>
-              <TouchableOpacity onPress={() => router.push('/workout/import')}>
-                <Text style={{ color: theme.accent }}>import</Text>
-              </TouchableOpacity>
-            </View>
-          }
+          emptyAction={EmptyWorkoutAction({ theme })}
         >
-          {nextRun && (
-            <WorkoutCard
-              theme={theme}
-              title={nextRun.title}
-              description={nextRun.description ? nextRun.description : ''}
-              date={new Date(nextRun.date).toISOString()}
-              distance={`${nextRun.distanceKm} km`}
-              type={nextRun.type}
-              onPress={() => router.push(`/workout/${nextRun.id}`)}
-            />
-          )}
+          {item && <WorkoutCard theme={theme} item={item} />}
         </DashboardWidget>
       </ScrollView>
     </SafeAreaView>
