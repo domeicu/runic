@@ -1,62 +1,47 @@
 import React from 'react';
-import { format, parseISO } from 'date-fns';
+import { router } from 'expo-router';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { MapPin, ChevronRight, Calendar, Check } from 'lucide-react-native';
-import { RunType } from '../lib/types';
+import { format } from 'date-fns';
+import * as Haptics from 'expo-haptics';
+
+import { Workout } from '@/src/lib/types';
 import { Layout } from '@/src/constants/theme';
 
-interface WorkoutCardProps {
-  theme: any;
-  date: string;
-  title: string;
-  description: string;
-  distance: string;
-  type: RunType;
-  isCompleted: boolean;
-  onPress?: () => void;
-  onLongPress?: () => void;
-}
-
-const WorkoutCard = ({
-  theme,
-  date,
-  title,
-  description,
-  distance,
-  type,
-  isCompleted,
-  onPress,
-  onLongPress,
-}: WorkoutCardProps) => (
+const WorkoutCard = ({ theme, item }: { theme: any; item: Workout }) => (
   <TouchableOpacity
     activeOpacity={0.7}
-    onPress={onPress}
-    onLongPress={onLongPress}
+    onPress={() => router.push(`/workout/${item.id}`)}
+    onLongPress={() => {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+      router.push({
+        pathname: '/workout/form',
+        params: { id: item.id },
+      });
+    }}
     className="flex-row items-center overflow-hidden pr-4 shadow-sm shadow-black/5"
     style={{
       backgroundColor: theme.surface,
       borderColor: theme.border,
       borderWidth: 1,
       borderRadius: Layout.borderRadius.card,
-      opacity: isCompleted ? 0.6 : 1,
+      opacity: item.isCompleted ? 0.6 : 1,
     }}
   >
-    {/* Left Strip */}
     <View
       className="mr-3 h-full w-1.5 opacity-90"
       style={
-        isCompleted
+        item.isCompleted
           ? { backgroundColor: theme.border }
           : { backgroundColor: theme.accent }
       }
     />
     <View className="flex-1 py-4">
-      {/* Header */}
       <View className="flex-row items-center justify-between px-2">
         <Text
           className="text-lg font-bold tracking-wide"
           style={
-            isCompleted
+            item.isCompleted
               ? {
                   color: theme.textSecondary,
                   textDecorationLine: 'line-through',
@@ -64,10 +49,9 @@ const WorkoutCard = ({
               : { color: theme.text }
           }
         >
-          {title}
+          {item.title}
         </Text>
 
-        {/* Badge */}
         <View
           className="overflow-hidden border px-2 py-0.5"
           style={{
@@ -79,10 +63,12 @@ const WorkoutCard = ({
           <Text
             className="text-[10px] font-extrabold uppercase tracking-widest"
             style={
-              isCompleted ? { color: theme.border } : { color: theme.accent }
+              item.isCompleted
+                ? { color: theme.border }
+                : { color: theme.accent }
             }
           >
-            {type}
+            {item.type}
           </Text>
         </View>
       </View>
@@ -92,20 +78,19 @@ const WorkoutCard = ({
           className="text-sm font-medium"
           style={{ color: theme.textSecondary }}
         >
-          {description}
+          {item.description}
         </Text>
       </View>
 
-      {/* Stats Row */}
       <View className="flex-row items-center justify-between px-2">
-        {date && (
+        {item.date && (
           <View className="flex-row items-center gap-1.5 opacity-80">
             <Calendar size={16} color={theme.textSecondary} />
             <Text
               className="text-sm font-medium"
               style={{ color: theme.textSecondary }}
             >
-              {format(parseISO(date), 'dd MMM')}
+              {format(item.date, 'dd MMM')}
             </Text>
           </View>
         )}
@@ -116,13 +101,13 @@ const WorkoutCard = ({
             className="text-sm font-medium"
             style={{ color: theme.textSecondary }}
           >
-            {distance}
+            {item.distanceKm} km
           </Text>
         </View>
       </View>
     </View>
 
-    {isCompleted ? (
+    {item.isCompleted ? (
       <Check color={theme.textSecondary} size={20} className="opacity-30" />
     ) : (
       <ChevronRight
