@@ -7,7 +7,7 @@ import { parseISO } from 'date-fns';
 
 import { Colours } from '@/src/constants/theme';
 import { getWorkoutById, addWorkout, updateWorkout } from '@/src/db/queries';
-import { RUN_TYPES, RunType } from '@/src/lib/types';
+import { RUN_TYPES, RunType } from '@/src/types/types';
 
 import WorkoutTextInput from '@/src/components/workoutTextInput';
 import WorkoutDateInput from '@/src/components/workoutDateInput';

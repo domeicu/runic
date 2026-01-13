@@ -7,9 +7,9 @@ import { asc } from 'drizzle-orm';
 
 import { db } from '@/src/db/client';
 import { workouts } from '@/src/db/schema';
-import { useFocusQuery } from '@/src/lib/useFocusQuery';
-import { useAutoScrollToToday } from '@/src/lib/useAutoScroll';
-import { Workout } from '@/src/lib/types';
+import { useFocusQuery } from '@/src/hooks/useFocusQuery';
+import { useAutoScrollToToday } from '@/src/hooks/useAutoScroll';
+import { Workout } from '@/src/types/types';
 import { groupWorkouts } from '@/src/lib/groupWorkouts';
 import { Colours } from '@/src/constants/theme';
 
@@ -64,14 +64,17 @@ const Schedule = () => {
         keyExtractor={(item) => item.id.toString()}
         sections={sections}
         ListHeaderComponent={<ScreenHeader.Spacer />}
-        renderSectionHeader={({ section }: { section: any }) => (
-          <Text
-            className="mb-2 mt-4 px-1 text-xl font-bold"
-            style={{ color: theme.text }}
-          >
-            {section.title}
-          </Text>
-        )}
+        renderSectionHeader={({ section }: { section: any }) => {
+          const isFirst = section.title === sections[0].title;
+          return (
+            <Text
+              className={`mb-2 px-1 text-xl font-bold ${!isFirst && 'mt-4'}`}
+              style={{ color: theme.text }}
+            >
+              {section.title}
+            </Text>
+          )
+        }}
         renderItem={({ item }: { item: Workout }) => (
           <View className="mb-2">
             <WorkoutCard theme={theme} item={item} />

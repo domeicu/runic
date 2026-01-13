@@ -9,7 +9,7 @@ import { Colours, Layout } from '@/src/constants/theme';
 import {
   importCsvWorkouts,
   importIcsWorkouts,
-} from '@/src/features/plans/importService';
+} from '@/src/services/importService';
 import ActionButton from '@/src/components/actionButton';
 import ModalHeader from '@/src/components/modalHeader';
 

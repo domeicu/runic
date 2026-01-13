@@ -1,6 +1,6 @@
 import * as Crypto from 'expo-crypto';
-import { TrainingPlan, Workout } from '../../lib/types';
-import { mapRunType, parseDistance } from '@/src/lib/parsingUtils';
+import { TrainingPlan, Workout } from '../types/types';
+import { mapRunType, parseDistance } from '@/src/lib/parsingHelpers';
 
 const parseIcsDate = (icsDate: string): Date => {
   const match = icsDate.match(/^(\d{4})(\d{2})(\d{2})/);
