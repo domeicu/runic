@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, Alert } from 'react-native';
+import { useColorScheme } from 'nativewind';
 import { db } from '@/src/db/client';
 import { workouts } from '@/src/db/schema';
+import { Layout, Colours } from '@/src/constants/theme';
+import ActionButton from './actionButton';
 
 const DataManagement = () => {
+  const { colorScheme } = useColorScheme();
+  const theme = Colours[colorScheme ?? 'light'];
   const [loading, setLoading] = useState(false);
 
   const handleClear = async () => {
@@ -33,21 +38,22 @@ const DataManagement = () => {
   };
 
   return (
-    <View className="mx-4 mt-8 rounded-xl border border-zinc-800 bg-zinc-900/50 p-4">
-      <Text className="mb-4 text-xs font-medium uppercase tracking-wider text-zinc-400">
-        Developer Tools
-      </Text>
-
+    <View
+      className="mt-8 border p-4"
+      style={{
+        backgroundColor: theme.surface,
+        borderColor: theme.border,
+        borderRadius: Layout.borderRadius.card,
+      }}
+    >
       <View className="flex-col gap-3">
-        <TouchableOpacity
+        <ActionButton
+          theme={theme}
+          label="clear database"
           onPress={handleClear}
-          disabled={loading}
-          className="flex-row items-center justify-center rounded-lg border border-red-900/50 bg-red-900/20 p-4 active:opacity-80"
-        >
-          <Text className="text-base font-bold text-red-400">
-            clear database
-          </Text>
-        </TouchableOpacity>
+          colour={theme.red}
+          loading={loading}
+        />
       </View>
     </View>
   );
