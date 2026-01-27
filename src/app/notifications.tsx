@@ -35,20 +35,7 @@ const Notifications = () => {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ minHeight: '100%' }}
     >
-      <View className="overflow-hidden">
-        <NotificationItem
-          title="New follower"
-          description="Guest has started following you."
-        />
-        <NotificationItem
-          title="Goal reached"
-          description="Weekly mileage goal of 50km reached. Congratulations!"
-        />
-        <NotificationItem
-          title="New year"
-          description="Happy new year! Let's make 2026 your year."
-        />
-      </View>
+      <View className="overflow-hidden"></View>
     </ScrollView>
   );
 };

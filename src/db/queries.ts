@@ -1,5 +1,5 @@
-import { startOfWeek, endOfWeek } from 'date-fns';
-import { and, gte, lte, eq, InferInsertModel } from 'drizzle-orm';
+import { startOfWeek, endOfWeek, startOfMonth, endOfMonth } from 'date-fns';
+import { and, gte, lte, eq, sql, desc, InferInsertModel } from 'drizzle-orm';
 import { db } from './client';
 import { workouts } from './schema';
 
@@ -62,5 +62,45 @@ export const getWeeklyProgress = async () => {
   return {
     run: Math.round(runDistance * 10) / 10,
     goal: Math.round(goalDistance * 10) / 10,
+  };
+};
+
+export const getMonthlyStats = async () => {
+  const now = new Date();
+  const start = startOfMonth(now).toISOString();
+  const end = endOfMonth(now).toISOString();
+
+  const [basicStats] = await db
+    .select({
+      totalRuns: sql<number>`count(*)`,
+      longestRun: sql<number>`max(${workouts.distanceKm})`,
+    })
+    .from(workouts)
+    .where(
+      and(
+        gte(workouts.date, start),
+        lte(workouts.date, end),
+        eq(workouts.isCompleted, true)
+      )
+    );
+
+  const [favoriteType] = await db
+    .select({ type: workouts.type })
+    .from(workouts)
+    .where(
+      and(
+        gte(workouts.date, start),
+        lte(workouts.date, end),
+        eq(workouts.isCompleted, true)
+      )
+    )
+    .groupBy(workouts.type)
+    .orderBy(desc(sql`count(*)`))
+    .limit(1);
+
+  return {
+    totalRuns: basicStats?.totalRuns || 0,
+    longestRun: basicStats?.longestRun || 0,
+    topType: favoriteType?.type || '-',
   };
 };
