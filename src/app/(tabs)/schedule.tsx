@@ -77,7 +77,7 @@ const Schedule = () => {
     };
 
     return marks;
-  }, [data, selectedDate, theme.accent]);
+  }, [data, selectedDate, theme.accent, theme.text]);
 
   const selectedDayWorkouts = useMemo(() => {
     return (
