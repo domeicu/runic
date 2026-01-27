@@ -73,7 +73,7 @@ const Schedule = () => {
       ...(marks[selectedDate] || {}),
       selected: true,
       selectedColor: theme.accent,
-      selectedTextColor: '#ffffff',
+      selectedTextColor: theme.text,
     };
 
     return marks;
@@ -170,7 +170,7 @@ const Schedule = () => {
             <View>
               <ScreenHeader.Spacer />
               <View
-                className="mb-6 mt-1 overflow-hidden border shadow-sm shadow-black/5"
+                className="mb-6 mt-1 overflow-hidden border"
                 style={{
                   backgroundColor: theme.surface,
                   borderColor: theme.border,
@@ -178,7 +178,7 @@ const Schedule = () => {
                 }}
               >
                 <Calendar
-                  key={calendarId}
+                  key={`${calendarId}-${theme.background}-${theme.accent}`}
                   firstDay={1}
                   current={selectedDate}
                   onDayPress={(day: any) => setSelectedDate(day.dateString)}
@@ -188,7 +188,7 @@ const Schedule = () => {
                     calendarBackground: theme.surface,
                     textSectionTitleColor: theme.textSecondary,
                     selectedDayBackgroundColor: theme.accent,
-                    selectedDayTextColor: '#ffffff',
+                    selectedDayTextColor: theme.text,
                     todayTextColor: theme.accent,
                     dayTextColor: theme.text,
                     textDisabledColor: theme.border,
@@ -213,12 +213,7 @@ const Schedule = () => {
                   }}
                   activeOpacity={0.7}
                 >
-                  <Text
-                    className="text-sm font-bold uppercase tracking-wider"
-                    style={{ color: theme.accent }}
-                  >
-                    Today
-                  </Text>
+                  <Text style={{ color: theme.accent }}>today</Text>
                 </TouchableOpacity>
               </View>
             </View>
