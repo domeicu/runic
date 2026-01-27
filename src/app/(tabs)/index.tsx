@@ -16,6 +16,7 @@ import ScreenHeader from '@/src/components/screenHeader';
 import DashboardWidget from '@/src/components/dashboardWidget';
 import LiquidButton from '@/src/components/liquidButton';
 import WorkoutCard from '@/src/components/workoutCard';
+import WeeklyProgressCard from '@/src/components/weeklyProgress';
 import { addImportButton } from '@/src/components/addImportButton';
 import { EmptyWorkoutAction } from '@/src/components/emptyWorkoutAction';
 
@@ -67,6 +68,10 @@ const Index = () => {
           emptyAction={EmptyWorkoutAction({ theme })}
         >
           {item && <WorkoutCard theme={theme} item={item} />}
+        </DashboardWidget>
+
+        <DashboardWidget theme={theme} title="Weekly Progress">
+          <WeeklyProgressCard theme={theme} />
         </DashboardWidget>
       </ScrollView>
     </SafeAreaView>
