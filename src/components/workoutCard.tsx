@@ -29,7 +29,7 @@ const WorkoutCard = ({ theme, item }: { theme: any; item: Workout }) => (
     }}
   >
     <View
-      className="mr-3 h-full w-1.5 opacity-90"
+      className="mr-3 h-full w-1.5"
       style={
         item.isCompleted
           ? { backgroundColor: theme.border }
@@ -122,6 +122,7 @@ const WorkoutCard = ({ theme, item }: { theme: any; item: Workout }) => (
 export default memo(WorkoutCard, (prev, next) => {
   return (
     prev.item.id === next.item.id &&
-    prev.item.isCompleted === next.item.isCompleted
+    prev.item.isCompleted === next.item.isCompleted &&
+    prev.theme === next.theme
   );
 });

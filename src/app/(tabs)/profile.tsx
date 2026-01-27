@@ -1,15 +1,15 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-import { useColorScheme } from 'nativewind';
 import { Settings } from 'lucide-react-native';
-import { Colours } from '@/src/constants/theme';
+
+import { useTheme } from '@/src/lib/themeContext';
+
 import ScreenHeader from '@/src/components/screenHeader';
 import LiquidButton from '@/src/components/liquidButton';
 
 const Profile = () => {
-  const { colorScheme } = useColorScheme();
-  const theme = Colours[colorScheme ?? 'light'];
+  const { theme } = useTheme();
 
   return (
     <SafeAreaView
