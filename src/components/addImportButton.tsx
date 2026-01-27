@@ -4,12 +4,19 @@ import { Pencil, FileUp } from 'lucide-react-native';
 
 import LiquidPillButton from '@/src/components/liquidPillButton';
 
-export const addImportButton = ({ theme }: { theme: any }) => (
+export const addImportButton = ({
+  theme,
+  date,
+}: {
+  theme: any;
+  date?: string;
+}) => (
   <LiquidPillButton
     theme={theme}
     leftAction={{
       icon: <Pencil size={18} color={theme.text} />,
-      onPress: () => router.push('/workout/form'),
+      onPress: () =>
+        router.push({ pathname: '/workout/form', params: { date } }),
     }}
     rightAction={{
       icon: <FileUp size={18} color={theme.text} />,

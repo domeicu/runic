@@ -2,10 +2,20 @@ import React from 'react';
 import { router } from 'expo-router';
 import { View, Text, TouchableOpacity } from 'react-native';
 
-export const EmptyWorkoutAction = ({ theme }: { theme: any }) => {
+export const EmptyWorkoutAction = ({
+  theme,
+  date,
+}: {
+  theme: any;
+  date?: string;
+}) => {
   return (
     <View className="flex-row gap-2">
-      <TouchableOpacity onPress={() => router.push('/workout/form')}>
+      <TouchableOpacity
+        onPress={() =>
+          router.push({ pathname: '/workout/form', params: { date } })
+        }
+      >
         <Text style={{ color: theme.accent }}>add</Text>
       </TouchableOpacity>
 
