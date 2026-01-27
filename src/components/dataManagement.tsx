@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import { View, Alert } from 'react-native';
-import { useColorScheme } from 'nativewind';
 import { db } from '@/src/db/client';
 import { workouts } from '@/src/db/schema';
-import { Layout, Colours } from '@/src/constants/theme';
+import { Layout } from '@/src/constants/theme';
 import ActionButton from './actionButton';
 
-const DataManagement = () => {
-  const { colorScheme } = useColorScheme();
-  const theme = Colours[colorScheme ?? 'light'];
+const DataManagement = ({ theme }: { theme: any }) => {
   const [loading, setLoading] = useState(false);
 
   const handleClear = async () => {

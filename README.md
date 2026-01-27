@@ -14,12 +14,13 @@ runic is a minimalist, offline-first running training log built with React Nativ
 
 ### Prerequisites
 
-* **Node.js**: [Download and install Node.js](https://nodejs.org/).
-* **Expo Go App**: Download the "Expo Go" app on your iOS or Android device from the App Store or Google Play Store.
+- **Node.js**: [Download and install Node.js](https://nodejs.org/).
+- **Expo Go App**: Download the "Expo Go" app on your iOS or Android device from the App Store or Google Play Store.
 
 ### Installation
 
 1. **Clone the repository:**
+
 ```bash
 git clone https://github.com/domeicu/runic.git
 cd runic
@@ -27,6 +28,7 @@ cd runic
 ```
 
 2. **Install dependencies:**
+
 ```bash
 npm install
 # or
@@ -37,14 +39,16 @@ yarn install
 ### Running the App
 
 1. **Start the development server:**
+
 ```bash
 npx expo start
 
 ```
 
 2. **Open the app on your device:**
-* **Android:** Open the Expo Go app and tap "Scan QR Code".
-* **iOS:** Open the default Camera app and scan the QR code displayed in your terminal.
+
+- **Android:** Open the Expo Go app and tap "Scan QR Code".
+- **iOS:** Open the default Camera app and scan the QR code displayed in your terminal.
 
 ## Roadmap
 

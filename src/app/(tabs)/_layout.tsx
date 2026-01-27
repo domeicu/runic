@@ -1,11 +1,9 @@
 import { NativeTabs, Icon, Label } from 'expo-router/unstable-native-tabs';
-import { useColorScheme } from 'nativewind';
+import { useTheme } from '@/src/lib/themeContext';
 import { icons } from '@/src/constants/icons';
-import { Colours } from '@/src/constants/theme';
 
 const Layout = () => {
-  const { colorScheme } = useColorScheme();
-  const theme = Colours[colorScheme ?? 'light'];
+  const theme = useTheme();
 
   return (
     <NativeTabs tintColor={theme.accent}>

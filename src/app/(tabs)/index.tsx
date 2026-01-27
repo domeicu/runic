@@ -2,15 +2,14 @@ import React from 'react';
 import { router } from 'expo-router';
 import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useColorScheme } from 'nativewind';
 import { Bell } from 'lucide-react-native';
 import { asc, gte } from 'drizzle-orm';
 
 import { db } from '@/src/db/client';
 import { workouts } from '@/src/db/schema';
-import { Colours } from '@/src/constants/theme';
-import { useFocusQuery } from '@/src/hooks/useFocusQuery';
 import { Workout } from '@/src/types/types';
+import { useFocusQuery } from '@/src/hooks/useFocusQuery';
+import { useTheme } from '@/src/lib/themeContext';
 
 import ScreenHeader from '@/src/components/screenHeader';
 import DashboardWidget from '@/src/components/dashboardWidget';
@@ -21,8 +20,7 @@ import { addImportButton } from '@/src/components/addImportButton';
 import { EmptyWorkoutAction } from '@/src/components/emptyWorkoutAction';
 
 const Index = () => {
-  const { colorScheme } = useColorScheme();
-  const theme = Colours[colorScheme ?? 'light'];
+  const { theme } = useTheme();
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);

@@ -1,7 +1,6 @@
 import React, { useRef, useMemo } from 'react';
 import { SectionList, View, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useColorScheme } from 'nativewind';
 import { Menu } from 'lucide-react-native';
 import { asc } from 'drizzle-orm';
 
@@ -11,7 +10,7 @@ import { useFocusQuery } from '@/src/hooks/useFocusQuery';
 import { useAutoScrollToToday } from '@/src/hooks/useAutoScroll';
 import { Workout } from '@/src/types/types';
 import { groupWorkouts } from '@/src/lib/groupWorkouts';
-import { Colours } from '@/src/constants/theme';
+import { useTheme } from '@/src/lib/themeContext';
 
 import ScreenHeader from '@/src/components/screenHeader';
 import LiquidButton from '@/src/components/liquidButton';
@@ -21,8 +20,7 @@ import { addImportButton } from '@/src/components/addImportButton';
 import { EmptyWorkoutAction } from '@/src/components/emptyWorkoutAction';
 
 const Schedule = () => {
-  const { colorScheme } = useColorScheme();
-  const theme = Colours[colorScheme ?? 'light'];
+  const { theme } = useTheme();
 
   const { data } = useFocusQuery<Workout[]>(
     db.select().from(workouts).orderBy(asc(workouts.date))

@@ -1,12 +1,10 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
-import { useColorScheme } from 'nativewind';
 import { ChevronRight } from 'lucide-react-native';
-import { Colours } from '@/src/constants/theme';
+import { useTheme } from '../lib/themeContext';
 
 const Notifications = () => {
-  const { colorScheme } = useColorScheme();
-  const theme = Colours[colorScheme ?? 'light'];
+  const { theme } = useTheme();
 
   const NotificationItem = ({ title, description }: any) => (
     <TouchableOpacity
