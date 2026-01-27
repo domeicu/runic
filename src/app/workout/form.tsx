@@ -15,23 +15,27 @@ import ChipSelector from '@/src/components/chipSelector';
 import ActionButton from '@/src/components/actionButton';
 import ModalHeader from '@/src/components/modalHeader';
 
-const DEFAULT_FORM = {
-  distance: '',
-  date: new Date().toISOString(),
-  title: '',
-  type: RUN_TYPES[0],
-  description: '',
-  notes: '',
-};
-
 export default function WorkoutForm() {
   const { colorScheme } = useColorScheme();
   const theme = Colours[colorScheme ?? 'light'];
   const { id } = useLocalSearchParams<{ id: string }>();
   const isEditing = !!id;
 
+  const params = useLocalSearchParams();
+  const initialDate = params.date
+    ? new Date((params.date as string) + 'T12:00:00')
+    : new Date();
+  const defaultForm = {
+    distance: '',
+    date: initialDate.toISOString(),
+    title: '',
+    type: RUN_TYPES[0],
+    description: '',
+    notes: '',
+  };
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [form, setForm] = useState(DEFAULT_FORM);
+  const [form, setForm] = useState(defaultForm);
 
   useEffect(() => {
     if (!id) return;
@@ -55,7 +59,7 @@ export default function WorkoutForm() {
       });
   }, [id]);
 
-  const updateField = (key: keyof typeof DEFAULT_FORM, value: any) => {
+  const updateField = (key: keyof typeof defaultForm, value: any) => {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
