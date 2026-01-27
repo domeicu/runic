@@ -2,11 +2,33 @@ import React, { memo } from 'react';
 import { router } from 'expo-router';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { MapPin, ChevronRight, Calendar, Check } from 'lucide-react-native';
-import { format } from 'date-fns';
+import {
+  format,
+  isToday,
+  isTomorrow,
+  isYesterday,
+  differenceInCalendarDays,
+} from 'date-fns';
 import * as Haptics from 'expo-haptics';
 
 import { Workout } from '@/src/types/types';
 import { Layout } from '@/src/constants/theme';
+
+const getRelativeLabel = (dateInput: Date | string) => {
+  const date = new Date(dateInput);
+  const now = new Date();
+
+  if (isYesterday(date)) return 'Yesterday';
+  if (isToday(date)) return 'Today';
+  if (isTomorrow(date)) return 'Tomorrow';
+
+  const diff = differenceInCalendarDays(date, now);
+  if (diff > 1 && diff < 7) {
+    return format(date, 'EEEE');
+  }
+
+  return format(date, 'dd MMM');
+};
 
 const WorkoutCard = ({ theme, item }: { theme: any; item: Workout }) => (
   <TouchableOpacity
@@ -90,7 +112,7 @@ const WorkoutCard = ({ theme, item }: { theme: any; item: Workout }) => (
               className="text-sm font-medium"
               style={{ color: theme.textSecondary }}
             >
-              {format(item.date, 'dd MMM')}
+              {getRelativeLabel(item.date)}
             </Text>
           </View>
         )}
