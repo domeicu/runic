@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { router } from 'expo-router';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { MapPin, ChevronRight, Calendar, Check } from 'lucide-react-native';
@@ -119,4 +119,9 @@ const WorkoutCard = ({ theme, item }: { theme: any; item: Workout }) => (
   </TouchableOpacity>
 );
 
-export default WorkoutCard;
+export default memo(WorkoutCard, (prev, next) => {
+  return (
+    prev.item.id === next.item.id &&
+    prev.item.isCompleted === next.item.isCompleted
+  );
+});

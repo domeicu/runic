@@ -73,7 +73,7 @@ const Schedule = () => {
             >
               {section.title}
             </Text>
-          )
+          );
         }}
         renderItem={({ item }: { item: Workout }) => (
           <View className="mb-2">
