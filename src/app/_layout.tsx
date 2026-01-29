@@ -3,13 +3,29 @@ import { View, Text, ActivityIndicator } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { SplashScreen, Stack } from 'expo-router';
 import { useColorScheme } from 'nativewind';
-import { Colours } from '@/src/constants/theme';
+
+import { Colours } from '../constants/theme';
+import { setupNotifications, syncNotifications } from '../lib/notifications';
 import { ThemeProvider, useTheme } from '../lib/themeContext';
 import { useDatabaseInit } from '../db/client';
+
 import './globals.css';
 
 const RootNavigation = () => {
   const { theme } = useTheme();
+
+  useEffect(() => {
+    const init = async () => {
+      const hasPermission = await setupNotifications();
+      if (hasPermission) {
+        console.log('Notification permissions granted');
+        await syncNotifications();
+      } else {
+        console.log('Notification permissions denied');
+      }
+    };
+    init();
+  }, []);
 
   return (
     <Stack

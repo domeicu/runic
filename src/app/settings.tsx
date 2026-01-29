@@ -1,30 +1,88 @@
-import React, { useState } from 'react';
-import { View, Text, ScrollView, Switch, Platform } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  Switch,
+  Platform,
+  Alert,
+  Linking,
+} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
 import { Bell, Clock, Moon, Palette } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useTheme } from '../lib/themeContext';
 import { Layout } from '@/src/constants/theme';
 import DataManagement from '../components/dataManagement';
 import AccentPicker from '../components/accentPicker';
+import {
+  setupNotifications,
+  syncNotifications,
+  cancelAllNotifications,
+} from '@/src/lib/notifications';
 
 const Settings = () => {
   const { colorScheme } = useColorScheme();
   const { theme, updateMode } = useTheme();
 
-  const getSixAM = () => {
-    const date = new Date();
-    date.setHours(6, 0, 0, 0);
-    return date;
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [notificationTime, setNotificationTime] = useState(
+    new Date(new Date().setHours(6, 0, 0, 0))
+  );
+
+  useEffect(() => {
+    const loadSettings = async () => {
+      const storedEnabled = await AsyncStorage.getItem('notifications_enabled');
+      const storedTime = await AsyncStorage.getItem('notification_time');
+
+      setNotificationsEnabled(
+        storedEnabled === null ? true : storedEnabled === 'true'
+      );
+
+      if (storedTime) setNotificationTime(new Date(storedTime));
+    };
+    loadSettings();
+  }, []);
+
+  const toggleNotifications = async (value: boolean) => {
+    setNotificationsEnabled(value);
+    await AsyncStorage.setItem('notifications_enabled', String(value));
+
+    if (value) {
+      const granted = await setupNotifications();
+      if (granted) {
+        await syncNotifications();
+      } else {
+        Alert.alert(
+          'Permissions Required',
+          'Please enable notifications in your phone settings to use this feature.',
+          [
+            {
+              text: 'Cancel',
+              style: 'cancel',
+              onPress: () => setNotificationsEnabled(false),
+            },
+            { text: 'Open Settings', onPress: () => Linking.openSettings() },
+          ]
+        );
+      }
+    } else {
+      await cancelAllNotifications();
+    }
   };
 
-  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-  const [notificationTime, setNotificationTime] = useState(getSixAM());
+  const handleTimeChange = async (event: any, selectedDate?: Date) => {
+    if (!selectedDate) return;
 
-  const handleTimeChange = (event: any, selectedDate?: Date) => {
-    if (selectedDate) setNotificationTime(selectedDate);
+    setNotificationTime(selectedDate);
+    await AsyncStorage.setItem('notification_time', selectedDate.toISOString());
+
+    if (notificationsEnabled) {
+      await syncNotifications();
+    }
   };
 
   const IconContainer = ({ children }: { children: React.ReactNode }) => (
@@ -38,7 +96,6 @@ const Settings = () => {
       style={{ backgroundColor: theme.background }}
       contentContainerStyle={{ paddingBottom: 60 }}
     >
-      {/* --- Notifications Section --- */}
       <View className="mb-2 mt-6">
         <View
           className="overflow-hidden border"
@@ -48,7 +105,6 @@ const Settings = () => {
             borderRadius: Layout.borderRadius.card,
           }}
         >
-          {/* Toggle Switch */}
           <View
             className="flex-row items-center justify-between border-b p-4"
             style={{ borderColor: theme.border }}
@@ -66,13 +122,12 @@ const Settings = () => {
             </View>
             <Switch
               value={notificationsEnabled}
-              onValueChange={setNotificationsEnabled}
+              onValueChange={toggleNotifications}
               trackColor={{ false: theme.border, true: theme.accent }}
               thumbColor={Platform.OS === 'ios' ? '#fff' : theme.text}
             />
           </View>
 
-          {/* Time Picker */}
           {notificationsEnabled && (
             <View className="flex-row items-center justify-between p-4">
               <View className="flex-row items-center">
@@ -108,7 +163,6 @@ const Settings = () => {
         </View>
       </View>
 
-      {/* --- Appearance Section --- */}
       <View className="mt-6">
         <View
           className="overflow-hidden border"
@@ -118,7 +172,6 @@ const Settings = () => {
             borderRadius: Layout.borderRadius.card,
           }}
         >
-          {/* Dark/Light Mode Picker */}
           <View className="border-b p-4" style={{ borderColor: theme.border }}>
             <View className="mb-1 flex-row items-center">
               <IconContainer>
@@ -148,7 +201,6 @@ const Settings = () => {
             </Picker>
           </View>
 
-          {/* Accent Color Picker */}
           <View className="p-4">
             <View className="mb-3 flex-row items-center justify-between">
               <View className="flex-row items-center">

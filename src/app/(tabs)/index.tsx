@@ -96,13 +96,13 @@ const Index = () => {
       <ScreenHeader
         theme={theme}
         title="dashboard"
-        button1={
-          <LiquidButton
-            theme={theme}
-            icon={<Bell size={22} color={theme.text} strokeWidth={1.5} />}
-            onPress={() => router.push('/notifications')}
-          />
-        }
+        // button1={
+        //   <LiquidButton
+        //     theme={theme}
+        //     icon={<Bell size={22} color={theme.text} strokeWidth={1.5} />}
+        //     onPress={() => router.push('/notifications')}
+        //   />
+        // }
         button2={addImportButton({ theme })}
       />
 
