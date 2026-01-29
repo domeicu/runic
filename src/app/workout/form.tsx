@@ -8,6 +8,7 @@ import { parseISO } from 'date-fns';
 import { Colours } from '@/src/constants/theme';
 import { getWorkoutById, addWorkout, updateWorkout } from '@/src/db/queries';
 import { RUN_TYPES, RunType } from '@/src/types/types';
+import { syncNotifications } from '@/src/lib/notifications';
 
 import WorkoutTextInput from '@/src/components/workoutTextInput';
 import WorkoutDateInput from '@/src/components/workoutDateInput';
@@ -86,6 +87,7 @@ export default function WorkoutForm() {
           externalId: null,
         });
       }
+      await syncNotifications();
       router.back();
     } catch (error) {
       console.error(error);
