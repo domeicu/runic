@@ -40,7 +40,10 @@ const WeeklyProgressCard = ({ theme }: WeeklyProgressCardProps) => {
       activeOpacity={0.7}
       onPress={() => {
         requestAnimationFrame(() => {
-          router.push('/schedule');
+          router.push({
+            pathname: '/schedule',
+            params: { viewMode: 'list' },
+          });
         });
       }}
       className="w-full overflow-hidden border"
