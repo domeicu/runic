@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from 'react';
-import { router, useFocusEffect } from 'expo-router';
+import { useFocusEffect } from 'expo-router';
 import { View, ScrollView, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Bell, Trophy, Activity, Tag } from 'lucide-react-native';
+import { Trophy, Activity, Tag } from 'lucide-react-native';
 import { asc, gte } from 'drizzle-orm';
 
 import { db } from '@/src/db/client';
@@ -14,7 +14,6 @@ import { useTheme } from '@/src/lib/themeContext';
 
 import ScreenHeader from '@/src/components/screenHeader';
 import DashboardWidget from '@/src/components/dashboardWidget';
-import LiquidButton from '@/src/components/liquidButton';
 import WorkoutCard from '@/src/components/workoutCard';
 import WeeklyProgressCard from '@/src/components/weeklyProgress';
 import { addImportButton } from '@/src/components/addImportButton';
@@ -96,13 +95,6 @@ const Index = () => {
       <ScreenHeader
         theme={theme}
         title="dashboard"
-        // button1={
-        //   <LiquidButton
-        //     theme={theme}
-        //     icon={<Bell size={22} color={theme.text} strokeWidth={1.5} />}
-        //     onPress={() => router.push('/notifications')}
-        //   />
-        // }
         button2={addImportButton({ theme })}
       />
 
