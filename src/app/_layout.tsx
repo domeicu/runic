@@ -59,7 +59,6 @@ const RootNavigation = () => {
           title: 'workout details',
         }}
       />
-      <Stack.Screen name="notifications" />
       <Stack.Screen name="settings" />
     </Stack>
   );

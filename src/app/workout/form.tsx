@@ -78,16 +78,20 @@ export default function WorkoutForm() {
         notes: form.notes,
       };
 
+      let savedData;
+
       if (isEditing) {
-        await updateWorkout(Number(id), payload);
+        savedData = await updateWorkout(Number(id), payload);
       } else {
-        await addWorkout({
+        savedData = await addWorkout({
           ...payload,
           dateCreated: new Date().toISOString(),
           externalId: null,
         });
       }
-      await syncNotifications();
+
+      const workoutToSync = Array.isArray(savedData) ? savedData[0] : savedData;
+      await syncNotifications(workoutToSync);
       router.back();
     } catch (error) {
       console.error(error);
