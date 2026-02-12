@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useState } from 'react';
+import React, { useRef, useMemo, useState, useEffect } from 'react';
 import {
   SectionList,
   View,
@@ -9,6 +9,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Calendar as CalendarIcon, List } from 'lucide-react-native';
 import { Calendar } from 'react-native-calendars';
+import { useLocalSearchParams } from 'expo-router';
 import { asc } from 'drizzle-orm';
 import { format } from 'date-fns';
 
@@ -31,7 +32,14 @@ import { Layout } from '@/src/constants/theme';
 const Schedule = () => {
   const { theme } = useTheme();
 
-  const [viewMode, setViewMode] = useState<'list' | 'calendar'>('calendar');
+  const params = useLocalSearchParams();
+  const [viewMode, setViewMode] = useState<'calendar' | 'list'>('calendar');
+  useEffect(() => {
+    if (params.viewMode) {
+      setViewMode(params.viewMode as 'calendar' | 'list');
+    }
+  }, [params.viewMode]);
+
   const [selectedDate, setSelectedDate] = useState(
     format(new Date(), 'yyyy-MM-dd')
   );

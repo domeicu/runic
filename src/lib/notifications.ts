@@ -3,6 +3,7 @@ import { Platform } from 'react-native';
 import { isBefore, set, isValid } from 'date-fns';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { db } from '@/src/db/client';
+import { Workout } from '@/src/types/types';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -48,8 +49,13 @@ export const getNotificationPreferences = async () => {
   };
 };
 
+export const cancelAllNotifications = async () => {
+  await Notifications.cancelAllScheduledNotificationsAsync();
+};
+
 export const scheduleRunReminder = async (
-  workoutDate: string,
+  workoutId: number | string,
+  workoutDate: Date | string,
   distance: number,
   type: string,
   reminderTime: { hour: number; minute: number }
@@ -65,7 +71,11 @@ export const scheduleRunReminder = async (
 
   if (isBefore(triggerDate, new Date())) return;
 
-  const id = await Notifications.scheduleNotificationAsync({
+  const notificationId = String(workoutId);
+
+  await Notifications.cancelScheduledNotificationAsync(notificationId);
+  await Notifications.scheduleNotificationAsync({
+    identifier: notificationId,
     content: {
       title: 'Run day!',
       body: `You have a ${distance}km ${type} scheduled today.`,
@@ -81,30 +91,42 @@ export const scheduleRunReminder = async (
     },
   });
 
-  return id;
+  return notificationId;
 };
 
-export const cancelAllNotifications = async () => {
-  await Notifications.cancelAllScheduledNotificationsAsync();
-};
-
-export const syncNotifications = async () => {
+export const syncNotifications = async (workout?: Workout) => {
   const { enabled, time } = await getNotificationPreferences();
+  if (!enabled) {
+    return;
+  }
+  const reminderTime = { hour: time.getHours(), minute: time.getMinutes() };
 
-  await cancelAllNotifications();
-
-  if (!enabled) return;
+  if (workout) {
+    await Notifications.cancelScheduledNotificationAsync(String(workout.id));
+    await scheduleRunReminder(
+      workout.id,
+      workout.date,
+      workout.distanceKm,
+      workout.type,
+      reminderTime
+    );
+    console.log(`Synced single notification for ID: ${workout.id}`);
+    return;
+  }
 
   const allWorkouts = await db.query.workouts.findMany();
   const futureRuns = allWorkouts.filter((w) => new Date(w.date) > new Date());
 
-  const reminderTime = { hour: time.getHours(), minute: time.getMinutes() };
-
+  await Notifications.cancelAllScheduledNotificationsAsync();
   for (const run of futureRuns) {
-    await scheduleRunReminder(run.date, run.distanceKm, run.type, reminderTime);
+    await scheduleRunReminder(
+      run.id,
+      run.date,
+      run.distanceKm,
+      run.type,
+      reminderTime
+    );
   }
 
-  console.log(
-    `Synced ${futureRuns.length} reminders for ${reminderTime.hour}:${reminderTime.minute}`
-  );
+  console.log(`Full Sync: Scheduled ${futureRuns.length} reminders`);
 };
